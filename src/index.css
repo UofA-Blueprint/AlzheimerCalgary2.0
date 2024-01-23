@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Proxima Nova";
+  src: url(@/assets/fonts/proximanova-regular.otf);
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Proxima Nova";
+  src: url(@/assets/fonts/proximanova-semibold.otf);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Proxima Nova";
+  src: url(@/assets/fonts/proximanova-regularit.otf);
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Proxima Nova";
+  src: url(@/assets/fonts/proximanova-semiboldit.otf);
+  font-weight: bold;
+  font-style: italic;
+}
