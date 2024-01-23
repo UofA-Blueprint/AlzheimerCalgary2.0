@@ -1,19 +1,22 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import HomePage from './components/HomePage';
-import FirebasePage from './components/FirebasePage';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import Test from "./routes/Test";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <>Home</>,
+  },
+  {
+    path: "/test",
+    element: <Test />,
+  },
+]);
 
 function App() {
-  return (
-    <Router>
-      <Navbar links={['/']} titles={['Home']} />
-      <Routes>
-        <Route path="/" element={<HomePage />}></Route>
-        <Route path="/firebase-connection" element={<FirebasePage />}></Route>
-      </Routes>
-    </Router>
-  );
+  return <RouterProvider router={router}></RouterProvider>;
 }
 
 export default App;
