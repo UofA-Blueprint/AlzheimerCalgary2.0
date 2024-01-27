@@ -4,26 +4,71 @@
 
 @font-face {
   font-family: "Proxima Nova";
-  src: url(@/assets/fonts/proximanova-regular.otf);
+  src: url(@/assets/fonts/ProximaNovaRegular.otf);
   font-weight: normal;
 }
 
 @font-face {
   font-family: "Proxima Nova";
-  src: url(@/assets/fonts/proximanova-semibold.otf);
+  src: url(@/assets/fonts/ProximaNovaSemibold.otf);
   font-weight: bold;
 }
 
 @font-face {
-  font-family: "Proxima Nova";
-  src: url(@/assets/fonts/proximanova-regularit.otf);
+  font-family: "Helvetica Now Display";
+  src: url(@/assets/fonts/HelveticaNowDisplay-Regular.otf);
   font-weight: normal;
-  font-style: italic;
 }
 
-@font-face {
-  font-family: "Proxima Nova";
-  src: url(@/assets/fonts/proximanova-semiboldit.otf);
-  font-weight: bold;
-  font-style: italic;
+@layer base {
+  .text-display1 {
+    font-family: "Proxima Nova";
+    font-weight: bold;
+    font-size: 64px;
+  }
+  .text-display2 {
+    font-family: "Proxima Nova";
+    font-weight: bold;
+    font-size: 56px;
+  }
+  .text-h1 {
+    font-family: "Proxima Nova";
+    font-weight: bold;
+    font-size: 40px;
+  }
+  .text-h2 {
+    font-family: "Proxima Nova";
+    font-weight: bold;
+    font-size: 32px;
+  }
+  .text-h3 {
+    font-family: "Proxima Nova";
+    font-weight: bold;
+    font-size: 24px;
+  }
+  .text-h4 {
+    font-family: "Proxima Nova";
+    font-weight: bold;
+    font-size: 16px;
+  }
+  .text-body-reg {
+    font-family: "Helvetica Now Display";
+    font-weight: normal;
+    font-size: 16px;
+  }
+  .text-body-sm {
+    font-family: "Helvetica Now Display";
+    font-weight: normal;
+    font-size: 14px;
+  }
+  .text-sm {
+    font-family: "Helvetica Now Display";
+    font-weight: normal;
+    font-size: 12px;
+  }
+  .text-tiny {
+    font-family: "Helvetica Now Display";
+    font-weight: normal;
+    font-size: 10px;
+  }
 }

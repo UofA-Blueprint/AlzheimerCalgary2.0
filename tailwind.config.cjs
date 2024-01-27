@@ -56,6 +56,7 @@ module.exports = {
       },
       fontFamily: {
         display: ['"Proxima Nova"', "sans-serif"],
+        body: ['"Helvetica Now Display"', "sans-serif"],
       },
     },
   },
