@@ -53,6 +53,16 @@ module.exports = {
             500: "#E4E4EB",
           },
         },
+        profile: {
+          tulip: "#F68F8F",
+          gold: "#F1C38D",
+          lime: "#F4FAAE",
+          jade: "#B8F1B6",
+          water: "#D0E4FF",
+          air: "#A7E4FC",
+          lilac: "#E6BFFF",
+          candy: "#F6AEDE",
+        },
       },
       fontFamily: {
         display: ['"Proxima Nova"', "sans-serif"],

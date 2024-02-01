@@ -17,6 +17,8 @@ function Test() {
         <TestSquare className={"bg-primary-main"} />
         <TestSquare className={"bg-secondary-main"} />
         <TestSquare className={"bg-accent"} />
+        <TestSquare className={"bg-profile-jade"} />
+        <TestSquare className={"bg-profile-tulip"} />
       </div>
     </div>
   );
