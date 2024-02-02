@@ -30,7 +30,7 @@ export default function NavigationBar({
   return (
     <nav
       className={twMerge(
-        "flex justify-between font-body my-8 md:my-8",
+        "flex justify-between items-center font-body my-6 md:my-8 text-sm sm:text-base",
         className
       )}
     >
