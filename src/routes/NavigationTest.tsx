@@ -2,7 +2,8 @@ import NavigationBar from "../components/NavigationBar";
 
 function NavigaionTest() {
   return (
-    <div className="mx-8 md:mx-16">
+    <div>
+      {/* Using margin or padding for the parent tag can break the navigation bar. */}
       <NavigationBar userType="admin" />
     </div>
   );
