@@ -18,13 +18,13 @@ const Button: React.FC<ButtonProps> = ({
   fill = true,
   status = true,
 }) => {
-  const buttonStyle = `flex flex-row text-sm p-4 ${
+  const buttonStyle = `flex flex-row items-center justify-center text-sm p-4 ${
     !status
       ? "bg-gray-100 text-gray-400"
       : fill
       ? "bg-blue-400 text-white"
       : "text-blue-500 border-blue-500 border-2"
-  } ${rounded ? "rounded-full" : "rounded-lg"}`;
+  } ${rounded ? "rounded-full" : "rounded-lg"} w-full h-full`;
 
   return (
     <button
@@ -33,7 +33,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={!status} // Placeholder to make it prettier
     >
       {icon && !text && <Plus className="" />}
-      {icon && text && <Plus className="mt-1" />}
+      {icon && text && <Plus className="mt-0.2" />}
       {text && <span className="pl-1.5">{text}</span>}
     </button>
   );
