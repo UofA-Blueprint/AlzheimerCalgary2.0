@@ -1,24 +1,46 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DropdownItem from "./DropdownItem";
 import { CaretDown } from '@phosphor-icons/react';
 
 
 function SortDropdownList() {
+    // Options that can be later add in
+    const items = ["Newest to Oldest", "Oldest to Newest", "Most-Least Storage", "Recently Updated"]
+
     // State to keep track of the currently selected option
     const [selectedItem, setSelectedItem] = useState<string | null>(null) // useState expect either string or null var
 
     // State to keep track of the menu is being open or not
     const [open, setOpen] = useState(false)
 
-    // Options that can be later add in
-    const items = ["Newest to Oldest", "Oldest to Newest", "Most-Least Storage", "Recently Updated"];
+    // Check if user click outside of the menu to close it
+    let menuRef = useRef<HTMLInputElement>(null) // Typescript like this
+
+    useEffect(() => {
+        let handler = (e:any) => {
+            if(menuRef.current && !menuRef.current.contains(e.target)){
+                // Check menuRef.current is not null before calling .contains 
+                setOpen(false)
+            }
+        }
+        
+        document.addEventListener("mousedown", handler)
+
+        return() => {
+            // Clean up to prevent memory leaks and avoid running outdated event handlers
+            document.removeEventListener("mousedown", handler)
+        }
+    }, [])
+
+
 
     return (
-        <div>
+        <div ref={menuRef}>
             {/* For the menu trigger */}
             <div className={`cursor-pointer font-body h-10 bg-status-blue-light flex justify-between items-center px-4 py-2 ${open ? 'rounded-t-lg mb-2' : 'rounded-lg'} `} onClick={() => setOpen(!open)}>
                 Sort
                 
+                {/* The arrow symbol */}
                 <CaretDown size={24}/>
             </div>
     
@@ -44,4 +66,4 @@ function SortDropdownList() {
     
 }
 
-export default SortDropdownList;
+export default SortDropdownList
