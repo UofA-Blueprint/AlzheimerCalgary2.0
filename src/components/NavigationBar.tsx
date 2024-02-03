@@ -1,5 +1,6 @@
 //#region Imports
 import { twMerge } from "tailwind-merge";
+import logoUrl from "@/assets/images/asc_logo.svg";
 //#endregion
 
 //#region Interface
@@ -36,10 +37,7 @@ export default function NavigationBar({
     >
       {/* Logo  */}
       <a href="/">
-        <img
-          src="src/assets/images/asc_logo.svg"
-          alt="ASC Logo"
-        />
+        <img src={logoUrl} alt="ASC Logo" />
       </a>
 
       {/* Navigation bar */}

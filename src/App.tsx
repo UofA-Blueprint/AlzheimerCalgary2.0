@@ -1,8 +1,11 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 
 // routes
 import NavigaionTest from "./routes/NavigationTest";
-import Test from "./routes/Test";
+import Test from "@/routes/Test";
 
 const router = createBrowserRouter([
   {
