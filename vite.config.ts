@@ -7,6 +7,7 @@ export default defineConfig({
   build: {
     outDir: "build",
   },
+  base: "/", // tells vite to request dependencies from the root domain
   plugins: [react()],
   resolve: {
     alias: {
