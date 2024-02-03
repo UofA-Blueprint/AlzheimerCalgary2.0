@@ -5,6 +5,7 @@ import {
 import Test from "./routes/Test";
 import DropdownItem from "./components/DropdownItem";
 import SortDropdownListTestRoute from "./routes/SortDropdownListTestRoute";
+import NavigaionTest from "./routes/NavigationTest";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/SortDropdownListTestRoute",
     element: <SortDropdownListTestRoute />,
+  },
+  {
+    path: "/nav-test",
+    element: <NavigaionTest />,
   },
 
 ]);
