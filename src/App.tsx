@@ -1,5 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Test from "./routes/Test";
+
+// routes
+import NavigaionTest from "./routes/NavigationTest";
+import Test from "@/routes/Test";
 import ButtonTestRoute from "./routes/ButtonTestRoute";
 
 const router = createBrowserRouter([
@@ -14,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: "/testButton",
     element: <ButtonTestRoute />,
+  },
+  {
+    path: "/nav-test",
+    element: <NavigaionTest />,
   },
 ]);
 
