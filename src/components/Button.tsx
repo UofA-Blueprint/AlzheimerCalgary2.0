@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Plus } from "@phosphor-icons/react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -18,23 +18,53 @@ const Button: React.FC<ButtonProps> = ({
   fill = true,
   status = true,
 }) => {
-  const buttonStyle = `flex flex-row items-center justify-center text-sm p-4 ${
-    !status
-      ? "bg-gray-100 text-gray-400"
-      : fill
-      ? "bg-blue-400 text-white"
-      : "text-blue-500 border-blue-500 border-2"
-  } ${rounded ? "rounded-full" : "rounded-lg"} w-full h-full`;
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [fontSize, setFontSize] = useState("1em");
+
+  useEffect(() => {
+    if (text) {
+      const width = buttonRef.current?.offsetWidth;
+      console.log(`Button width: ${width}`);
+      // size adjustment could be error since hand adjusted it
+      // probably adjust it later or ask for advise
+      if (width) {
+        if (width > 200) {
+          setFontSize(`${width / 14}px`);
+        } else if (width > 100) {
+          setFontSize(`${width / 11}px`);
+        } else {
+          setFontSize(`${width / 7}px`);
+        }
+      }
+    }
+  }, [text]);
+  // general detail
+  const buttonClassName = `flex flex-row items-center justify-center p-4 
+  ${rounded ? "rounded-full" : "rounded-lg"} w-full h-full`;
+
+  // #color management
+  const buttonStyle: React.CSSProperties = {
+    backgroundColor: !status ? "#E4E4EB" : fill ? "#009FDF" : "transparent",
+    color: !status ? "#8F90A6" : fill ? "white" : "#007BAC",
+    border: !status || fill ? "none" : "2px solid #007BAC",
+  };
 
   return (
     <button
+      ref={buttonRef}
+      style={{ fontSize, ...buttonStyle }}
       onClick={onClick}
-      className={buttonStyle}
-      disabled={!status} // Placeholder to make it prettier
+      className={buttonClassName}
+      disabled={!status}
     >
       {icon && !text && <Plus className="" />}
-      {icon && text && <Plus className="mt-0.2" />}
-      {text && <span className="pl-1.5">{text}</span>}
+      {icon && text && (
+        <>
+          <Plus className="mt-0.2" />
+          <span className="pl-1">{text}</span>
+        </>
+      )}
+      {!icon && text && <span>{text}</span>}
     </button>
   );
 };

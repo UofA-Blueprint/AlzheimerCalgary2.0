@@ -28,6 +28,30 @@ function ButtonTestRoute() {
             icon={false}
           />
         </div>
+        <div className="w-22 h-8">
+          <Button
+            onClick={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+            text={"Button"}
+            rounded={false}
+            fill={true}
+            status={false}
+            icon={true}
+          />
+        </div>
+        <div className="w-22 h-8">
+          <Button
+            onClick={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+            text={"Button"}
+            rounded={false}
+            fill={true}
+            status={false}
+            icon={false}
+          />
+        </div>
         <div className="w-12 h-12">
           <Button
             onClick={function (): void {
@@ -76,6 +100,18 @@ function ButtonTestRoute() {
             fill={true}
             status={true}
             icon={false}
+          />
+        </div>
+        <div className="w-48 h-12">
+          <Button
+            onClick={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+            text={"Button"}
+            rounded={false}
+            fill={true}
+            status={true}
+            icon={true}
           />
         </div>
         <div className="w-12 h-12">
