@@ -24,7 +24,7 @@ const Button: React.FC<ButtonProps> = ({
   useEffect(() => {
     if (text) {
       const width = buttonRef.current?.offsetWidth;
-      console.log(`Button width: ${width}`);
+
       // size adjustment could be error since hand adjusted it
       // probably adjust it later or ask for advise
       if (width) {
