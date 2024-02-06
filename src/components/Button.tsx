@@ -38,21 +38,18 @@ const Button: React.FC<ButtonProps> = ({
       }
     }
   }, [text]);
-  // general detail
-  const buttonClassName = `flex flex-row items-center justify-center p-4 
-  ${rounded ? "rounded-full" : "rounded-lg"} w-full h-full`;
-
-  // #color management
-  const buttonStyle: React.CSSProperties = {
-    backgroundColor: !status ? "#E4E4EB" : fill ? "#009FDF" : "transparent",
-    color: !status ? "#8F90A6" : fill ? "white" : "#007BAC",
-    border: !status || fill ? "none" : "2px solid #007BAC",
-  };
+  const buttonClassName = `flex flex-row items-center justify-center p-4 ${
+    !status
+      ? "bg-neutrals-light-200 text-gray-400"
+      : fill
+      ? "bg-primary-main text-white"
+      : "text-primary-dark border-primary-dark border-2"
+  } ${rounded ? "rounded-full" : "rounded-lg"} w-full h-full`;
 
   return (
     <button
       ref={buttonRef}
-      style={{ fontSize, ...buttonStyle }}
+      style={{ fontSize }}
       onClick={onClick}
       className={buttonClassName}
       disabled={!status}
