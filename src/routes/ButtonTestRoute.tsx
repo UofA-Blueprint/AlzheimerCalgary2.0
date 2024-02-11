@@ -13,7 +13,7 @@ function ButtonTestRoute() {
             text={"Button"}
             rounded={false}
             fill={true}
-            status={false}
+            status={"disabled"}
             icon={true}
           />
         </div>
@@ -25,7 +25,7 @@ function ButtonTestRoute() {
             text={"Button"}
             rounded={false}
             fill={true}
-            status={false}
+            status={"disabled"}
             icon={false}
           />
         </div>
@@ -37,7 +37,7 @@ function ButtonTestRoute() {
             text={"Button"}
             rounded={false}
             fill={true}
-            status={false}
+            status={"disabled"}
             icon={true}
           />
         </div>
@@ -49,7 +49,7 @@ function ButtonTestRoute() {
             text={"Button"}
             rounded={false}
             fill={true}
-            status={false}
+            status={"disabled"}
             icon={false}
           />
         </div>
@@ -61,7 +61,7 @@ function ButtonTestRoute() {
             text={""}
             rounded={false}
             fill={true}
-            status={false}
+            status={"disabled"}
             icon={true}
           />
         </div>
@@ -73,7 +73,7 @@ function ButtonTestRoute() {
             text={""}
             rounded={true}
             fill={true}
-            status={false}
+            status={"disabled"}
             icon={true}
           />
         </div>
@@ -87,7 +87,7 @@ function ButtonTestRoute() {
             text={"Button"}
             rounded={false}
             fill={true}
-            status={true}
+            status={"enabled"}
             icon={true}
           />
         </div>
@@ -99,7 +99,7 @@ function ButtonTestRoute() {
             text={"Button"}
             rounded={false}
             fill={true}
-            status={true}
+            status={"enabled"}
             icon={false}
           />
         </div>
@@ -111,7 +111,7 @@ function ButtonTestRoute() {
             text={"Button"}
             rounded={false}
             fill={true}
-            status={true}
+            status={"enabled"}
             icon={true}
           />
         </div>
@@ -123,7 +123,7 @@ function ButtonTestRoute() {
             text={""}
             rounded={false}
             fill={true}
-            status={true}
+            status={"enabled"}
             icon={true}
           />
         </div>
@@ -135,7 +135,7 @@ function ButtonTestRoute() {
             text={""}
             rounded={true}
             fill={true}
-            status={true}
+            status={"enabled"}
             icon={true}
           />
         </div>
@@ -149,7 +149,7 @@ function ButtonTestRoute() {
             text={"Button"}
             rounded={false}
             fill={false}
-            status={true}
+            status={"enabled"}
             icon={true}
           />
         </div>
@@ -161,7 +161,7 @@ function ButtonTestRoute() {
             text={"Button"}
             rounded={false}
             fill={false}
-            status={true}
+            status={"enabled"}
             icon={false}
           />
         </div>
@@ -173,7 +173,7 @@ function ButtonTestRoute() {
             text={""}
             rounded={false}
             fill={false}
-            status={true}
+            status={"enabled"}
             icon={true}
           />
         </div>
@@ -185,7 +185,7 @@ function ButtonTestRoute() {
             text={""}
             rounded={true}
             fill={false}
-            status={true}
+            status={"enabled"}
             icon={true}
           />
         </div>

@@ -7,7 +7,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   text?: string;
   rounded?: boolean;
   fill?: boolean;
-  status?: boolean;
+  status?: string;
   fontSize?: string;
 }
 
@@ -17,13 +17,13 @@ const Button: React.FC<ButtonProps> = ({
   onClick = () => console.log("Clicked"),
   rounded = false,
   fill = true,
-  status = true,
+  status = "enabled",
   fontSize = "1em",
 }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const buttonClassName = `flex flex-row items-center justify-center p-4 ${
-    !status
+    status === "disabled"
       ? "bg-neutrals-light-200 text-gray-400"
       : fill
       ? "bg-primary-main text-white  hover:bg-primary-light active:bg-primary-dark  "

@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // routes
 
-import ButtonTestRoute from "./routes/ButtonTestRoute";
+import ButtonTestRoute from "@/routes/ButtonTestRoute";
 
 import Test from "./routes/Test";
 import DropdownItem from "./components/DropdownItem";
