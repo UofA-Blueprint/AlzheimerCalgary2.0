@@ -7,7 +7,7 @@ import ButtonTestRoute from "@/routes/ButtonTestRoute";
 import Test from "./routes/Test";
 import DropdownItem from "@/components/DropdownItem";
 import SortDropdownListTestRoute from "@/routes/SortDropdownListTestRoute";
-import NavigaionTest from "@/routes/NavigationTest";
+import NavigationTest from "@/routes/NavigationTest";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/nav-test",
-    element: <NavigaionTest />,
+    element: <NavigationTest />,
   },
 ]);
 
