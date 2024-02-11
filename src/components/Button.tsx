@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Plus } from "@phosphor-icons/react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -8,6 +8,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   rounded?: boolean;
   fill?: boolean;
   status?: boolean;
+  fontSize?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -17,39 +18,22 @@ const Button: React.FC<ButtonProps> = ({
   rounded = false,
   fill = true,
   status = true,
+  fontSize = "1em",
 }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const [fontSize, setFontSize] = useState("1em");
 
-  useEffect(() => {
-    if (text) {
-      const width = buttonRef.current?.offsetWidth;
-
-      // size adjustment could be error since hand adjusted it
-      // probably adjust it later or ask for advise
-      if (width) {
-        if (width > 200) {
-          setFontSize(`${width / 14}px`);
-        } else if (width > 100) {
-          setFontSize(`${width / 11}px`);
-        } else {
-          setFontSize(`${width / 7}px`);
-        }
-      }
-    }
-  }, [text]);
   const buttonClassName = `flex flex-row items-center justify-center p-4 ${
     !status
       ? "bg-neutrals-light-200 text-gray-400"
       : fill
-      ? "bg-primary-main text-white"
-      : "text-primary-dark border-primary-dark border-2"
+      ? "bg-primary-main text-white  hover:bg-primary-light active:bg-primary-dark  "
+      : "text-primary-dark border-primary-dark border-2 hover:bg-neutrals-dark-100 active:bg-primary-dark active:text-white "
   } ${rounded ? "rounded-full" : "rounded-lg"} w-full h-full`;
 
   return (
     <button
       ref={buttonRef}
-      style={{ fontSize }}
+      style={{ fontSize: fontSize }}
       onClick={onClick}
       className={buttonClassName}
       disabled={!status}

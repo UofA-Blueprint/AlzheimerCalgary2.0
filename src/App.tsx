@@ -1,9 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // routes
-import NavigaionTest from "./routes/NavigationTest";
-import Test from "@/routes/Test";
+
 import ButtonTestRoute from "./routes/ButtonTestRoute";
+
+import Test from "./routes/Test";
+import DropdownItem from "./components/DropdownItem";
+import SortDropdownListTestRoute from "./routes/SortDropdownListTestRoute";
+import NavigaionTest from "./routes/NavigationTest";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/testButton",
     element: <ButtonTestRoute />,
+  },
+  {
+    path: "/SortDropdownListTestRoute",
+    element: <SortDropdownListTestRoute />,
   },
   {
     path: "/nav-test",
