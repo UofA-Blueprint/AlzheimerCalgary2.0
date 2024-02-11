@@ -5,9 +5,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ButtonTestRoute from "@/routes/ButtonTestRoute";
 
 import Test from "./routes/Test";
-import DropdownItem from "./components/DropdownItem";
-import SortDropdownListTestRoute from "./routes/SortDropdownListTestRoute";
-import NavigaionTest from "./routes/NavigationTest";
+import DropdownItem from "@/components/DropdownItem";
+import SortDropdownListTestRoute from "@/routes/SortDropdownListTestRoute";
+import NavigaionTest from "@/routes/NavigationTest";
 
 const router = createBrowserRouter([
   {
