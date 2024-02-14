@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import { Plus } from "@phosphor-icons/react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   onClick?: () => void;
@@ -21,7 +20,6 @@ const Button: React.FC<ButtonProps> = ({
   fontSize = "1em",
 }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  // "relative overflow-hidden bg-primary-main text-white transition-colors hover:bg-neutrals-light-100 hover:text-primary-main hover:border-2 hover:border-primary-main rounded-full w-full h-full before:absolute before:left-0 before:top-0 before:w-full before:h-full before:z-10 before:bg-primary-dark before:content[''] before:transition-transform before:duration-300 hover:before:transform hover:before:translate-x-full"
   const buttonClassName = ` flex flex-row items-center justify-center p-4 ${
     status === "disabled"
       ? "bg-neutrals-light-200 text-gray-400 cursor-default"
