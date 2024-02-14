@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import { Plus } from "@phosphor-icons/react";
 
 function ButtonTestRoute() {
   return (
@@ -14,7 +15,7 @@ function ButtonTestRoute() {
             rounded={false}
             fill={true}
             status={"disabled"}
-            icon={true}
+            icon={Plus}
           />
         </div>
         <div className="text-sm w-48 h-12">
@@ -26,7 +27,6 @@ function ButtonTestRoute() {
             rounded={false}
             fill={true}
             status={"disabled"}
-            icon={false}
           />
         </div>
         <div className="text-sm w-22 h-8">
@@ -38,7 +38,7 @@ function ButtonTestRoute() {
             rounded={false}
             fill={true}
             status={"disabled"}
-            icon={true}
+            icon={Plus}
           />
         </div>
         <div className="text-sm w-22 h-8">
@@ -50,7 +50,6 @@ function ButtonTestRoute() {
             rounded={false}
             fill={true}
             status={"disabled"}
-            icon={false}
           />
         </div>
         <div className="text-sm w-12 h-12">
@@ -62,7 +61,7 @@ function ButtonTestRoute() {
             rounded={false}
             fill={true}
             status={"disabled"}
-            icon={true}
+            icon={Plus}
           />
         </div>
         <div className="text-sm w-12 h-12">
@@ -74,7 +73,7 @@ function ButtonTestRoute() {
             rounded={true}
             fill={true}
             status={"disabled"}
-            icon={true}
+            icon={Plus}
           />
         </div>
       </div>
@@ -88,7 +87,7 @@ function ButtonTestRoute() {
             rounded={false}
             fill={true}
             status={"enabled"}
-            icon={true}
+            icon={Plus}
           />
         </div>
         <div className="text-sm w-48 h-12">
@@ -100,7 +99,6 @@ function ButtonTestRoute() {
             rounded={false}
             fill={true}
             status={"enabled"}
-            icon={false}
           />
         </div>
         <div className="text-sm w-48 h-12">
@@ -112,7 +110,7 @@ function ButtonTestRoute() {
             rounded={false}
             fill={true}
             status={"enabled"}
-            icon={true}
+            icon={Plus}
           />
         </div>
         <div className="text-sm w-12 h-12">
@@ -124,7 +122,7 @@ function ButtonTestRoute() {
             rounded={false}
             fill={true}
             status={"enabled"}
-            icon={true}
+            icon={Plus}
           />
         </div>
         <div className="text-sm w-12 h-12">
@@ -136,7 +134,7 @@ function ButtonTestRoute() {
             rounded={true}
             fill={true}
             status={"enabled"}
-            icon={true}
+            icon={Plus}
           />
         </div>
       </div>
@@ -150,7 +148,7 @@ function ButtonTestRoute() {
             rounded={false}
             fill={false}
             status={"enabled"}
-            icon={true}
+            icon={Plus}
           />
         </div>
         <div className="text-sm w-48 h-12">
@@ -162,7 +160,6 @@ function ButtonTestRoute() {
             rounded={false}
             fill={false}
             status={"enabled"}
-            icon={false}
           />
         </div>
         <div className="text-sm w-12 h-12">
@@ -174,7 +171,7 @@ function ButtonTestRoute() {
             rounded={false}
             fill={false}
             status={"enabled"}
-            icon={true}
+            icon={Plus}
           />
         </div>
         <div className="text-sm w-12 h-12">
@@ -186,7 +183,7 @@ function ButtonTestRoute() {
             rounded={true}
             fill={false}
             status={"enabled"}
-            icon={true}
+            icon={Plus}
           />
         </div>
       </div>
