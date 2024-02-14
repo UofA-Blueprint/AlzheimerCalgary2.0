@@ -6,7 +6,7 @@ import {
 // routes
 import NavigaionTest from "./routes/NavigationTest";
 import Test from "@/routes/Test";
-
+import ProfilePictureTest from "./routes/ProfilePictureTestRoute";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,7 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/nav-test",
     element: <NavigaionTest />,
-  },
+  },{
+    path:"/profile-test",
+    element:<ProfilePictureTest />
+  }
 ]);
 
 function App() {
