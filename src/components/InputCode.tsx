@@ -27,15 +27,27 @@ interface InputCodeProps {
 }
 //#endregion
 
+/**
+ * Renders an input code field component.
+ *
+ * @component
+ * @param {object} props - The component props.
+ * @param {boolean} props.error - Indicates whether the input field has an error.
+ * @param {string} props.label - The label of the input field. Defaults to an empty string if not provided.
+ * @param {boolean} props.required - Indicates whether the input field is required.
+ * @param {string} props.className - Additional CSS class name for the component.
+ * @returns {JSX.Element} The rendered input code component.
+ */
 export function InputCode({
   error,
-  label,
+  label = "",
   required,
   className,
 }: InputCodeProps): JSX.Element {
   const inputRefs = Array.from({ length: 6 }, () =>
     useRef<HTMLInputElement | null>(null)
   );
+
   const [input, setInput] = useState<Record<number, string>>({
     0: "",
     1: "",
@@ -74,14 +86,14 @@ export function InputCode({
   return (
     <div
       className={twMerge(
-        "flex flex-col gap-y-1 text-neutrals-dark-500 text-body-reg",
+        "flex flex-col gap-y-2 md:gap-y-3 text-neutrals-dark-500 text-body-reg",
         className
       )}
     >
       {/* Title section */}
-      <div className="flex gap-x-1">
-        <p className="text-base capitalize">Input Text</p>
-        <p className="text-status-red-main">*</p>
+      <div className="flex gap-x-1 items-center">
+        <p className="text-base capitalize">{label}</p>
+        {required && <p className="text-status-red-main">*</p>}
       </div>
 
       {/* Input Code Section */}
@@ -92,7 +104,9 @@ export function InputCode({
             ref={inputRefs[index]}
             type="text"
             maxLength={1}
-            className="w-12 h-16 text-center text-3xl rounded-md bg-neutrals-light-300"
+            className={`w-10 h-14 md:w-12 md:h-16 text-center text-2xl md:text-3xl rounded-md bg-neutrals-light-300 border-2 border-status-red-main ${
+              error ? "border-status-red-main" : "border-none"
+            }`}
             onChange={(e) => setValue(e.target.value)}
             onKeyDown={(e) => handleKeyDown(e, index)}
           />
@@ -100,14 +114,16 @@ export function InputCode({
       </div>
 
       {/* Error Message */}
-      <div className="flex text-body-sm items-center gap-x-1 text-status-red-main">
-        <img
-          src="src/assets/images/error.svg"
-          alt="Error icon"
-          className="w-5"
-        />
-        <p>Error passcode</p>
-      </div>
+      {error && (
+        <div className="flex text-body-sm items-center gap-x-1 text-status-red-main">
+          <img
+            src="src/assets/images/error.svg"
+            alt="Error icon"
+            className="w-5"
+          />
+          <p>Error passcode</p>
+        </div>
+      )}
     </div>
   );
 }
