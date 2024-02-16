@@ -47,19 +47,30 @@ export function InputCode({
   const [value, setValue] = useState<string>("");
 
   //#region Functions
+  /**
+   * This function handles inputs based on the selected key.
+   * @param {React.KeyboardEvent<HTMLInputElement>} e - The keyboard event.
+   * @param {number} index - The index of the input field.
+   */
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
     index: number
   ) => {
-    if (e.key === "Backspace" && index > 0 && value.length === 0) {
-      setInput((prev) => ({ ...prev, [index]: "" }));
-      inputRefs[index - 1]?.current?.focus();
-    } else if (e.key !== "Backspace" && index < 5 && value.length > 0) {
+    if (e.key === "Backspace" && index > 0) {
+      inputRefs[index]?.current?.value === ""
+        ? inputRefs[index - 1]?.current?.focus()
+        : setInput((prev) => ({ ...prev, [index]: "" }));
+    } else if (e.key === "Tab" && index > 0) {
+      setInput((prev) => ({ ...prev, [index]: value }));
+      setValue("");
+    } else if (index < 5 && value !== "") {
       setInput((prev) => ({ ...prev, [index]: value }));
       inputRefs[index + 1]?.current?.focus();
+      setValue("");
     }
   };
   //#endregion
+
   return (
     <div
       className={twMerge(
@@ -75,7 +86,7 @@ export function InputCode({
 
       {/* Input Code Section */}
       <div className="flex gap-x-2">
-        {[1, 2, 3, 4, 5, 6].map((_, index) => (
+        {[0, 1, 2, 3, 4, 5].map((_, index) => (
           <input
             key={index}
             ref={inputRefs[index]}
