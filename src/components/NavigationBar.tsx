@@ -36,7 +36,7 @@ export function NavigationBar({
   return (
     <nav
       className={twMerge(
-        "flex justify-between items-center font-bod py-2 md:py-1 px-8 md:px-16 text-sm sm:text-base borer border-b-2 w-full",
+        "flex justify-between items-center font-bod py-2 md:py-1 px-8 md:px-16 borer border-b-2 w-full md:text-body-reg",
         className
       )}
     >

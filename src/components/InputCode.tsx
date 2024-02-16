@@ -1,3 +1,7 @@
+//#region Imports
+import { twMerge } from "tailwind-merge";
+//#endregion
+
 //#region Interfaces
 interface InputCodeProps {
   /**
@@ -35,5 +39,24 @@ export function InputCode({
   required,
   className,
 }: InputCodeProps): JSX.Element {
-  return <div>Input code</div>;
+  return (
+    <div className="flex flex-col gap-y-1 text-neutrals-dark-500 text-body-reg">
+      {/* Title section */}
+      <div className="flex gap-x-1">
+        <p className="text-base capitalize">Input Text</p>
+        <p className="text-status-red-main">*</p>
+      </div>
+
+      {/* Input Code Section */}
+      <div className="flex gap-x-2">
+        {[1, 2, 3, 4, 5, 6].map((_, index) => (
+          <input
+            key={index}
+            type="text"
+            className="w-12 h-16 text-center rounded-md bg-neutrals-light-300"
+          />
+        ))}
+      </div>
+    </div>
+  );
 }

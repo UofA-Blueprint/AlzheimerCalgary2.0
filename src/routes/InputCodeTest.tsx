@@ -2,7 +2,7 @@ import { InputCode } from "@/components/InputCode";
 
 function NavigationTest() {
   return (
-    <div>
+    <div className="flex w-full h-screen items-center justify-center">
       <InputCode
         type="email"
         error={true}
