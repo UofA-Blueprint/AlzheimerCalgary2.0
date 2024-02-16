@@ -4,7 +4,6 @@ function NavigationTest() {
   return (
     <div className="flex w-full h-screen items-center justify-center">
       <InputCode
-        type="email"
         error={true}
         required={true}
       />
