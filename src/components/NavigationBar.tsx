@@ -44,11 +44,11 @@ export function NavigationBar({
       </a>
 
       {/* Navigation bar */}
-      <div className="space-x-[40px]">
+      <div className="space-x-[40px] flex">
         {userType === "admin" ? (
           <a
             href="/dashboard"
-            className="hover:text-primary-main transition ease-in-out duration-75"
+            className="hover:text-primary-main hidden sm:block transition ease-in-out duration-75"
           >
             Members
           </a>
