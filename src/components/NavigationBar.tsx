@@ -24,7 +24,7 @@ function signOut() {
  * @param {string} props.className - The additional CSS class name.
  * @returns {JSX.Element} The rendered navigation bar.
  */
-export default function NavigationBar({
+export function NavigationBar({
   userType = "user",
   className,
 }: NavigationBarProps): JSX.Element {
@@ -37,7 +37,10 @@ export default function NavigationBar({
     >
       {/* Logo  */}
       <a href="/">
-        <img src={logoUrl} alt="ASC Logo" />
+        <img
+          src={logoUrl}
+          alt="ASC Logo"
+        />
       </a>
 
       {/* Navigation bar */}
