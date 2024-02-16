@@ -5,7 +5,12 @@ import logoUrl from "@/assets/images/asc_logo.svg";
 
 //#region Interface
 interface NavigationBarProps {
-  userType?: string;
+  /**
+   * The type of user.
+   * - "user" for regular users.
+   * - "admin" for admin users.
+   */
+  userType?: "user" | "admin";
   className?: string;
 }
 //#endregion

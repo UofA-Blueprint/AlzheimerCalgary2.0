@@ -8,6 +8,7 @@ import Test from "./routes/Test";
 import DropdownItem from "@/components/DropdownItem";
 import SortDropdownListTestRoute from "@/routes/SortDropdownListTestRoute";
 import NavigationTest from "@/routes/NavigationTest";
+import InputCodeTest from "@/routes/InputCodeTest";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: "/nav-test",
     element: <NavigationTest />,
+  },
+  {
+    path: "/input-code-test",
+    element: <InputCodeTest />,
   },
 ]);
 
