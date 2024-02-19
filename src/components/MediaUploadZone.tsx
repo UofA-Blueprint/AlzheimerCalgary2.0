@@ -8,10 +8,14 @@ interface MediaUploadZoneProps {
 const MediaUploadZone: React.FC<MediaUploadZoneProps> = ({
   onFilesDropped,
 }) => {
+  const [isDragOver, setIsDragOver] = useState(false);
   const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
   const [isValidFile, setIsValidFile] = useState(true);
   const UploadZoneClassName =
-    "w-full h-full border-2 border-dashed flex flex-col justify-center items-center rounded-md border-primary-main mb-2";
+    "w-full h-full border-2 border-dashed flex flex-col justify-center items-center rounded-md border-primary-main " +
+    (isDragOver
+      ? " transform transition-transform duration-300 border-primary-dark ease-in-out scale-95"
+      : "");
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -19,6 +23,7 @@ const MediaUploadZone: React.FC<MediaUploadZoneProps> = ({
     const validFiles = filterValidFiles(files);
 
     setDroppedFiles((prevFiles) => [...prevFiles, ...validFiles]);
+    setIsDragOver(false);
   };
 
   const filterValidFiles = (files: File[]): File[] => {
@@ -34,25 +39,34 @@ const MediaUploadZone: React.FC<MediaUploadZoneProps> = ({
       return isValid;
     });
   };
-  //   const sizeCheckFile
 
-  const allowDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
+    setIsDragOver(true);
   };
-  //
+
+  const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setIsDragOver(false);
+  };
 
   useEffect(() => {
     console.log("Dropped files:", droppedFiles);
-  }, [droppedFiles]); // Run this effect whenever droppedFiles changes
+  }, [droppedFiles]);
+
   return (
     <div className="w-full h-full">
       <div
         className={UploadZoneClassName}
         onDrop={handleDrop}
-        onDragOver={allowDrop}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
       >
-        <UploadSimple style={{ transform: "scale(1.5)" }} />
-        Drag and Drop here
+        <UploadSimple className="mb-5" style={{ transform: "scale(2)" }} />
+
+        <div style={{ fontSize: "1em" }} className="">
+          Drag and Drop here
+        </div>
         <div> or </div>
         <input
           type="file"
@@ -70,7 +84,10 @@ const MediaUploadZone: React.FC<MediaUploadZoneProps> = ({
           Browse file
         </label>
         {droppedFiles.length > 0 && (
-          <div className="truncate w-5/6 flex flex-col items-center overflow-hidden">
+          <div
+            className="truncate w-5/6 flex flex-col items-center overflow-hidden"
+            style={{ fontSize: "1em" }}
+          >
             {droppedFiles.slice(0, 3).map((file, index) => (
               <div key={index} className="">
                 {file.name}
@@ -80,7 +97,7 @@ const MediaUploadZone: React.FC<MediaUploadZoneProps> = ({
           </div>
         )}
       </div>
-      <div className="flex flex-row justify-between text-xs text-gray-500">
+      <div className="flex flex-row justify-between text-xs text-gray-500 mt-0.5">
         <div>Accepted file types: png, jpeg</div>
         <div>Max size: 25MB</div>
       </div>

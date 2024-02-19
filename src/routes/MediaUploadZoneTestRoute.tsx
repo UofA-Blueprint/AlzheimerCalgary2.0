@@ -8,9 +8,16 @@ const MediaUploadZonetestRoute: React.FC = () => {
   };
 
   return (
-    <div className="grid place-items-center h-screen ">
-      <div className="w-96 h-64 text-base">
-        <MediaUploadZone onFilesDropped={handleFilesDropped} />
+    <div className="w-full h-full flex flex-col">
+      <div className="grid place-items-center h-screen ">
+        <div className="w-9/12 h-64 text-base mb-4">
+          <MediaUploadZone onFilesDropped={handleFilesDropped} />
+        </div>
+      </div>
+      <div className="grid place-items-center h-screen ">
+        <div className="w-96 h-32 text-base mt-4">
+          <MediaUploadZone onFilesDropped={handleFilesDropped} />
+        </div>
       </div>
     </div>
   );
