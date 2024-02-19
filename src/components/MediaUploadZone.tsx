@@ -1,5 +1,5 @@
 import { UploadSimple, WarningCircle } from "@phosphor-icons/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface MediaUploadZoneProps {
   onFilesDropped: (files: File[]) => void;
@@ -8,14 +8,36 @@ interface MediaUploadZoneProps {
 const MediaUploadZone: React.FC<MediaUploadZoneProps> = ({
   onFilesDropped,
 }) => {
+  // parent ref
+  const parentRef = useRef<HTMLDivElement>(null);
+
+  // handling sizing
+  const [margin, setMargin] = useState("1em");
+  const [fontSize, setFontSize] = useState("1em");
+  // handling drop in file
   const [isDragOver, setIsDragOver] = useState(false);
   const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
   const [isValidFile, setIsValidFile] = useState(true);
+
   const UploadZoneClassName =
     "w-full h-full border-2 border-dashed flex flex-col justify-center items-center rounded-md border-primary-main " +
     (isDragOver
       ? " transform transition-transform duration-300 border-primary-dark ease-in-out scale-95"
       : "");
+
+  // adjust font size according to parent ref
+  useEffect(() => {
+    if (parentRef.current) {
+      const { width, height } = parentRef.current.getBoundingClientRect();
+      const newSize = Math.min(width, height) / 15;
+      setFontSize(`${newSize}px`);
+      setMargin(`${newSize / 10}px  `);
+      width > 700
+        ? setMargin(`${newSize / 10}px`)
+        : setMargin(`${-newSize / 2}px`);
+      console.log(width);
+    }
+  }, []);
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -55,19 +77,19 @@ const MediaUploadZone: React.FC<MediaUploadZoneProps> = ({
   }, [droppedFiles]);
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full" style={{ fontSize }} ref={parentRef}>
       <div
         className={UploadZoneClassName}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
       >
-        <UploadSimple className="mb-5" style={{ transform: "scale(2)" }} />
+        <UploadSimple className="mb-2" style={{ transform: "scale(2)" }} />
 
-        <div style={{ fontSize: "1em" }} className="">
+        <div style={{ margin }} className="">
           Drag and Drop here
         </div>
-        <div> or </div>
+        <div style={{ margin }}> or </div>
         <input
           type="file"
           id="fileInput"
@@ -80,16 +102,24 @@ const MediaUploadZone: React.FC<MediaUploadZoneProps> = ({
             }
           }}
         />
-        <label htmlFor="fileInput" className="text-primary-main cursor-pointer">
+        <label
+          style={{ margin }}
+          htmlFor="fileInput"
+          className="text-primary-main cursor-pointer"
+        >
           Browse file
         </label>
         {droppedFiles.length > 0 && (
           <div
             className="truncate w-5/6 flex flex-col items-center overflow-hidden"
-            style={{ fontSize: "1em" }}
+            style={{ margin }}
           >
             {droppedFiles.slice(0, 3).map((file, index) => (
-              <div key={index} className="">
+              <div
+                style={{ margin }}
+                key={index}
+                className="truncate w-full text-center"
+              >
                 {file.name}
               </div>
             ))}
@@ -97,7 +127,10 @@ const MediaUploadZone: React.FC<MediaUploadZoneProps> = ({
           </div>
         )}
       </div>
-      <div className="flex flex-row justify-between text-xs text-gray-500 mt-0.5">
+      <div
+        className="flex flex-row justify-between text-xs text-gray-500 mt-0.5"
+        style={{ fontSize }}
+      >
         <div>Accepted file types: png, jpeg</div>
         <div>Max size: 25MB</div>
       </div>
