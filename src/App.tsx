@@ -8,7 +8,7 @@ import Test from "./routes/Test";
 import DropdownItem from "@/components/DropdownItem";
 import SortDropdownListTestRoute from "@/routes/SortDropdownListTestRoute";
 import NavigationTest from "@/routes/NavigationTest";
-
+import MediaUploadZoneTestRoute from "@/routes/MediaUploadZoneTestRoute";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -29,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/nav-test",
     element: <NavigationTest />,
+  },
+  {
+    path: "/upload-file-test",
+    element: <MediaUploadZoneTestRoute />,
   },
 ]);
 
