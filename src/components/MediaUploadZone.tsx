@@ -123,7 +123,7 @@ const MediaUploadZone: React.FC<MediaUploadZoneProps> = ({
                 {file.name}
               </div>
             ))}
-            {droppedFiles.length > 3 && <div>...</div>}
+            {droppedFiles.length > 3 && <div style={{ margin }}>...</div>}
           </div>
         )}
       </div>
