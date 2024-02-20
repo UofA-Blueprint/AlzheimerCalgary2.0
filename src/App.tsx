@@ -1,12 +1,15 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // routes
-import NavigaionTest from "./routes/NavigationTest";
-import Test from "@/routes/Test";
+
+import ButtonTestRoute from "@/routes/ButtonTestRoute";
 import ProfilePictureTest from "./routes/ProfilePictureTestRoute";
+import Test from "./routes/Test";
+import DropdownItem from "@/components/DropdownItem";
+import SortDropdownListTestRoute from "@/routes/SortDropdownListTestRoute";
+import NavigationTest from "@/routes/NavigationTest";
+
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -17,12 +20,22 @@ const router = createBrowserRouter([
     element: <Test />,
   },
   {
+    path: "/testButton",
+    element: <ButtonTestRoute />,
+  },
+  {
+    path: "/SortDropdownListTestRoute",
+    element: <SortDropdownListTestRoute />,
+  },
+  {
     path: "/nav-test",
+
     element: <NavigaionTest />,
   },{
     path:"/profile-test",
     element:<ProfilePictureTest />
   }
+
 ]);
 
 function App() {

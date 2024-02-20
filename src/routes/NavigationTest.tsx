@@ -1,6 +1,6 @@
 import NavigationBar from "../components/NavigationBar";
 
-function NavigaionTest() {
+function NavigationTest() {
   return (
     <div>
       {/* Using margin or padding for the parent tag can break the navigation bar. */}
@@ -9,4 +9,4 @@ function NavigaionTest() {
   );
 }
 
-export default NavigaionTest;
+export default NavigationTest;
