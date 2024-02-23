@@ -1,9 +1,12 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 
 // routes
 
 import ButtonTestRoute from "@/routes/ButtonTestRoute";
-
+import ProfilePictureTest from "./routes/ProfilePictureTestRoute";
 import Test from "./routes/Test";
 import DropdownItem from "@/components/DropdownItem";
 import SortDropdownListTestRoute from "@/routes/SortDropdownListTestRoute";
@@ -33,7 +36,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/toast-test",
-    element: <ToastTestRoute />
+    element: <ToastTestRoute />,
   },
 ]);
 
