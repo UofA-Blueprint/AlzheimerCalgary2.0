@@ -38,6 +38,10 @@ const router = createBrowserRouter([
     path: "/toast-test",
     element: <ToastTestRoute />,
   },
+  {
+    path: "/profile-test",
+    element: <ProfilePictureTest />,
+  },
 ]);
 
 function App() {
