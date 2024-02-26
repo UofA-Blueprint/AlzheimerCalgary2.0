@@ -77,7 +77,6 @@ const MediaUploadZone: React.FC<MediaUploadZoneProps> = ({
           <input
             type="file"
             id="fileInput"
-            style={{ display: "none" }}
             onChange={(event) => {
               if (event.target.files) {
                 const files = Array.from(event.target.files);
@@ -85,6 +84,7 @@ const MediaUploadZone: React.FC<MediaUploadZoneProps> = ({
                 setDroppedFiles((prevFiles) => [...prevFiles, ...validFiles]);
               }
             }}
+            className="hidden"
           />
           <label
             htmlFor="fileInput"
