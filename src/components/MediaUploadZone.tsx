@@ -70,11 +70,8 @@ const MediaUploadZone: React.FC<MediaUploadZoneProps> = ({
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
       >
-        <div className="flex flex-col  justify-center items-center flex-grow text-body-reg text-base ">
-          <UploadSimple
-            className="mb-3 leading-normal"
-            style={{ transform: "scale(2)" }}
-          />
+        <div className="flex flex-col  justify-center items-center flex-grow text-body-reg sm:text-body-sm  ">
+          <UploadSimple className="mb-3 leading-normal scale-[2]" />
           <div className="leading-normal ">Drag and Drop here</div>
           <div className="leading-normal"> or </div>
           <input

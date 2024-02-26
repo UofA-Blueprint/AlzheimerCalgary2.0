@@ -15,11 +15,6 @@ const MediaUploadZonetestRoute: React.FC = () => {
           <MediaUploadZone onFilesDropped={handleFilesDropped} />
         </div>
       </div>
-      <div className="grid place-items-center h-screen ">
-        <div className="w-96 h-32 mt-4 ">
-          <MediaUploadZone onFilesDropped={handleFilesDropped} />
-        </div>
-      </div>
     </div>
   );
 };
