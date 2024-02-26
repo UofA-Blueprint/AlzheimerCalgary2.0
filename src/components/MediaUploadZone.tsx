@@ -4,12 +4,10 @@ import { useState, useEffect, useRef } from "react";
 interface MediaUploadZoneProps {
   onFilesDropped: (files: File[]) => void;
   fontSize?: string;
-  className?: string;
 }
 
 const MediaUploadZone: React.FC<MediaUploadZoneProps> = ({
   onFilesDropped,
-  fontSize = "1em",
 }) => {
   // parent ref
   const parentRef = useRef<HTMLDivElement>(null);
@@ -65,27 +63,19 @@ const MediaUploadZone: React.FC<MediaUploadZoneProps> = ({
   }, [droppedFiles]);
 
   return (
-    <div
-      className="w-full h-full "
-      ref={parentRef}
-      style={{ fontSize: fontSize }}
-    >
+    <div className="w-full h-full ">
       <div
         className={UploadZoneClassName}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
-        style={{ fontSize: fontSize }}
       >
-        <div
-          className="flex flex-col  justify-center items-center text-base flex-grow"
-          style={{ fontSize: fontSize }}
-        >
+        <div className="flex flex-col  justify-center items-center flex-grow text-body-reg text-base ">
           <UploadSimple
             className="mb-3 leading-normal"
             style={{ transform: "scale(2)" }}
           />
-          <div className="leading-normal">Drag and Drop hered</div>
+          <div className="leading-normal ">Drag and Drop here</div>
           <div className="leading-normal"> or </div>
           <input
             type="file"

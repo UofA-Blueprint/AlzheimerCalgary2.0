@@ -11,12 +11,12 @@ const MediaUploadZonetestRoute: React.FC = () => {
     <div className="w-full h-full flex flex-col">
       <div className="grid place-items-center h-screen ">
         {/* renember to put it in a parent div that is large enough */}
-        <div className="w-9/12 h-64 mb-4 " style={{ fontSize: "20px" }}>
+        <div className="w-9/12 h-64 mb-4 ">
           <MediaUploadZone onFilesDropped={handleFilesDropped} />
         </div>
       </div>
       <div className="grid place-items-center h-screen ">
-        <div className="w-96 h-32 mt-4 " style={{ fontSize: "10px" }}>
+        <div className="w-96 h-32 mt-4 ">
           <MediaUploadZone onFilesDropped={handleFilesDropped} />
         </div>
       </div>
