@@ -78,12 +78,15 @@ const MediaUploadZone: React.FC<MediaUploadZoneProps> = ({
         style={{ fontSize: fontSize }}
       >
         <div
-          className="flex flex-col  justify-center items-center text-base	shrink"
+          className="flex flex-col  justify-center items-center text-base flex-grow"
           style={{ fontSize: fontSize }}
         >
-          <UploadSimple className="mb-2" style={{ transform: "scale(2)" }} />
-          <div className="">Drag and Drop hered</div>
-          <div className=""> or </div>
+          <UploadSimple
+            className="mb-3 leading-normal"
+            style={{ transform: "scale(2)" }}
+          />
+          <div className="leading-normal">Drag and Drop hered</div>
+          <div className="leading-normal"> or </div>
           <input
             type="file"
             id="fileInput"
@@ -98,7 +101,7 @@ const MediaUploadZone: React.FC<MediaUploadZoneProps> = ({
           />
           <label
             htmlFor="fileInput"
-            className="text-primary-main cursor-pointer mb-3"
+            className="text-primary-main cursor-pointer leading-normal"
           >
             Browse file
           </label>
