@@ -1,4 +1,7 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 
 // routes
 
@@ -10,6 +13,7 @@ import SortDropdownListTestRoute from "@/routes/SortDropdownListTestRoute";
 import NavigationTest from "@/routes/NavigationTest";
 import ToastTestRoute from "@/routes/ToastTestRoute";
 import MediaUploadZoneTestRoute from "@/routes/MediaUploadZoneTestRoute";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -36,6 +40,7 @@ const router = createBrowserRouter([
     element: <MediaUploadZoneTestRoute />,
   },
   {
+
     path: "/toast-test",
     element: <ToastTestRoute />,
   },
