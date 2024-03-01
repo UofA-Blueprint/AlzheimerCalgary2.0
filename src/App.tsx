@@ -3,6 +3,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Test from "./routes/Test";
+import SearchBarTest from "./routes/SearchBarTestRoute";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
     path: "/test",
     element: <Test />,
   },
+  {
+    path:"/SearchBarTestRoute",
+    element: <SearchBarTest />
+  }
 ]);
 
 function App() {
