@@ -1,6 +1,7 @@
 //#region Imports
 import { twMerge } from "tailwind-merge";
 import { useRef, useState } from "react";
+import { WarningCircle } from "@phosphor-icons/react";
 //#endregion
 
 //#region Interfaces
@@ -116,11 +117,7 @@ export function InputCode({
       {/* Error Message */}
       {error && (
         <div className="flex text-body-sm items-center gap-x-1 text-status-red-main">
-          <img
-            src="src/assets/images/error.svg"
-            alt="Error icon"
-            className="w-5"
-          />
+          <WarningCircle size={20} />
           <p>Error passcode</p>
         </div>
       )}
