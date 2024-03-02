@@ -8,6 +8,7 @@ import {
 import ButtonTestRoute from "@/routes/ButtonTestRoute";
 import ProfilePictureTest from "./routes/ProfilePictureTestRoute";
 import Test from "./routes/Test";
+import SearchBarTest from "./routes/SearchBarTestRoute";
 import DropdownItem from "@/components/DropdownItem";
 import SortDropdownListTestRoute from "@/routes/SortDropdownListTestRoute";
 import NavigationTest from "@/routes/NavigationTest";
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/test",
     element: <Test />,
+  },
+  {
+    path:"/SearchBarTestRoute",
+    element: <SearchBarTest />
   },
   {
     path: "/testButton",
