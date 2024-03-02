@@ -1,4 +1,4 @@
-import TestSquare from "../components/TestSquare";
+import TestSquare from "@/components/TestSquare";
 
 function Test() {
   return (
