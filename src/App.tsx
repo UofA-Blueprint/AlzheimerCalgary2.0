@@ -13,6 +13,7 @@ import SortDropdownListTestRoute from "@/routes/SortDropdownListTestRoute";
 import NavigationTest from "@/routes/NavigationTest";
 import ToastTestRoute from "@/routes/ToastTestRoute";
 import MediaUploadZoneTestRoute from "@/routes/MediaUploadZoneTestRoute";
+import InputFieldTestRoute from "./routes/InputFieldTestRoute";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
 
     path: "/toast-test",
     element: <ToastTestRoute />,
+  },
+  {
+    path: "/input-field-test",
+    element: <InputFieldTestRoute />
   },
 ]);
 
