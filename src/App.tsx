@@ -12,6 +12,7 @@ import NavigationTest from "@/routes/NavigationTest";
 import InputCodeTest from "@/routes/InputCodeTest";
 import ToastTestRoute from "@/routes/ToastTestRoute";
 import MediaUploadZoneTestRoute from "@/routes/MediaUploadZoneTestRoute";
+import ColorPickerTestRoute from "@/routes/ColorPickerTestRoute";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
   {
     path: "/toast-test",
     element: <ToastTestRoute />,
+  },
+  {
+    path: "/color-picker-test",
+    element: <ColorPickerTestRoute />,
   },
 ]);
 
