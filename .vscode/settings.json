@@ -1,0 +1,5 @@
+{
+    "prettier.configPath": ".prettierrc",
+    "prettier.withNodeModules": true,
+    "prettier.requireConfig": true,
+}
