@@ -12,12 +12,10 @@ import NavigationTest from "@/routes/NavigationTest";
 import InputCodeTest from "@/routes/InputCodeTest";
 import ToastTestRoute from "@/routes/ToastTestRoute";
 import MediaUploadZoneTestRoute from "@/routes/MediaUploadZoneTestRoute";
+import IconOptionTest from "./routes/IconOptionTest";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <>Home</>,
-  },
+ 
   {
     path: "/test",
     element: <Test />,
@@ -50,6 +48,14 @@ const router = createBrowserRouter([
     path: "/toast-test",
     element: <ToastTestRoute />,
   },
+  {
+    path:"/icon-select",
+    element:<IconOptionTest/>
+  },
+  {
+    path:"/ProfilePic",
+    element:<ProfilePictureTest/>
+  }
 ]);
 
 function App() {
