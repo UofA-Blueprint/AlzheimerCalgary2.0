@@ -184,6 +184,7 @@ function ButtonTestRoute() {
             fill={false}
             status={"enabled"}
             icon={Plus}
+            color="red-900"
           />
         </div>
       </div>
