@@ -184,7 +184,8 @@ function ButtonTestRoute() {
             fill={false}
             status={"enabled"}
             icon={Plus}
-            color="red-900"
+            // change color --> change text-{color}, border-{color} and active:bg-{color}, active:text-{color}, before:bg-{color}
+            className="text-red-600 border-red-600 active:bg-red-600 active:text-red-600 before:bg-red-600"
           />
         </div>
       </div>
