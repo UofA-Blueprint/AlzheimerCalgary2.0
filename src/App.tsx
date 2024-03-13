@@ -3,12 +3,17 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // routes
 
 import ButtonTestRoute from "@/routes/ButtonTestRoute";
-
+import ProfilePictureTest from "./routes/ProfilePictureTestRoute";
 import Test from "./routes/Test";
+import SearchBarTest from "./routes/SearchBarTestRoute";
 import DropdownItem from "@/components/DropdownItem";
 import SortDropdownListTestRoute from "@/routes/SortDropdownListTestRoute";
 import NavigationTest from "@/routes/NavigationTest";
 import TooltipTestRoute from "./routes/TooltipTestRoute";
+import InputCodeTest from "@/routes/InputCodeTest";
+import ToastTestRoute from "@/routes/ToastTestRoute";
+import MediaUploadZoneTestRoute from "@/routes/MediaUploadZoneTestRoute";
+import ColorPickerTestRoute from "@/routes/ColorPickerTestRoute";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/test",
     element: <Test />,
+  },
+  {
+    path: "/SearchBarTestRoute",
+    element: <SearchBarTest />,
   },
   {
     path: "/testButton",
@@ -34,6 +43,20 @@ const router = createBrowserRouter([
   {
     path: "/tooltip",
     element: <TooltipTestRoute />,
+    path: "/input-code-test",
+    element: <InputCodeTest />,
+  },
+  {
+    path: "/upload-file-test",
+    element: <MediaUploadZoneTestRoute />,
+  },
+  {
+    path: "/toast-test",
+    element: <ToastTestRoute />,
+  },
+  {
+    path: "/color-picker-test",
+    element: <ColorPickerTestRoute />,
   },
 ]);
 
