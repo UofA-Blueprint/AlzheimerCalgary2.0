@@ -43,6 +43,8 @@ const router = createBrowserRouter([
   {
     path: "/tooltip",
     element: <TooltipTestRoute />,
+  },
+  {
     path: "/input-code-test",
     element: <InputCodeTest />,
   },
