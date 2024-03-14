@@ -9,6 +9,7 @@ import SearchBarTest from "./routes/SearchBarTestRoute";
 import DropdownItem from "@/components/DropdownItem";
 import SortDropdownListTestRoute from "@/routes/SortDropdownListTestRoute";
 import NavigationTest from "@/routes/NavigationTest";
+import TooltipTestRoute from "./routes/TooltipTestRoute";
 import InputCodeTest from "@/routes/InputCodeTest";
 import ToastTestRoute from "@/routes/ToastTestRoute";
 import MediaUploadZoneTestRoute from "@/routes/MediaUploadZoneTestRoute";
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: "/nav-test",
     element: <NavigationTest />,
+  },
+  {
+    path: "/tooltip",
+    element: <TooltipTestRoute />,
   },
   {
     path: "/input-code-test",
