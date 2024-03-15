@@ -9,24 +9,20 @@ import {
 
 //#region Interfaces
 interface MemberInformationProps {
-  link: string;
-  lastName: string;
-  errorText?: string;
+  className?: string;
 }
 //#endregion
 
 /**
  * Renders a member information component.
- * @param link - The link of the member.
- * @param lastName - The last name of the member.
  * @param errorText - The error text to be displayed.
  * @returns
  */
-const MemberInformation = ({
-  link,
-  lastName,
-  errorText,
-}: MemberInformationProps) => {
+const MemberInformation = ({ className }: MemberInformationProps) => {
+  const [lastName, setLastName] = useState<string>("Lastname");
+  const [link, setLink] = useState<string>("Link");
+  const [errorText, setErrorText] = useState<string>("Error message");
+
   const [password, setPassword] = useState<string>();
   const [copied, setCopied] = useState<boolean>(false);
   const fields = [
@@ -72,7 +68,9 @@ const MemberInformation = ({
   }, 2500);
 
   return (
-    <div className="flex flex-col gap-y-4 w-[90vw] md:w-[50vw] max-w-2xl text-sm md:text-base bg-neutrals-light-100 p-8 rounded-lg font-display">
+    <div
+      className={`flex flex-col gap-y-4 w-[90vw] md:w-[50vw] max-w-2xl text-sm md:text-base bg-neutrals-light-100 p-8 rounded-lg font-display ${className}`}
+    >
       {/* title */}
       <div className="flex items-center text-xl md:text-2xl gap-x-2 font-semibold">
         <WarningCircle size={28} />

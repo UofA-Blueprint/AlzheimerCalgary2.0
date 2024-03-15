@@ -65,15 +65,7 @@ const router = createBrowserRouter([
     path: "/member-information-test",
     element: (
       <div className="flex flex-col gap-y-20 items-center justify-center w-full h-[100vh] bg-slate-400">
-        <MemberInformation
-          link="https://github.com/"
-          lastName="Nguyen"
-        />
-        <MemberInformation
-          link="https://github.com/"
-          lastName="Nguyen"
-          errorText="Error message"
-        />
+        <MemberInformation />
       </div>
     ),
   },
