@@ -14,6 +14,7 @@ import InputCodeTest from "@/routes/InputCodeTest";
 import ToastTestRoute from "@/routes/ToastTestRoute";
 import MediaUploadZoneTestRoute from "@/routes/MediaUploadZoneTestRoute";
 import ColorPickerTestRoute from "@/routes/ColorPickerTestRoute";
+import { MemberInformation } from "./components/MemberInformation";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,14 @@ const router = createBrowserRouter([
   {
     path: "/color-picker-test",
     element: <ColorPickerTestRoute />,
+  },
+  {
+    path: "/member-information-test",
+    element: (
+      <div className="flex flex-col gap-y-20 items-center justify-center w-full h-[100vh] bg-slate-400">
+        <MemberInformation />
+      </div>
+    ),
   },
 ]);
 
