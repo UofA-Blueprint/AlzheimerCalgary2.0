@@ -9,10 +9,12 @@ import SearchBarTest from "./routes/SearchBarTestRoute";
 import DropdownItem from "@/components/DropdownItem";
 import SortDropdownListTestRoute from "@/routes/SortDropdownListTestRoute";
 import NavigationTest from "@/routes/NavigationTest";
+import TooltipTestRoute from "./routes/TooltipTestRoute";
 import InputCodeTest from "@/routes/InputCodeTest";
 import ToastTestRoute from "@/routes/ToastTestRoute";
 import MediaUploadZoneTestRoute from "@/routes/MediaUploadZoneTestRoute";
 import InputFieldTestRoute from "./routes/InputFieldTestRoute";
+import ColorPickerTestRoute from "@/routes/ColorPickerTestRoute";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,10 @@ const router = createBrowserRouter([
     element: <NavigationTest />,
   },
   {
+    path: "/tooltip",
+    element: <TooltipTestRoute />,
+  },
+  {
     path: "/input-code-test",
     element: <InputCodeTest />,
   },
@@ -53,7 +59,10 @@ const router = createBrowserRouter([
   },
   {
     path: "/input-field-test",
-    element: <InputFieldTestRoute />
+    element: <InputFieldTestRoute />},
+  {
+    path: "/color-picker-test",
+    element: <ColorPickerTestRoute />,
   },
 ]);
 
