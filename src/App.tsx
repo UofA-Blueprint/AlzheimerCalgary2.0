@@ -9,12 +9,14 @@ import SearchBarTest from "./routes/SearchBarTestRoute";
 import DropdownItem from "@/components/DropdownItem";
 import SortDropdownListTestRoute from "@/routes/SortDropdownListTestRoute";
 import NavigationTest from "@/routes/NavigationTest";
+import TooltipTestRoute from "./routes/TooltipTestRoute";
 import InputCodeTest from "@/routes/InputCodeTest";
 import ToastTestRoute from "@/routes/ToastTestRoute";
 import MediaUploadZoneTestRoute from "@/routes/MediaUploadZoneTestRoute";
 import ColorPickerTestRoute from "@/routes/ColorPickerTestRoute";
 import InputFieldTestRoute from "./routes/InputFieldTestRoute";
 import MemberHeaderTestRoute from "@/routes/MemberHeaderTestRoute";
+import { MemberInformation } from "./components/MemberInformation";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/nav-test",
     element: <NavigationTest />,
+  },
+  {
+    path: "/tooltip",
+    element: <TooltipTestRoute />,
   },
   {
     path: "/input-code-test",
@@ -68,6 +74,14 @@ const router = createBrowserRouter([
   {
     path: "/profile-test",
     element: <ProfilePictureTest />,
+  },
+  {
+    path: "/member-information-test",
+    element: (
+      <div className="flex flex-col gap-y-20 items-center justify-center w-full h-[100vh] bg-slate-400">
+        <MemberInformation />
+      </div>
+    ),
   },
 ]);
 
