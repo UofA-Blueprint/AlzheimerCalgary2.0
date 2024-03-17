@@ -1,6 +1,7 @@
 // MemberHeader.tsx
 import { ReactNode } from "react";
 import ProfilePictures from "./ProfilePictures";
+import { twMerge } from "tailwind-merge";
 
 interface MemberHeaderProp {
   profilePicChildren: ReactNode;
@@ -22,13 +23,17 @@ function MemberHeader({
   username,
 }: MemberHeaderProp) {
   return (
-    <div className="flex flex-col md:flex-row items-center w-full h-full">
-      <div className="w-full ">
+    <div
+      className={twMerge("flex flex-col md:flex-row items-center w-full h-36")}
+    >
+      <div className="w-32 h-32">
         <ProfilePictures backgroundColor={backgroundColor}>
           {profilePicChildren}
         </ProfilePictures>
       </div>
-      <h1 className="w-full ">{username}</h1>
+      <div className=" pl-2 font-bold justify-center flex pb-2 w-20">
+        <h1>{username}</h1>
+      </div>
     </div>
   );
 }
