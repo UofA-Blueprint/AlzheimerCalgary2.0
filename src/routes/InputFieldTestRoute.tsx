@@ -1,3 +1,4 @@
+import Button from "@/components/Button";
 import InputField from "@/components/InputField";
 
 function InputFieldTestRoute() {
@@ -10,7 +11,9 @@ function InputFieldTestRoute() {
       {/* Error field */}
       <InputField type="text" error={true} label="Input Text" required={true}/>
       {/* No label */}
-      <InputField type="text" error={false} label="" required={false}/>
+      <InputField type="text" error={false} required={false}/>
+
+
     </div>
   );
 }
