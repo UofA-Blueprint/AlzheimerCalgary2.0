@@ -15,11 +15,9 @@ import ToastTestRoute from "@/routes/ToastTestRoute";
 import MediaUploadZoneTestRoute from "@/routes/MediaUploadZoneTestRoute";
 import ColorPickerTestRoute from "@/routes/ColorPickerTestRoute";
 import InputFieldTestRoute from "./routes/InputFieldTestRoute";
-<<<<<<< HEAD
+
 import MemberHeaderTestRoute from "@/routes/MemberHeaderTestRoute";
 import { MemberInformation } from "./components/MemberInformation";
-=======
->>>>>>> ae629e90f9756ee94511bfd28caff565160a2ed9
 
 const router = createBrowserRouter([
   {
@@ -65,7 +63,6 @@ const router = createBrowserRouter([
   {
     path: "/color-picker-test",
     element: <ColorPickerTestRoute />,
-<<<<<<< HEAD
   },
   {
     path: "/input-field-test",
@@ -86,13 +83,11 @@ const router = createBrowserRouter([
         <MemberInformation />
       </div>
     ),
-=======
->>>>>>> ae629e90f9756ee94511bfd28caff565160a2ed9
   },
   {
-    path:"/input-field-test",
-    element: <InputFieldTestRoute />
-  }
+    path: "/input-field-test",
+    element: <InputFieldTestRoute />,
+  },
 ]);
 
 function App() {
