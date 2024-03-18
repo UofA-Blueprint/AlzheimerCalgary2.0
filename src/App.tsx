@@ -64,10 +64,7 @@ const router = createBrowserRouter([
     path: "/color-picker-test",
     element: <ColorPickerTestRoute />,
   },
-  {
-    path: "/input-field-test",
-    element: <InputFieldTestRoute />,
-  },
+
   {
     path: "/member-header-test",
     element: <MemberHeaderTestRoute />,
