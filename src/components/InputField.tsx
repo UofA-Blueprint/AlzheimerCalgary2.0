@@ -48,7 +48,7 @@ function InputField({ type, error, label, required }: InputFieldProps) {
             type={type}
             ref={inputRef}
             onSelect={checkLen}
-            className="bg-gray-50 border  border-red-500 text-light-500 text-sm rounded-lg focus:outline-none focus:drop-shadow-[0_0px_5px_rgba(0,0,0,0.25)] hover:outline-none hover:drop-shadow-[0_0px_5px_rgba(0,0,0,0.25)] block w-full p-2.5  dark:text-white"
+            className="bg-gray-50 border  border-red-500 text-light-500 text-sm rounded-lg focus:outline-none focus:drop-shadow-[0_0px_5px_rgba(0,0,0,0.25)] hover:outline-none hover:drop-shadow-[0_0px_5px_rgba(0,0,0,0.25)] block w-full p-2.5  dark:text-black"
           ></input>
 
           <div className="flex mt-1 align-middle">
