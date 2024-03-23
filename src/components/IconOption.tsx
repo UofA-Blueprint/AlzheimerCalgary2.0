@@ -11,10 +11,15 @@ interface IconOptionProps {
 
 const IconOption: React.FC<IconOptionProps> = ({ icon, color, selected }) => {
     const IconComponent: React.ElementType = Icon[icon];
+    const colorVariants: { [key: string]: any } = {
+        blue: 'border-blue-500',
+        red: 'border-red-500',
+        yellow: 'border-yellow-500',
+      }
 
     return (
-        <div className={`inline-flex justify-center items-center border-4 ${selected ? 'border-blue-500' : 'border-transparent'}`}>
-            <IconComponent className="w-12 h-12" style={{ color: color }} />
+        <div className={`inline-flex justify-center items-center rounded-full border-4 ${selected ? `${colorVariants[color]}` : 'border-transparent'}`}>
+            <IconComponent className={`rounded-full w-12 h-12`}/>
         </div>
     );
 }

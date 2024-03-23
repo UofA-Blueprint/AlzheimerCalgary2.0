@@ -8,7 +8,7 @@ const IconOptionTest: React.FC = () => {
             <IconOption icon="ArrowDown" color="red" selected={true} />
             
             <IconOption icon="Camera" color="blue" selected={true} />
-            <IconOption icon="Camera" color="green" selected={false} />
+            <IconOption icon="Camera" color="yellow" selected={false} />
         </div>
     );
 };
