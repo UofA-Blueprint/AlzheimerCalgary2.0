@@ -13,17 +13,18 @@ import TooltipTestRoute from "./routes/TooltipTestRoute";
 import InputCodeTest from "@/routes/InputCodeTest";
 import ToastTestRoute from "@/routes/ToastTestRoute";
 import MediaUploadZoneTestRoute from "@/routes/MediaUploadZoneTestRoute";
+
+import IconOptionTest from "./routes/IconOptionTest";
+
 import ColorPickerTestRoute from "@/routes/ColorPickerTestRoute";
 import InputFieldTestRoute from "./routes/InputFieldTestRoute";
 
 import MemberHeaderTestRoute from "@/routes/MemberHeaderTestRoute";
 import { MemberInformation } from "./components/MemberInformation";
 
+
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <>Home</>,
-  },
+ 
   {
     path: "/test",
     element: <Test />,
@@ -61,6 +62,15 @@ const router = createBrowserRouter([
     element: <ToastTestRoute />,
   },
   {
+
+    path:"/icon-select",
+    element:<IconOptionTest/>
+  },
+  {
+    path:"/ProfilePic",
+    element:<ProfilePictureTest/>
+  },{
+
     path: "/color-picker-test",
     element: <ColorPickerTestRoute />,
   },
@@ -85,6 +95,7 @@ const router = createBrowserRouter([
     path: "/input-field-test",
     element: <InputFieldTestRoute />,
   },
+
 ]);
 
 function App() {
