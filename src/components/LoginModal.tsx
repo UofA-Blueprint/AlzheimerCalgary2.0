@@ -10,8 +10,19 @@ import { InputCode } from "./InputCode";
 
 //#region Interface
 interface LoginModalProps {
+  /**
+   * Additional TailwindCSS classes.
+   */
   className?: string;
+
+  /**
+   * The title of the login modal.
+   */
   title: string;
+
+  /**
+   * The type of the login modal.
+   */
   type: "admin" | "member";
 }
 //#endregion
@@ -20,9 +31,11 @@ interface LoginModalProps {
  * Represents the login modal component.
  * @param {string} title - The title of the login modal.
  * @param {string} className - Additional TailwindCSS.
+ * @param {string} type - The type of the login modal.
  * @returns
  */
 const LoginModal = ({ className, title, type }: LoginModalProps) => {
+  // TODO: Authentication functionality
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passcode, setPasscode] = useState<Record<number, string>>({
@@ -60,6 +73,7 @@ const LoginModal = ({ className, title, type }: LoginModalProps) => {
         setInput={setUsername}
       />
 
+      {/* Password field */}
       {type === "admin" ? (
         <InputField
           label={"Password"}
