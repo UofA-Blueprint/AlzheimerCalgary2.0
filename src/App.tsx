@@ -21,10 +21,9 @@ import InputFieldTestRoute from "./routes/InputFieldTestRoute";
 import MemberHeaderTestRoute from "@/routes/MemberHeaderTestRoute";
 import { MemberInformation } from "./components/MemberInformation";
 import ModalTestRoute from "@/routes/ModalTestRoute";
-
+import { LoginModal } from "./components/LoginModal";
 
 const router = createBrowserRouter([
- 
   {
     path: "/test",
     element: <Test />,
@@ -62,15 +61,14 @@ const router = createBrowserRouter([
     element: <ToastTestRoute />,
   },
   {
-
-    path:"/icon-select",
-    element:<IconOptionTest/>
+    path: "/icon-select",
+    element: <IconOptionTest />,
   },
   {
-    path:"/ProfilePic",
-    element:<ProfilePictureTest/>
-  },{
-
+    path: "/ProfilePic",
+    element: <ProfilePictureTest />,
+  },
+  {
     path: "/color-picker-test",
     element: <ColorPickerTestRoute />,
   },
@@ -97,6 +95,21 @@ const router = createBrowserRouter([
   {
     path: "/modal-test",
     element: <ModalTestRoute />,
+  },
+  {
+    path: "/login-modal-test",
+    element: (
+      <div className="flex flex-col gap-y-8 justify-center items-center py-20 bg-slate-100">
+        <LoginModal
+          title="Admin Panel"
+          type="admin"
+        />
+        <LoginModal
+          title="Caregiver Panel"
+          type="member"
+        />
+      </div>
+    ),
   },
 ]);
 

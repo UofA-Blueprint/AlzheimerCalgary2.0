@@ -1,16 +1,28 @@
 import { WarningCircle } from "@phosphor-icons/react";
 import { useRef, useState } from "react";
+import { Eye, EyeSlash } from "@phosphor-icons/react";
 
 export interface InputFieldProps {
   type: string;
   error: boolean;
   label?: string; // Optional; Default to none.
   required: boolean;
+  placeholder?: string;
+
+  // set Field value
+  setInput: (input: string) => void;
 }
 
-function InputField({ type, error, label, required }: InputFieldProps) {
-  // todo: functionality
+function InputField({
+  type,
+  error,
+  label,
+  required,
+  placeholder,
+  setInput,
+}: InputFieldProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   function checkLen(event: { preventDefault: () => void }) {
     event.preventDefault();
@@ -22,39 +34,51 @@ function InputField({ type, error, label, required }: InputFieldProps) {
   }
 
   return (
-    <div className="mt-5 w-[30em]">
-      {required === false ? (
-        <label className="font-extrabold block mb-1 ml-1 text-sm text-light-500 dark:text-white">
-          {label}
-        </label>
-      ) : (
-        <label className="font-extrabold block mb-1 ml-1 text-sm text-light-500 dark:text-white">
-          {label} <span className="text-red-500"> * </span>
-        </label>
-      )}
+    <div className="w-full font-display flex flex-col gap-y-2">
+      {/* Label */}
+      <div className="flex gap-x-2 text-h4">
+        <label className="block text-light-500">{label}</label>
+        {required && <span className="text-status-red-main">*</span>}
+      </div>
 
-      {error !== true ? (
+      {/* Input */}
+      <div className="relative">
         <input
-          placeholder={"Enter " + type + "..."}
-          type={type}
+          placeholder={placeholder}
+          type={type === "password" && showPassword ? "text" : type}
           ref={inputRef}
           onSelect={checkLen}
-          className="bg-gray-50 border  border-gray-300 text-sm rounded-lg focus:outline-none focus:drop-shadow-[0_0px_5px_rgba(0,0,0,0.25)] hover:outline-none hover:drop-shadow-[0_0px_5px_rgba(0,0,0,0.25)] block w-full p-2.5  dark:text-black"
+          className={`bg-gray-100 rounded-lg w-full p-4`}
+          onChange={(e) => setInput(e.target.value)}
         ></input>
-      ) : (
-        <div>
-          <input
-            placeholder={"Enter " + type + "..."}
-            type={type}
-            ref={inputRef}
-            onSelect={checkLen}
-            className="bg-gray-50 border  border-red-500 text-light-500 text-sm rounded-lg focus:outline-none focus:drop-shadow-[0_0px_5px_rgba(0,0,0,0.25)] hover:outline-none hover:drop-shadow-[0_0px_5px_rgba(0,0,0,0.25)] block w-full p-2.5  dark:text-black"
-          ></input>
 
-          <div className="flex mt-1 align-middle">
-            <WarningCircle color="red" className="mr-1" size={"1.1em"} />
-            <span className="text-red-500 text-xs "> Error {type} </span>
-          </div>
+        {type.toLowerCase() === "password" && !showPassword && (
+          <Eye
+            size={20}
+            className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer hover:text-primary-main transition duration-300 ease-in-out"
+            onClick={() => setShowPassword(!showPassword)}
+          />
+        )}
+
+        {/* Show password button */}
+        {type.toLowerCase() === "password" && showPassword && (
+          <EyeSlash
+            size={20}
+            className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer hover:text-primary-main transition duration-300 ease-in-out"
+            onClick={() => setShowPassword(!showPassword)}
+          />
+        )}
+      </div>
+
+      {/* Error */}
+      {error && (
+        <div className="flex mt-1 align-middle">
+          <WarningCircle
+            color="red"
+            className="mr-1"
+            size={"1.1em"}
+          />
+          <span className="text-status-red-main text-xs"> Error {type} </span>
         </div>
       )}
     </div>
