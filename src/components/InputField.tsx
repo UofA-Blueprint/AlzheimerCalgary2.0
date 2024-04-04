@@ -34,9 +34,9 @@ function InputField({
   }
 
   return (
-    <div className="w-full font-display flex flex-col gap-y-2">
+    <div className="w-full flex flex-col gap-y-2">
       {/* Label */}
-      <div className="flex gap-x-2 text-h4">
+      <div className="flex gap-x-2 font-display font-semibold">
         <label className="block text-light-500">{label}</label>
         {required && <span className="text-status-red-main">*</span>}
       </div>
@@ -72,13 +72,15 @@ function InputField({
 
       {/* Error */}
       {error && (
-        <div className="flex mt-1 align-middle">
+        <div className="flex items-center">
           <WarningCircle
             color="red"
             className="mr-1"
             size={"1.1em"}
           />
-          <span className="text-status-red-main text-xs"> Error {type} </span>
+          <span className="text-status-red-main text-body-smfont-display">
+            Error {type}{" "}
+          </span>
         </div>
       )}
     </div>

@@ -104,7 +104,7 @@ export function InputCode({
       )}
     >
       {/* Title section */}
-      <div className="flex gap-x-1 items-center">
+      <div className="flex gap-x-1 items-center font-display font-semibold">
         <p className="text-base capitalize">{label}</p>
         {required && <p className="text-status-red-main">*</p>}
       </div>
@@ -117,7 +117,7 @@ export function InputCode({
             ref={inputRefs[index]}
             type="text"
             maxLength={1}
-            className={`h-14 w-1/6 md:h-16 text-center text-2xl md:text-3xl rounded-md bg-neutrals-light-300 border-2 border-status-red-main ${
+            className={`h-14 w-1/6 md:h-16 text-center text-2xl md:text-3xl rounded-md bg-neutrals-light-300 border-2 border-status-red-main font-display ${
               error ? "border-status-red-main" : "border-none"
             }`}
             onChange={(e) => setValue(e.target.value)}
@@ -128,7 +128,7 @@ export function InputCode({
 
       {/* Error Message */}
       {error && (
-        <div className="flex text-body-sm items-center gap-x-1 text-status-red-main">
+        <div className="flex text-body-sm items-center gap-x-1 text-status-red-main font-display">
           <WarningCircle size={20} />
           <p>Error passcode</p>
         </div>

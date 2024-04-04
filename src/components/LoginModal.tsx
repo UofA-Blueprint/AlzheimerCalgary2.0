@@ -37,7 +37,7 @@ const LoginModal = ({ className, title, type }: LoginModalProps) => {
   return (
     <div
       className={twMerge(
-        "flex flex-col items-center justify-center gap-y-8 font-display bg-white py-8 px-6 rounded-2xl shadow-lg w-[90%] sm:w-[70%] md:w-[50%] max-w-[30rem]",
+        "flex flex-col items-center justify-center gap-y-8 bg-white py-8 px-6 rounded-2xl shadow-lg w-[90%] sm:w-[70%] md:w-[50%] max-w-[30rem]",
         className
       )}
     >
@@ -48,7 +48,7 @@ const LoginModal = ({ className, title, type }: LoginModalProps) => {
       />
 
       {/* Title */}
-      <h1 className="text-h3 text-center font-normal">{title}</h1>
+      <h1 className="text-h3 text-center font-display font-normal">{title}</h1>
 
       {/*Username field */}
       <InputField
@@ -62,18 +62,18 @@ const LoginModal = ({ className, title, type }: LoginModalProps) => {
 
       {type === "admin" ? (
         <InputField
-          label={"Username"}
-          error={username.length === 0}
+          label={"Password"}
+          error={password.length === 0}
           required={true}
-          placeholder={"Username"}
+          placeholder={"Password"}
           type={"text"}
-          setInput={setUsername}
+          setInput={setPassword}
         />
       ) : (
         <InputCode
           input={passcode}
           required={true}
-          label={"Verification Code"}
+          label={"Passcode"}
           setInput={setPasscode}
         />
       )}
