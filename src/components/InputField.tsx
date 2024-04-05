@@ -22,13 +22,13 @@ function InputField({ type, error, label, required }: InputFieldProps) {
   }
 
   return (
-    <div className="mt-5 w-[30em]">
+    <div className="w-[30em]">
       {required === false ? (
-        <label className="font-extrabold block mb-1 ml-1 text-sm text-light-500 dark:text-white">
+        <label className="font-extrabold block mb-1 ml-1 text-sm text-light-500">
           {label}
         </label>
       ) : (
-        <label className="font-extrabold block mb-1 ml-1 text-sm text-light-500 dark:text-white">
+        <label className="font-extrabold block mb-1 ml-1 text-sm text-light-500">
           {label} <span className="text-red-500"> * </span>
         </label>
       )}
@@ -52,7 +52,11 @@ function InputField({ type, error, label, required }: InputFieldProps) {
           ></input>
 
           <div className="flex mt-1 align-middle">
-            <WarningCircle color="red" className="mr-1" size={"1.1em"} />
+            <WarningCircle
+              color="red"
+              className="mr-1"
+              size={"1.1em"}
+            />
             <span className="text-red-500 text-xs "> Error {type} </span>
           </div>
         </div>
