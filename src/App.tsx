@@ -21,10 +21,9 @@ import InputFieldTestRoute from "./routes/InputFieldTestRoute";
 import MemberHeaderTestRoute from "@/routes/MemberHeaderTestRoute";
 import { MemberInformation } from "./components/MemberInformation";
 import ModalTestRoute from "@/routes/ModalTestRoute";
-
+import AddMemberTestRoute from "@/routes/AddMemberTestRoute";
 
 const router = createBrowserRouter([
- 
   {
     path: "/test",
     element: <Test />,
@@ -62,15 +61,14 @@ const router = createBrowserRouter([
     element: <ToastTestRoute />,
   },
   {
-
-    path:"/icon-select",
-    element:<IconOptionTest/>
+    path: "/icon-select",
+    element: <IconOptionTest />,
   },
   {
-    path:"/ProfilePic",
-    element:<ProfilePictureTest/>
-  },{
-
+    path: "/ProfilePic",
+    element: <ProfilePictureTest />,
+  },
+  {
     path: "/color-picker-test",
     element: <ColorPickerTestRoute />,
   },
@@ -97,6 +95,10 @@ const router = createBrowserRouter([
   {
     path: "/modal-test",
     element: <ModalTestRoute />,
+  },
+  {
+    path: "/add-member-test",
+    element: <AddMemberTestRoute />,
   },
 ]);
 
