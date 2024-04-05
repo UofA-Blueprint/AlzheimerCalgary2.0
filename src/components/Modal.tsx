@@ -41,8 +41,14 @@ function Modal({
   content,
   actions,
 }: ModalProps) {
+  // Encapsulates the visibility of the modal in a prop
+  if (!isOpen) return null;
+
   // Body style
-  const body = `flex flex-col w-[${width}rem] p-8 gap-4 bg-neutrals-light-100 rounded-lg`;
+  const body = "flex flex-col p-8 gap-4 bg-neutrals-light-100 rounded-lg";
+
+  // Width style
+  const modalWidth = `w-[${width}rem]`;
 
   // Header style
   const header = "flex flex-row w-full justify-between items-center";
@@ -59,9 +65,6 @@ function Modal({
 
   // Form styles
   const form = "flex flex-col gap-8";
-
-  // Encapsulates the visibility of the modal in a prop
-  if (!isOpen) return null;
 
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -108,7 +111,7 @@ function Modal({
   return (
     <div
       ref={modalRef}
-      className={clsx(body)}
+      className={clsx(body, modalWidth)}
     >
       <div className={clsx(header)}>
         <div className={clsx(headerTitle)}>
