@@ -80,7 +80,7 @@ const LoginModal = ({ className, title, type }: LoginModalProps) => {
           error={password.length === 0}
           required={true}
           placeholder={"Password"}
-          type={"text"}
+          type={"password"}
           setInput={setPassword}
         />
       ) : (
