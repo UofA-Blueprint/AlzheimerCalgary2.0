@@ -33,7 +33,7 @@ const router = createBrowserRouter([
     element: <SearchBarTest />,
   },
   {
-    path: "/testButton",
+    path: "/Button-test",
     element: <ButtonTestRoute />,
   },
   {
