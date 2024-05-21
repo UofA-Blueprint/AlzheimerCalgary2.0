@@ -1,32 +1,37 @@
-import * as Icon from "@phosphor-icons/react";
-import { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-interface Props {
-  children: ReactNode;
-  backgroundColor:
-    | "tulip"
-    | "gold"
-    | "lime"
-    | "jade"
-    | "water"
-    | "air"
-    | "lilac"
-    | "candy";
+//#region interfaces
+interface ProfilePicturesProps {
+	children: React.ReactNode;
+	className?: string;
+	backgroundColor?:
+		| "tulip"
+		| "gold"
+		| "lime"
+		| "jade"
+		| "water"
+		| "air"
+		| "lilac"
+		| "candy"
+		| string;
 }
+//#endregion
 
-const ProfilePictures = (props: Props) => {
-  const backgroundColor = `bg-profile-${props.backgroundColor}`;
-  const className = twMerge(
-    backgroundColor,
-    "object-cover object-center flex overflow-hidden justify-center items-center rounded-full w-full h-full"
-  );
-
-  return (
-    <div className="w-full h-full">
-      <div className={className}>{props.children}</div>
-    </div>
-  );
+const ProfilePictures = ({
+	backgroundColor,
+	className,
+	children,
+}: ProfilePicturesProps) => {
+	return (
+		<div
+			className={twMerge(
+				`object-cover rounded-full w-full h-full bg-profile-${backgroundColor}`,
+				className,
+			)}
+		>
+			{children}
+		</div>
+	);
 };
 
 export default ProfilePictures;
