@@ -21,6 +21,7 @@ import InputFieldTestRoute from "./routes/InputFieldTestRoute";
 import MemberHeaderTestRoute from "@/routes/MemberHeaderTestRoute";
 import { MemberInformation } from "./components/MemberInformation";
 import ModalTestRoute from "@/routes/ModalTestRoute";
+import MediaUploadStatusTestRoute from "./routes/MediaUploadStatusTestRoute";
 
 
 const router = createBrowserRouter([
@@ -97,6 +98,10 @@ const router = createBrowserRouter([
   {
     path: "/modal-test",
     element: <ModalTestRoute />,
+  },
+  {
+    path: "/MediaUploadStatusTest",
+    element: <MediaUploadStatusTestRoute />,
   },
 ]);
 
