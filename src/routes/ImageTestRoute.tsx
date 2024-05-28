@@ -14,13 +14,19 @@ const getDeviceType = (): string => {
 
 
 }
+
 function ImageTestRoute() {
     const deviceType = getDeviceType()
     const [imageClicked, setImageClicked] = useState(false);
+
+    const openCloseCarousel = () => {
+        setImageClicked(!imageClicked)
+    }
+
     return (
         <div className="items-center h-screen w-screen relative">
-            <button className="absolute top-4 left-4" onClick={() => setImageClicked(!imageClicked)}>Click to view image</button>
-            {imageClicked ? <Image deviceType={deviceType}/> : <></>}
+            <button className="absolute top-4 left-4" onClick={openCloseCarousel}>Click to view image</button>
+            {imageClicked ? <Image deviceType={deviceType} closeCarousel={openCloseCarousel}/> : <></>}
         </div>
     );
 }

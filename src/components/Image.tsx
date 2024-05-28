@@ -8,10 +8,11 @@ import old4 from "../assets/images/old4.jpg";
 import old5 from "../assets/images/old5.jpg";
 
 interface ImageProps {
-    deviceType: string
+    deviceType: string;
+    closeCarousel: () => void;
 }
 
-const Image: React.FC<ImageProps> = ({deviceType}) => {
+const Image: React.FC<ImageProps> = ({deviceType, closeCarousel}) => {
 
     const responsive = {
         desktop: {
@@ -41,6 +42,13 @@ const Image: React.FC<ImageProps> = ({deviceType}) => {
       
       return(
     <div className="absolute w-full h-full bg-gray-800 bg-opacity-75 top-0">
+        <button
+                type="button"
+                className="absolute top-4 right-4 z-20 text-xl text-white"
+                onClick={closeCarousel}
+              >
+                X
+              </button>
       <Carousel
         swipeable={false}
         draggable={false}
