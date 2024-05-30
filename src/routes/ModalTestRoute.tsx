@@ -26,23 +26,7 @@ function ModalTestRoute() {
         icon={<Truck size={24} />}
         content={
           <div className="flex flex-col gap-6">
-            <InputField
-              type="text"
-              error={false}
-              label="Name"
-              required={false}
-            />
-            <InputField
-              type="text"
-              error={false}
-              required={false}
-            />
-            <InputField
-              type="text"
-              error={false}
-              label="Phone"
-              required={false}
-            />
+            
           </div>
         }
         actions={
