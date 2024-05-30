@@ -1,17 +1,11 @@
 //#region Imports
 import { twMerge } from "tailwind-merge";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { WarningCircle } from "@phosphor-icons/react";
 //#endregion
 
 //#region Interfaces
 interface InputCodeProps {
-  /**
-   * Indicates whether the input field has an error.
-   * If true, a red border and small information will be displayed.
-   */
-  error: boolean;
-
   /**
    * The label of the input field.
    * Defaults to an empty string if not provided.
@@ -25,6 +19,10 @@ interface InputCodeProps {
    */
   required: boolean;
   className?: string;
+
+  // set Field value
+  input: Record<number, string>;
+  setInput: React.Dispatch<React.SetStateAction<Record<number, string>>>;
 }
 //#endregion
 
@@ -40,24 +38,24 @@ interface InputCodeProps {
  * @returns {JSX.Element} The rendered input code component.
  */
 export function InputCode({
-  error,
   label = "",
   required,
   className,
+  input,
+  setInput,
 }: InputCodeProps): JSX.Element {
   const inputRefs = Array.from({ length: 6 }, () =>
     useRef<HTMLInputElement | null>(null)
   );
 
-  const [input, setInput] = useState<Record<number, string>>({
-    0: "",
-    1: "",
-    2: "",
-    3: "",
-    4: "",
-    5: "",
-  });
   const [value, setValue] = useState<string>("");
+  const [error, setError] = useState<boolean>(false);
+
+  //#region useEffect
+  useEffect(() => {
+    checkError();
+  }, [inputRefs]);
+  //#endregion
 
   //#region Functions
   /**
@@ -73,7 +71,7 @@ export function InputCode({
       inputRefs[index]?.current?.value === ""
         ? inputRefs[index - 1]?.current?.focus()
         : setInput((prev) => ({ ...prev, [index]: "" }));
-    } else if (e.key === "Tab" && index > 0) {
+    } else if (e.key === "Tab" && index > 0 && index < 5 && value !== "") {
       setInput((prev) => ({ ...prev, [index]: value }));
       setValue("");
     } else if (index < 5 && value !== "") {
@@ -82,30 +80,44 @@ export function InputCode({
       setValue("");
     }
   };
+
+  /**
+   * This function checks if there is an error in the input field.
+   * @returns None
+   */
+  const checkError = () => {
+    inputRefs.forEach((input) => {
+      if (input.current?.value == "") {
+        setError(true);
+      } else {
+        setError(false);
+      }
+    });
+  };
   //#endregion
 
   return (
     <div
       className={twMerge(
-        "flex flex-col gap-y-2 md:gap-y-3 text-neutrals-dark-500 text-body-reg",
+        "flex flex-col gap-y-2 md:gap-y-3 text-neutrals-dark-500 text-body-reg w-full",
         className
       )}
     >
       {/* Title section */}
-      <div className="flex gap-x-1 items-center">
+      <div className="flex gap-x-1 items-center font-display font-semibold">
         <p className="text-base capitalize">{label}</p>
         {required && <p className="text-status-red-main">*</p>}
       </div>
 
       {/* Input Code Section */}
-      <div className="flex gap-x-2">
+      <div className="flex gap-x-2 w-full">
         {[0, 1, 2, 3, 4, 5].map((_, index) => (
           <input
             key={index}
             ref={inputRefs[index]}
             type="text"
             maxLength={1}
-            className={`w-10 h-14 md:w-12 md:h-16 text-center text-2xl md:text-3xl rounded-md bg-neutrals-light-300 border-2 border-status-red-main ${
+            className={`h-14 w-1/6 md:h-16 text-center text-2xl md:text-3xl rounded-md bg-neutrals-light-300 border-2 border-status-red-main font-display ${
               error ? "border-status-red-main" : "border-none"
             }`}
             onChange={(e) => setValue(e.target.value)}
@@ -116,7 +128,7 @@ export function InputCode({
 
       {/* Error Message */}
       {error && (
-        <div className="flex text-body-sm items-center gap-x-1 text-status-red-main">
+        <div className="flex text-body-sm items-center gap-x-1 text-status-red-main font-display">
           <WarningCircle size={20} />
           <p>Error passcode</p>
         </div>
