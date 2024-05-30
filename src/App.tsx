@@ -1,30 +1,34 @@
+//#region import
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // routes
-
 import ButtonTestRoute from "@/routes/ButtonTestRoute";
 import ProfilePictureTest from "./routes/ProfilePictureTestRoute";
 import Test from "./routes/Test";
 import SearchBarTest from "./routes/SearchBarTestRoute";
-import DropdownItem from "@/components/DropdownItem";
 import SortDropdownListTestRoute from "@/routes/SortDropdownListTestRoute";
 import NavigationTest from "@/routes/NavigationTest";
 import TooltipTestRoute from "./routes/TooltipTestRoute";
 import InputCodeTest from "@/routes/InputCodeTest";
 import ToastTestRoute from "@/routes/ToastTestRoute";
 import MediaUploadZoneTestRoute from "@/routes/MediaUploadZoneTestRoute";
-
 import IconOptionTest from "./routes/IconOptionTest";
 import ImageTestRoute from "./routes/ImageTestRoute";
-
+import { MemberTableTestRoute } from "./routes/MemberTableTestRoute";
 import ColorPickerTestRoute from "@/routes/ColorPickerTestRoute";
 import InputFieldTestRoute from "./routes/InputFieldTestRoute";
 import MemberHeaderTestRoute from "@/routes/MemberHeaderTestRoute";
-import { MemberInformation } from "./components/MemberInformation";
+import MediaUploadStatusTestRoute from "./routes/MediaUploadStatusTestRoute";
 import ModalTestRoute from "@/routes/ModalTestRoute";
+
+// components
+import { MemberInformation } from "./components/MemberInformation";
 import { LoginModal } from "./components/LoginModal";
 
+//#endregion
+
 const router = createBrowserRouter([
+ 
   {
     path: "/test",
     element: <Test />,
@@ -70,6 +74,7 @@ const router = createBrowserRouter([
     element: <ProfilePictureTest />,
   },
   {
+
     path: "/color-picker-test",
     element: <ColorPickerTestRoute />,
   },
@@ -115,6 +120,14 @@ const router = createBrowserRouter([
         />
       </div>
     ),
+	},
+	{
+		path: "/member-table",
+		element: <MemberTableTestRoute />,
+	},
+  {
+    path: "/MediaUploadStatusTest",
+    element: <MediaUploadStatusTestRoute />,
   },
 ]);
 
