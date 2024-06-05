@@ -1,18 +1,31 @@
 //#region Imports
+import { CaretLeft } from "@phosphor-icons/react";
 import MediaUploadZone from "./MediaUploadZone";
-import MediaUploadStatus from "./MediaUploadStatus";
 //#endregion
 
 function Gallery() {
-	const handleFilesDropped = (files: File[]) => {
-		// handle file
-		console.log("Dropped files:", files);
-	};
+	//#region Functions
+
+	/**
+	 * Close the gallery
+	 */
+	const handleClose = () => {};
+
+	//#endregion
 
 	return (
-		<div>
+		<div className="flex flex-col items-center justify-center gap-y-6 w-[90%] md:w-[80%] lg:w-[70%] max-w-5xl px-6 rounded-xl py-8 bg-white">
 			{/* Image gallery */}
-			<div></div>
+			<div className="w-full">
+				<div className="flex gap-x-2 items-center font-display text-2xl font-bold">
+					<CaretLeft
+						className="cursor-pointer hover:text-primary-light transition ease-in-out"
+						weight="bold"
+						onClick={handleClose}
+					/>
+					<h1 className="">Gallery</h1>
+				</div>
+			</div>
 
 			{/* Upload media */}
 			<MediaUploadZone />

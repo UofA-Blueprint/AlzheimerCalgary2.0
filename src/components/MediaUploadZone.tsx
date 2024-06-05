@@ -1,6 +1,7 @@
 import { UploadSimple, WarningCircle } from "@phosphor-icons/react";
 import { useState, useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
+import MediaUploadStatus from "./MediaUploadStatus";
 
 //#region interface
 interface MediaUploadZoneProps {
@@ -12,6 +13,7 @@ const MediaUploadZone = ({ className }: MediaUploadZoneProps) => {
 	const [isDragOver, setIsDragOver] = useState(false);
 	const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
 	const [isValidFile, setIsValidFile] = useState(true);
+	const [uploadProgress, setUploadProgress] = useState(0);
 
 	const UploadZoneClassName =
 		"w-full h-full border-2 border-dashed flex flex-col justify-center items-center rounded-md border-primary-main text-base" +
@@ -62,52 +64,53 @@ const MediaUploadZone = ({ className }: MediaUploadZoneProps) => {
 	return (
 		<div
 			className={twMerge(
-				"w-full h-full font-display relative",
+				"w-full h-full font-display flex flex-col",
 				className,
 			)}
 		>
-			<input
-				type="file"
-				id="fileInput"
-				onChange={(event) => {
-					if (event.target.files) {
-						const files = Array.from(event.target.files);
-						const validFiles = filterValidFiles(files);
-						setDroppedFiles((prevFiles) => [
-							...prevFiles,
-							...validFiles,
-						]);
-					}
-				}}
-				className="absolute h-full w-full cursor-pointer opacity-0"
-			/>
 			<div
 				className={UploadZoneClassName}
 				onDrop={handleDrop}
 				onDragOver={handleDragOver}
 				onDragLeave={handleDragLeave}
 			>
-				<div className="flex flex-col justify-center items-center gap-y-2">
+				<div className="flex flex-col justify-center items-center gap-y-2 p-8">
 					<UploadSimple className="text-3xl opacity-80" />
 					<p className="text-lg opacity-80">Drag and Drop here</p>
 					<p className="text-lg opacity-80">or</p>
+
+					<input
+						type="file"
+						id="fileInput"
+						onChange={(event) => {
+							if (event.target.files) {
+								const files = Array.from(event.target.files);
+								const validFiles = filterValidFiles(files);
+								setDroppedFiles((prevFiles) => [
+									...prevFiles,
+									...validFiles,
+								]);
+							}
+						}}
+						className="hidden"
+					/>
 					<label
 						htmlFor="fileInput"
-						className="text-primary-main cursor-pointer text-lg font-bold"
+						className="text-primary-main cursor-pointer text-lg font-bold hover:text-primary-light transition ease-in-out"
 					>
 						Browse file
 					</label>
 				</div>
 				{droppedFiles.length > 0 && (
 					<div className="overflow-hidden">
-						{droppedFiles.slice(0, 3).map((file, index) => (
+						{/* {droppedFiles.slice(0, 3).map((file, index) => (
 							<div
 								key={index}
 								className="truncate w-full text-center opacity-80"
 							>
 								{file.name}
 							</div>
-						))}
+						))} */}
 						{droppedFiles.length > 3 && <div>...</div>}
 					</div>
 				)}
@@ -121,6 +124,28 @@ const MediaUploadZone = ({ className }: MediaUploadZoneProps) => {
 					<WarningCircle></WarningCircle> File type not supported
 				</div>
 			)}
+
+			{/* Upload Status */}
+			<div className="mt-4 flex flex-col gap-y-4">
+				<MediaUploadStatus
+					fileName="Testing.png"
+					fileSize={1000000000}
+					uploadProgress={uploadProgress}
+					setUploadProgress={setUploadProgress}
+				/>
+				<MediaUploadStatus
+					fileName="Testing.png"
+					fileSize={1000000000}
+					uploadProgress={50}
+					setUploadProgress={setUploadProgress}
+				/>
+				<MediaUploadStatus
+					fileName="Testing2.png"
+					fileSize={1000000000}
+					uploadProgress={100}
+					setUploadProgress={setUploadProgress}
+				/>
+			</div>
 		</div>
 	);
 };
