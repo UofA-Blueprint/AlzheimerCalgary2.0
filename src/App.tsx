@@ -13,18 +13,23 @@ import TooltipTestRoute from "./routes/TooltipTestRoute";
 import InputCodeTest from "@/routes/InputCodeTest";
 import ToastTestRoute from "@/routes/ToastTestRoute";
 import MediaUploadZoneTestRoute from "@/routes/MediaUploadZoneTestRoute";
-
 import IconOptionTest from "./routes/IconOptionTest";
-import ImageTestRoute from "./routes/ImageTestRoute";
-
+import { MemberTableTestRoute } from "./routes/MemberTableTestRoute";
 import ColorPickerTestRoute from "@/routes/ColorPickerTestRoute";
 import InputFieldTestRoute from "./routes/InputFieldTestRoute";
 import MemberHeaderTestRoute from "@/routes/MemberHeaderTestRoute";
+import MediaUploadStatusTestRoute from "./routes/MediaUploadStatusTestRoute";
+import ImageTestRoute from "./routes/ImageTestRoute";
+
+// components
 import { MemberInformation } from "./components/MemberInformation";
 import ModalTestRoute from "@/routes/ModalTestRoute";
 import { LoginModal } from "./components/LoginModal";
 
+//#endregion
+
 const router = createBrowserRouter([
+ 
   {
     path: "/test",
     element: <Test />,
@@ -62,14 +67,15 @@ const router = createBrowserRouter([
     element: <ToastTestRoute />,
   },
   {
-    path: "/icon-select",
-    element: <IconOptionTest />,
+
+    path:"/icon-select",
+    element:<IconOptionTest/>
   },
   {
-    path: "/ProfilePic",
-    element: <ProfilePictureTest />,
-  },
-  {
+    path:"/ProfilePic",
+    element:<ProfilePictureTest/>
+  },{
+
     path: "/color-picker-test",
     element: <ColorPickerTestRoute />,
   },
@@ -98,24 +104,32 @@ const router = createBrowserRouter([
     element: <ModalTestRoute />,
   },
   {
-    path: "/image-overlay",
-    element: <ImageTestRoute/>,
+		path: "/login-modal-test",
+		element: (
+			<div className="flex flex-col gap-y-8 justify-center items-center py-20 bg-slate-100">
+				<LoginModal
+					title="Admin Panel"
+					type="admin"
+				/>
+				<LoginModal
+					title="Caregiver Panel"
+					type="member"
+				/>
+			</div>
+		),
+	},
+	{
+		path: "/member-table",
+		element: <MemberTableTestRoute />,
+	},
+  {
+    path: "/MediaUploadStatusTest",
+    element: <MediaUploadStatusTestRoute />,
   },
   {
-    path: "/login-modal-test",
-    element: (
-      <div className="flex flex-col gap-y-8 justify-center items-center py-20 bg-slate-100">
-        <LoginModal
-          title="Admin Panel"
-          type="admin"
-        />
-        <LoginModal
-          title="Caregiver Panel"
-          type="member"
-        />
-      </div>
-    ),
-  },
+    path: "/image-overlay",
+    element: <ImageTestRoute/>
+  }
 ]);
 
 function App() {
