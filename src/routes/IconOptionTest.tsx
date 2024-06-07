@@ -1,16 +1,33 @@
-import React from 'react';
-import IconOption from '@/components/IconOption';
+import React from "react";
+import IconOption from "@/components/IconOption";
+import { Pizza, Camera, Atom, Binoculars } from "@phosphor-icons/react";
 
-const IconOptionTest: React.FC = () => {
-    return (
-        <div>
-            <h1>Icon Options</h1>
-            <IconOption icon="ArrowDown" color="red" selected={true} />
-            
-            <IconOption icon="Camera" color="blue" selected={true} />
-            <IconOption icon="Camera" color="yellow" selected={false} />
-        </div>
-    );
+const IconOptionTest = () => {
+	return (
+		<div className="fixed inset-0 flex flex-col gap-6 items-center justify-center">
+			<IconOption
+				icon={<Pizza size={32} />}
+				color="bg-profile-candy"
+				selected={true}
+			/>
+
+			<IconOption
+				icon={<Camera size={32} />}
+				color="bg-profile-lilac"
+				selected={false}
+			/>
+			<IconOption
+				icon={<Atom size={32} />}
+				color="bg-profile-water"
+				selected={false}
+			/>
+			<IconOption
+				icon={<Binoculars size={32} />}
+				color="bg-profile-lime"
+				selected={false}
+			/>
+		</div>
+	);
 };
 
 export default IconOptionTest;
