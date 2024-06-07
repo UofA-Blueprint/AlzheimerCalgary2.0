@@ -37,7 +37,7 @@ function Gallery() {
 			</div>
 
 			{/* Image gallery */}
-			<div className=" grid h-96 w-full grid-cols-2 md:grid-cols-4 gap-6 items-center overflow-scroll scroller">
+			<div className=" grid h-96 w-full grid-cols-2 md:grid-cols-4 gap-6 items-center overflow-y-auto scroller">
 				{imgList.map((img, index) => (
 					<img
 						key={index}
