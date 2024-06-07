@@ -49,7 +49,7 @@ function Modal({
 	};
 
 	// Body style
-	const body = `flex flex-col p-8 gap-4 bg-neutrals-light-100 rounded-lg`;
+	const body = `flex flex-col p-8 gap-4 bg-neutrals-light-100 rounded-lg max-w-[80vw] max-h-[95vh] overflow-auto`;
 
 	// Header style
 	const header = "flex flex-row w-full justify-between items-center";
@@ -66,9 +66,6 @@ function Modal({
 
 	// Form styles
 	const form = "flex flex-col gap-8";
-
-	// Encapsulates the visibility of the modal in a prop
-	if (!isOpen) return null;
 
 	const modalRef = useRef<HTMLDivElement>(null);
 
@@ -111,6 +108,9 @@ function Modal({
 
 		return () => document.removeEventListener("keydown", handleKeyDown);
 	}, [isOpen, disableCloseOnEscape, onClose]);
+
+	// Encapsulates the visibility of the modal in a prop
+	if (!isOpen) return null;
 
 	return (
 		<div

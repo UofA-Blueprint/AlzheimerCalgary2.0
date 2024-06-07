@@ -20,7 +20,7 @@ function ModalTestRoute() {
 				Open Modal
 			</button>
 			<Modal
-				size="sm"
+				size="lg"
 				isOpen={isModalOpen}
 				onClose={toggleModal}
 				title="Modal Title"
@@ -32,17 +32,20 @@ function ModalTestRoute() {
 							error={false}
 							label="Name"
 							required={false}
+							setInput={() => {}}
 						/>
 						<InputField
 							type="text"
 							error={false}
 							required={false}
+							setInput={() => {}}
 						/>
 						<InputField
 							type="text"
 							error={false}
 							label="Phone"
 							required={false}
+							setInput={() => {}}
 						/>
 					</div>
 				}
