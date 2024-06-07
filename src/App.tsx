@@ -19,6 +19,7 @@ import ColorPickerTestRoute from "@/routes/ColorPickerTestRoute";
 import InputFieldTestRoute from "./routes/InputFieldTestRoute";
 import MemberHeaderTestRoute from "@/routes/MemberHeaderTestRoute";
 import MediaUploadStatusTestRoute from "./routes/MediaUploadStatusTestRoute";
+import GalleryTestRoute from "./routes/GalleryTestRoute";
 
 // components
 import { MemberInformation } from "./components/MemberInformation";
@@ -27,81 +28,79 @@ import { LoginModal } from "./components/LoginModal";
 //#endregion
 
 const router = createBrowserRouter([
- 
-  {
-    path: "/test",
-    element: <Test />,
-  },
-  {
-    path: "/SearchBarTestRoute",
-    element: <SearchBarTest />,
-  },
-  {
-    path: "/testButton",
-    element: <ButtonTestRoute />,
-  },
-  {
-    path: "/SortDropdownListTestRoute",
-    element: <SortDropdownListTestRoute />,
-  },
-  {
-    path: "/nav-test",
-    element: <NavigationTest />,
-  },
-  {
-    path: "/tooltip",
-    element: <TooltipTestRoute />,
-  },
-  {
-    path: "/input-code-test",
-    element: <InputCodeTest />,
-  },
-  {
-    path: "/upload-file-test",
-    element: <MediaUploadZoneTestRoute />,
-  },
-  {
-    path: "/toast-test",
-    element: <ToastTestRoute />,
-  },
-  {
-
-    path:"/icon-select",
-    element:<IconOptionTest/>
-  },
-  {
-    path:"/ProfilePic",
-    element:<ProfilePictureTest/>
-  },{
-
-    path: "/color-picker-test",
-    element: <ColorPickerTestRoute />,
-  },
-  {
-    path: "/member-header-test",
-    element: <MemberHeaderTestRoute />,
-  },
-  {
-    path: "/profile-test",
-    element: <ProfilePictureTest />,
-  },
-  {
-    path: "/member-information-test",
-    element: (
-      <div className="flex flex-col gap-y-20 items-center justify-center w-full h-[100vh] bg-slate-400">
-        <MemberInformation />
-      </div>
-    ),
-  },
-  {
-    path: "/input-field-test",
-    element: <InputFieldTestRoute />,
-  },
-  {
-    path: "/modal-test",
-    element: <ModalTestRoute />,
-  },
-  {
+	{
+		path: "/test",
+		element: <Test />,
+	},
+	{
+		path: "/SearchBarTestRoute",
+		element: <SearchBarTest />,
+	},
+	{
+		path: "/testButton",
+		element: <ButtonTestRoute />,
+	},
+	{
+		path: "/SortDropdownListTestRoute",
+		element: <SortDropdownListTestRoute />,
+	},
+	{
+		path: "/nav-test",
+		element: <NavigationTest />,
+	},
+	{
+		path: "/tooltip",
+		element: <TooltipTestRoute />,
+	},
+	{
+		path: "/input-code-test",
+		element: <InputCodeTest />,
+	},
+	{
+		path: "/upload-file-test",
+		element: <MediaUploadZoneTestRoute />,
+	},
+	{
+		path: "/toast-test",
+		element: <ToastTestRoute />,
+	},
+	{
+		path: "/icon-select",
+		element: <IconOptionTest />,
+	},
+	{
+		path: "/ProfilePic",
+		element: <ProfilePictureTest />,
+	},
+	{
+		path: "/color-picker-test",
+		element: <ColorPickerTestRoute />,
+	},
+	{
+		path: "/member-header-test",
+		element: <MemberHeaderTestRoute />,
+	},
+	{
+		path: "/profile-test",
+		element: <ProfilePictureTest />,
+	},
+	{
+		path: "/member-information-test",
+		element: (
+			<div className="flex flex-col gap-y-20 items-center justify-center w-full h-[100vh] bg-slate-400">
+				<MemberInformation />
+			</div>
+		),
+	},
+	{
+		path: "/input-field-test",
+		element: <InputFieldTestRoute />,
+	},
+	{
+		path: "/modal-test",
+		element: <ModalTestRoute />,
+	},
+	{
 		path: "/login-modal-test",
 		element: (
 			<div className="flex flex-col gap-y-8 justify-center items-center py-20 bg-slate-100">
@@ -120,10 +119,14 @@ const router = createBrowserRouter([
 		path: "/member-table",
 		element: <MemberTableTestRoute />,
 	},
-  {
-    path: "/MediaUploadStatusTest",
-    element: <MediaUploadStatusTestRoute />,
-  },
+	{
+		path: "/MediaUploadStatusTest",
+		element: <MediaUploadStatusTestRoute />,
+	},
+	{
+		path: "/gallery-test",
+		element: <GalleryTestRoute />,
+	},
 ]);
 
 function App() {
