@@ -1,27 +1,40 @@
-// IconOption.tsx
-
-import React from 'react';
-import * as Icon from '@phosphor-icons/react';
+import React from "react";
+import clsx from "clsx";
+import ProfileColor from "@/types/ProfileColor";
 
 interface IconOptionProps {
-    icon: keyof typeof Icon;
-    color: string;
-    selected: boolean;
+	/** The phosphor icon to display in the option component */
+	icon: React.ReactNode;
+
+	/** The background color of the option component */
+	color: ProfileColor;
+
+	/** Whether the option is selected or not */
+	selected: boolean;
+
+	/** The function to call when the option is clicked */
+	setSelectedIcon: () => void;
 }
 
-const IconOption: React.FC<IconOptionProps> = ({ icon, color, selected }) => {
-    const IconComponent: React.ElementType = Icon[icon];
-    const colorVariants: { [key: string]: any } = {
-        blue: 'border-blue-500',
-        red: 'border-red-500',
-        yellow: 'border-yellow-500',
-      }
+const IconOption = ({
+	icon,
+	color,
+	selected,
+	setSelectedIcon,
+}: IconOptionProps) => {
+	const body =
+		"flex items-center justify-center w-16 h-16 rounded cursor-pointer";
 
-    return (
-        <div className={`inline-flex justify-center items-center rounded-full border-4 ${selected ? `${colorVariants[color]}` : 'border-transparent'}`}>
-            <IconComponent className={`rounded-full w-12 h-12`}/>
-        </div>
-    );
-}
+	const border = "outline outline-2 outline-primary-dark outline-offset-2";
+
+	return (
+		<div
+			className={clsx(body, color, { [border]: selected })}
+			onClick={setSelectedIcon}
+		>
+			{icon}
+		</div>
+	);
+};
 
 export default IconOption;

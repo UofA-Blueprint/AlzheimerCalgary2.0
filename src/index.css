@@ -21,6 +21,13 @@
 }
 
 @layer base {
+  .scroller {
+    scrollbar-color: #555770 #fffff;
+    scrollbar-width: auto;
+    scroll-behavior: smooth;
+
+  }
+
   .text-display1 {
     font-family: "Proxima Nova";
     font-weight: bold;
@@ -71,4 +78,5 @@
     font-weight: normal;
     font-size: 0.625rem;
   }
+
 }
