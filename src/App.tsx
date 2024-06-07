@@ -24,6 +24,7 @@ import GalleryTestRoute from "./routes/GalleryTestRoute";
 // components
 import { MemberInformation } from "./components/MemberInformation";
 import { LoginModal } from "./components/LoginModal";
+import MemberProfilePictureTest from "@/routes/MemberProfilePictureTest";
 
 //#endregion
 
@@ -126,6 +127,10 @@ const router = createBrowserRouter([
 	{
 		path: "/gallery-test",
 		element: <GalleryTestRoute />,
+	},
+	{
+		path: "/member-profile-picture-test",
+		element: <MemberProfilePictureTest />,
 	},
 ]);
 

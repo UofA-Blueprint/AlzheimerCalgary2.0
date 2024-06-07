@@ -106,7 +106,7 @@ function ColorPickerDropdown({
 
 interface ColorPickerButtonProps {
 	/** The color currently selected */
-	selectedColor: ProfileColor;
+	backgroundColor: ProfileColor;
 
 	/** The ref to the button */
 	buttonRef: React.RefObject<HTMLButtonElement>;
@@ -115,7 +115,7 @@ interface ColorPickerButtonProps {
 	handleClick: () => void;
 }
 function ColorPickerButton({
-	selectedColor,
+	backgroundColor,
 	buttonRef,
 	handleClick,
 }: ColorPickerButtonProps) {
@@ -132,17 +132,25 @@ function ColorPickerButton({
 			className={clsx(body)}
 			onClick={handleClick}
 		>
-			<ColorCircle color={selectedColor} />
+			<ColorCircle color={backgroundColor} />
 			<div className={clsx(text)}>Background</div>
 		</button>
 	);
 }
 
-function ColorPicker() {
+interface ColorPickerProps {
+	/** The color currently selected */
+	backgroundColor: ProfileColor;
+
+	/** The callback function to invoke when a color is selected */
+	setBackgroundColor: (color: ProfileColor) => void;
+}
+function ColorPicker({
+	backgroundColor,
+	setBackgroundColor,
+}: ColorPickerProps) {
 	// State for the color picker
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-	const [selectedColor, setSelectedColor] =
-		useState<ProfileColor>("bg-profile-air");
 
 	// Refs for the button and the dropdown
 	const buttonRef = useRef<HTMLButtonElement>(null);
@@ -175,14 +183,14 @@ function ColorPicker() {
 	return (
 		<div className={clsx(body)}>
 			<ColorPickerButton
-				selectedColor={selectedColor}
+				backgroundColor={backgroundColor}
 				buttonRef={buttonRef}
 				handleClick={() => setIsDropdownOpen(!isDropdownOpen)}
 			/>
 			{isDropdownOpen && (
 				<ColorPickerDropdown
 					dropdownRef={dropdownRef}
-					handleClick={setSelectedColor}
+					handleClick={setBackgroundColor}
 				/>
 			)}
 		</div>
