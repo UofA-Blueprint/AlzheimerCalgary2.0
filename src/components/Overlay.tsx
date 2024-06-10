@@ -1,5 +1,4 @@
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 
 interface OverlayProps {  
     className?: string;
@@ -13,9 +12,9 @@ const Overlay: React.FC<OverlayProps> = ({className, nav, children}) => {
 
         <div className={`bg-zinc-400 h-screen w-screen items-center ${className}`}>
             <div className="flex h-screen w-screen flex-row justify-between items-center">
-                {nav ? <ArrowBackIcon/> : <></>}
+                {nav ? <ArrowLeft color="black" weight="thin" size={150} />: <></>}
                 {children}
-                {nav ? <ArrowForwardIcon/> : <></>}
+                {nav ? <ArrowRight color="black" weight="thin" size={150} /> : <></>}
             </div>
         </div>
     
