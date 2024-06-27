@@ -1,8 +1,7 @@
+//#region import
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-//#region imports
 // routes
-import ModalTestRoute from "@/routes/ModalTestRoute";
 import ButtonTestRoute from "@/routes/ButtonTestRoute";
 import ProfilePictureTest from "./routes/ProfilePictureTestRoute";
 import Test from "./routes/Test";
@@ -14,19 +13,18 @@ import InputCodeTest from "@/routes/InputCodeTest";
 import ToastTestRoute from "@/routes/ToastTestRoute";
 import MediaUploadZoneTestRoute from "@/routes/MediaUploadZoneTestRoute";
 import IconOptionTest from "./routes/IconOptionTest";
+import ImageTestRoute from "./routes/ImageTestRoute";
 import { MemberTableTestRoute } from "./routes/MemberTableTestRoute";
 import ColorPickerTestRoute from "@/routes/ColorPickerTestRoute";
 import InputFieldTestRoute from "./routes/InputFieldTestRoute";
 import MemberHeaderTestRoute from "@/routes/MemberHeaderTestRoute";
 import MediaUploadStatusTestRoute from "./routes/MediaUploadStatusTestRoute";
+import ModalTestRoute from "@/routes/ModalTestRoute";
 import GalleryTestRoute from "./routes/GalleryTestRoute";
-
-// components
 import { MemberInformation } from "./components/MemberInformation";
 import { LoginModal } from "./components/LoginModal";
 import MemberProfilePictureTest from "@/routes/MemberProfilePictureTest";
 
-//#endregion
 
 const router = createBrowserRouter([
 	{
@@ -120,6 +118,10 @@ const router = createBrowserRouter([
 		path: "/member-table",
 		element: <MemberTableTestRoute />,
 	},
+  {
+    path: "/image-overlay",
+    element: <ImageTestRoute/>
+  },
 	{
 		path: "/MediaUploadStatusTest",
 		element: <MediaUploadStatusTestRoute />,
@@ -135,7 +137,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-	return <RouterProvider router={router}></RouterProvider>;
+  return <RouterProvider router={router}></RouterProvider>;
 }
 
 export default App;
