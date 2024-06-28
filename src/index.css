@@ -21,6 +21,10 @@
 }
 
 @layer base {
+  .Toastify__toast {
+    background: #bbccdd;
+  }
+
   .scroller {
     scrollbar-color: #555770 #fffff;
     scrollbar-width: auto;
