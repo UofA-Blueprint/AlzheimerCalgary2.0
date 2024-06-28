@@ -1,30 +1,32 @@
 //#region import
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-// routes
-import ButtonTestRoute from "@/routes/ButtonTestRoute";
-import ProfilePictureTest from "./routes/ProfilePictureTestRoute";
-import Test from "./routes/Test";
-import SearchBarTest from "./routes/SearchBarTestRoute";
-import SortDropdownListTestRoute from "@/routes/SortDropdownListTestRoute";
-import NavigationTest from "@/routes/NavigationTest";
-import TooltipTestRoute from "./routes/TooltipTestRoute";
-import InputCodeTest from "@/routes/InputCodeTest";
-import ToastTestRoute from "@/routes/ToastTestRoute";
-import MediaUploadZoneTestRoute from "@/routes/MediaUploadZoneTestRoute";
-import IconOptionTest from "./routes/IconOptionTest";
-import ImageTestRoute from "./routes/ImageTestRoute";
-import { MemberTableTestRoute } from "./routes/MemberTableTestRoute";
-import ColorPickerTestRoute from "@/routes/ColorPickerTestRoute";
-import InputFieldTestRoute from "./routes/InputFieldTestRoute";
-import MemberHeaderTestRoute from "@/routes/MemberHeaderTestRoute";
-import MediaUploadStatusTestRoute from "./routes/MediaUploadStatusTestRoute";
-import ModalTestRoute from "@/routes/ModalTestRoute";
-import GalleryTestRoute from "./routes/GalleryTestRoute";
+// test routes
+import ButtonTestRoute from "@/routes/test/ButtonTestRoute";
+import ProfilePictureTest from "./routes/test/ProfilePictureTestRoute";
+import Test from "./routes/test/Test";
+import SearchBarTest from "./routes/test/SearchBarTestRoute";
+import SortDropdownListTestRoute from "@/routes/test/SortDropdownListTestRoute";
+import NavigationTest from "@/routes/test/NavigationTest";
+import TooltipTestRoute from "./routes/test/TooltipTestRoute";
+import InputCodeTest from "@/routes/test/InputCodeTest";
+import ToastTestRoute from "@/routes/test/ToastTestRoute";
+import MediaUploadZoneTestRoute from "@/routes/test/MediaUploadZoneTestRoute";
+import IconOptionTest from "./routes/test/IconOptionTest";
+import ImageTestRoute from "./routes/test/ImageTestRoute";
+import { MemberTableTestRoute } from "./routes/test/MemberTableTestRoute";
+import ColorPickerTestRoute from "@/routes/test/ColorPickerTestRoute";
+import InputFieldTestRoute from "./routes/test/InputFieldTestRoute";
+import MemberHeaderTestRoute from "@/routes/test/MemberHeaderTestRoute";
+import MediaUploadStatusTestRoute from "./routes/test/MediaUploadStatusTestRoute";
+import ModalTestRoute from "@/routes/test/ModalTestRoute";
+import GalleryTestRoute from "./routes/test/GalleryTestRoute";
 import { MemberInformation } from "./components/MemberInformation";
 import { LoginModal } from "./components/LoginModal";
-import MemberProfilePictureTest from "@/routes/MemberProfilePictureTest";
+import MemberProfilePictureTest from "@/routes/test/MemberProfilePictureTest";
 
+// routes
+import AdminLogin from "./routes/admin/AdminLogin";
 
 const router = createBrowserRouter([
 	{
@@ -100,28 +102,13 @@ const router = createBrowserRouter([
 		element: <ModalTestRoute />,
 	},
 	{
-		path: "/login-modal-test",
-		element: (
-			<div className="flex flex-col gap-y-8 justify-center items-center py-20 bg-slate-100">
-				<LoginModal
-					title="Admin Panel"
-					type="admin"
-				/>
-				<LoginModal
-					title="Caregiver Panel"
-					type="member"
-				/>
-			</div>
-		),
-	},
-	{
 		path: "/member-table",
 		element: <MemberTableTestRoute />,
 	},
-  {
-    path: "/image-overlay",
-    element: <ImageTestRoute/>
-  },
+	{
+		path: "/image-overlay",
+		element: <ImageTestRoute />,
+	},
 	{
 		path: "/MediaUploadStatusTest",
 		element: <MediaUploadStatusTestRoute />,
@@ -134,10 +121,24 @@ const router = createBrowserRouter([
 		path: "/member-profile-picture-test",
 		element: <MemberProfilePictureTest />,
 	},
+
+	// Admin routes
+	{
+		path: "/admin",
+		element: (
+			<div>
+				<p>Home Page</p>
+			</div>
+		),
+	},
+	{
+		path: "/admin/login",
+		element: <AdminLogin />,
+	},
 ]);
 
 function App() {
-  return <RouterProvider router={router}></RouterProvider>;
+	return <RouterProvider router={router}></RouterProvider>;
 }
 
 export default App;

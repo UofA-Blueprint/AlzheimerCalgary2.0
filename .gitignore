@@ -30,3 +30,5 @@ package-lock.json
 
 # Local Netlify folder
 .netlify
+config.tsx
+.env
