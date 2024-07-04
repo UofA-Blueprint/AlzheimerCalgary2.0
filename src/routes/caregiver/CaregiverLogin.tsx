@@ -5,7 +5,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import {
+	getFirestore,
+	collection,
+	where,
+	getDocs,
+	query,
+} from "firebase/firestore";
 
 import { LoginModal } from "@/components/LoginModal";
 import Toast from "@/components/Toast.js";
@@ -32,10 +38,42 @@ export default function CaregiverLogin() {
 		5: "",
 	});
 
-	// sign in functionality
-	const signIn = () => {
-		console.log("Signing in as: ", lastName);
-		console.log("Passcode: ", passcode);
+	// Sign in functionality
+	const signIn = async () => {
+		const userLastName = lastName.trim();
+		const userPasscode = Object.values(passcode).join("");
+
+		const q = query(
+			collection(database, "users"),
+			where("lastName", "==", userLastName),
+			where("passcode", "==", userPasscode),
+		);
+
+		const user = await getDocs(q);
+
+		// User found
+		if (user.docs.length > 0) {
+			console.log("Signed in as: ", user.docs[0].data().lastName);
+			navigate("/");
+		}
+
+		// User not found
+		else {
+			console.log("Username", userLastName, "not found.");
+			toast(
+				<Toast
+					message="Failed to log in."
+					severity="error"
+				/>,
+				{
+					toastId: "error",
+					style: {
+						background: "transparent",
+						boxShadow: "none",
+					},
+				},
+			);
+		}
 	};
 
 	return (
