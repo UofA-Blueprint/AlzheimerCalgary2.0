@@ -6,23 +6,25 @@ import { WarningCircle } from "@phosphor-icons/react";
 
 //#region Interfaces
 interface InputCodeProps {
-  /**
-   * The label of the input field.
-   * Defaults to an empty string if not provided.
-   */
-  label?: string;
+	/**
+	 * The label of the input field.
+	 * Defaults to an empty string if not provided.
+	 */
+	label?: string;
 
-  /**
-   * Indicates whether the input field is required.
-   * If true, an asterisk will be displayed after the label,
-   * and the text length will be checked to ensure it is not 0.
-   */
-  required: boolean;
-  className?: string;
+	/**
+	 * Indicates whether the input field is required.
+	 * If true, an asterisk will be displayed after the label,
+	 * and the text length will be checked to ensure it is not 0.
+	 */
+	required: boolean;
 
-  // set Field value
-  input: Record<number, string>;
-  setInput: React.Dispatch<React.SetStateAction<Record<number, string>>>;
+	error: boolean;
+	className?: string;
+
+	// set Field value
+	setError: React.Dispatch<React.SetStateAction<boolean>>;
+	setInput: React.Dispatch<React.SetStateAction<Record<number, string>>>;
 }
 //#endregion
 
@@ -38,101 +40,123 @@ interface InputCodeProps {
  * @returns {JSX.Element} The rendered input code component.
  */
 export function InputCode({
-  label = "",
-  required,
-  className,
-  input,
-  setInput,
+	label = "",
+	required,
+	error,
+	className,
+	setError,
+	setInput,
 }: InputCodeProps): JSX.Element {
-  const inputRefs = Array.from({ length: 6 }, () =>
-    useRef<HTMLInputElement | null>(null)
-  );
+	const inputRefs = Array.from({ length: 6 }, () =>
+		useRef<HTMLInputElement>(null),
+	);
 
-  const [value, setValue] = useState<string>("");
-  const [error, setError] = useState<boolean>(false);
+	const [value, setValue] = useState<string>("");
+	const [showError, setShowError] = useState<boolean>(false);
 
-  //#region useEffect
-  useEffect(() => {
-    checkError();
-  }, [inputRefs]);
-  //#endregion
+	//#region Functions
+	/**
+	 * This function handles inputs based on the selected key.
+	 * @param {React.KeyboardEvent<HTMLInputElement>} e - The keyboard event.
+	 * @param {number} index - The index of the input field.
+	 */
+	const handleKeyDown = (
+		e: React.KeyboardEvent<HTMLInputElement>,
+		index: number,
+	) => {
+		setValue(e.key.toString());
 
-  //#region Functions
-  /**
-   * This function handles inputs based on the selected key.
-   * @param {React.KeyboardEvent<HTMLInputElement>} e - The keyboard event.
-   * @param {number} index - The index of the input field.
-   */
-  const handleKeyDown = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    if (e.key === "Backspace" && index > 0) {
-      inputRefs[index]?.current?.value === ""
-        ? inputRefs[index - 1]?.current?.focus()
-        : setInput((prev) => ({ ...prev, [index]: "" }));
-    } else if (e.key === "Tab" && index > 0 && index < 5 && value !== "") {
-      setInput((prev) => ({ ...prev, [index]: value }));
-      setValue("");
-    } else if (index < 5 && value !== "") {
-      setInput((prev) => ({ ...prev, [index]: value }));
-      inputRefs[index + 1]?.current?.focus();
-      setValue("");
-    }
-  };
+		// Erase the value of the current input field when the backspace key is pressed
+		if (e.key === "Backspace") {
+			if (inputRefs[index]?.current?.value === "" && index > 0)
+				inputRefs[index - 1]?.current?.focus();
+			setValue("");
+		}
 
-  /**
-   * This function checks if there is an error in the input field.
-   * @returns None
-   */
-  const checkError = () => {
-    inputRefs.forEach((input) => {
-      if (input.current?.value == "") {
-        setError(true);
-      } else {
-        setError(false);
-      }
-    });
-  };
-  //#endregion
+		// Enter the value of the current input
+		else {
+			if (index <= 5 && value != "") {
+				// inputRefs[index + 1]?.current?.focus();
+				inputRefs[index + 1]?.current?.select();
+			}
+		}
+	};
 
-  return (
-    <div
-      className={twMerge(
-        "flex flex-col gap-y-2 md:gap-y-3 text-neutrals-dark-500 text-body-reg w-full",
-        className
-      )}
-    >
-      {/* Title section */}
-      <div className="flex gap-x-1 items-center font-display font-semibold">
-        <p className="text-base capitalize">{label}</p>
-        {required && <p className="text-status-red-main">*</p>}
-      </div>
+	/**
+	 * This function checks if there is an error in the input field.
+	 * @returns None
+	 */
+	const checkError = (index: number) => {
+		setShowError(true);
+		inputRefs[index]?.current?.focus();
 
-      {/* Input Code Section */}
-      <div className="flex gap-x-2 w-full">
-        {[0, 1, 2, 3, 4, 5].map((_, index) => (
-          <input
-            key={index}
-            ref={inputRefs[index]}
-            type="text"
-            maxLength={1}
-            className={`h-14 w-1/6 md:h-16 text-center text-2xl md:text-3xl rounded-md bg-neutrals-light-300 border-2 border-status-red-main font-display ${
-              error ? "border-status-red-main" : "border-none"
-            }`}
-            onChange={(e) => setValue(e.target.value)}
-            onKeyDown={(e) => handleKeyDown(e, index)}
-          />
-        ))}
-      </div>
+		inputRefs.forEach((input) => {
+			if (input.current?.value == "") {
+				setError(true);
+			} else {
+				setError(false);
+			}
+		});
+	};
 
-      {/* Error Message */}
-      {error && (
-        <div className="flex text-body-sm items-center gap-x-1 text-status-red-main font-display">
-          <WarningCircle size={20} />
-          <p>Error passcode</p>
-        </div>
-      )}
-    </div>
-  );
+	/**
+	 * This function handles the change event of the input field.
+	 * @param {React.ChangeEvent<HTMLInputElement>} e - The change event.
+	 * @returns None
+	 */
+	const handleInputChange = (index: number) => {
+		checkError(index);
+		setInput({
+			0: inputRefs[0]?.current?.value || "",
+			1: inputRefs[1]?.current?.value || "",
+			2: inputRefs[2]?.current?.value || "",
+			3: inputRefs[3]?.current?.value || "",
+			4: inputRefs[4]?.current?.value || "",
+			5: inputRefs[5]?.current?.value || "",
+		});
+	};
+	//#endregion
+
+	return (
+		<div
+			className={twMerge(
+				"flex flex-col gap-y-2 md:gap-y-3 text-neutrals-dark-500 text-body-reg w-full",
+				className,
+			)}
+		>
+			{/* Title section */}
+			<div className="flex gap-x-1 items-center font-display font-semibold">
+				<p className="text-base capitalize">{label}</p>
+				{required && <p className="text-status-red-main">*</p>}
+			</div>
+
+			{/* Input Code Section */}
+			<div className="flex gap-x-2 w-full">
+				{[0, 1, 2, 3, 4, 5].map((_, index) => (
+					<input
+						key={index}
+						ref={inputRefs[index]}
+						type="text"
+						maxLength={1}
+						className={`h-14 w-1/6 md:h-16 text-center text-2xl md:text-3xl rounded-md bg-neutrals-light-300 border-2 border-status-red-main font-display ${
+							error && showError
+								? "border-status-red-main"
+								: "border-none"
+						}`}
+						onClick={() => checkError(index)}
+						onChange={(e) => handleInputChange(index)}
+						onKeyDown={(e) => handleKeyDown(e, index)}
+					/>
+				))}
+			</div>
+
+			{/* Error Message */}
+			{showError && error && (
+				<div className="flex text-body-sm items-center gap-x-1 text-status-red-main font-display">
+					<WarningCircle size={20} />
+					<p>Error passcode</p>
+				</div>
+			)}
+		</div>
+	);
 }
