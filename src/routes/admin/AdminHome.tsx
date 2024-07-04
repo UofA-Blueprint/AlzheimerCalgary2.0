@@ -1,7 +1,8 @@
 //#region Imports
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Plus, CaretDown } from "@phosphor-icons/react";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { initializeApp } from "firebase/app";
@@ -18,6 +19,7 @@ import {
 	startAt,
 	endAt,
 } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import { memberData } from "@/components/MemberTable";
 import Button from "@/components/Button";
@@ -28,23 +30,21 @@ import SearchBar from "@/components/SearchBar";
 import { displayToast, convertTimestamp } from "@/utils";
 //#endregion
 
+const MAX_MEMBER_PER_LOAD = 4;
+
 //#region firebase
 const firebaseConfig = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
 const app = initializeApp(firebaseConfig);
 const database = getFirestore(app);
+const auth = getAuth(app);
 //#endregion
-
-//#region helpers
-
-//#endregion
-
-const MAX_MEMBER_PER_LOAD = 4;
 
 /**
  * Represents the admin home page.
  * @returns {JSX.Element} The rendered admin home page.
  */
 export default function AdminHome() {
+	const navigate = useNavigate();
 	const [totalStorageUsed, setTotalStorageUsed] = useState<number>(0);
 	const [members, setMembers] = useState<memberData[]>([]);
 	const [allLoaded, setAllLoaded] = useState<boolean>(false);
@@ -171,7 +171,15 @@ export default function AdminHome() {
 
 	//#region UseEffect
 	useEffect(() => {
-		fetchMembers();
+		// Check if user is signed in
+		onAuthStateChanged(auth, (user) => {
+			if (!user) {
+				console.log("User is not signed in");
+				navigate("/admin/login");
+			} else {
+				fetchMembers();
+			}
+		});
 	}, []);
 	//#endregion
 
