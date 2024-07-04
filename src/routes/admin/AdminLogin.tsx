@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-import { LoginModal } from "@/components/LoginModal.js";
+import { LoginModal } from "@/components/LoginModal";
 import Toast from "@/components/Toast.js";
 //#endregion
 
@@ -68,9 +68,7 @@ export default function AdminLogin() {
 			<LoginModal
 				title="Admin Login"
 				type="admin"
-				email={email}
 				setEmail={setEmail}
-				password={password}
 				setPassword={setPassword}
 				onClick={signIn}
 			/>

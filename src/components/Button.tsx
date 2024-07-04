@@ -17,7 +17,7 @@ const Button: React.FC<ButtonProps> = ({
 	onClick,
 	rounded = false,
 	fill = true,
-	disabled = false,
+	disabled,
 	fontSize = "1em",
 	className = null,
 }) => {

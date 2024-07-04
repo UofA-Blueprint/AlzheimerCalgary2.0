@@ -10,12 +10,14 @@ export interface InputFieldProps {
 	placeholder?: string;
 
 	// set Field value
+	setError: React.Dispatch<React.SetStateAction<boolean>>;
 	setInput: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function InputField({
 	type,
 	error,
+	setError,
 	label,
 	required,
 	placeholder,
@@ -32,16 +34,20 @@ function InputField({
 			setInput(inputRef.current.value);
 			if (inputRef.current.value.trim() === "" && required === true) {
 				setShowError(true);
+				setError(true);
 			}
 			if (type === "email") {
 				const email = inputRef.current.value.trim();
 				const emailRegex =
 					/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 				const valid = emailRegex.test(email);
-				setShowError(!valid);
+				setError(!valid);
 			} else if (type === "password") {
 				const password = inputRef.current.value.trim();
-				password.length < 6 ? setShowError(true) : setShowError(false);
+				password.length < 6 ? setError(true) : setError(false);
+			} else if (type === "text") {
+				const text = inputRef.current.value.trim();
+				text.length === 0 ? setError(true) : setError(false);
 			}
 		}
 	}
@@ -84,7 +90,7 @@ function InputField({
 			</div>
 
 			{/* Error */}
-			{showError && (
+			{showError && error && (
 				<div className="flex items-center">
 					<WarningCircle
 						color="red"

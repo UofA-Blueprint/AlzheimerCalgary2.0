@@ -22,11 +22,11 @@ import MediaUploadStatusTestRoute from "./routes/test/MediaUploadStatusTestRoute
 import ModalTestRoute from "@/routes/test/ModalTestRoute";
 import GalleryTestRoute from "./routes/test/GalleryTestRoute";
 import { MemberInformation } from "./components/MemberInformation";
-import { LoginModal } from "./components/LoginModal";
 import MemberProfilePictureTest from "@/routes/test/MemberProfilePictureTest";
 
 // routes
 import AdminLogin from "./routes/admin/AdminLogin";
+import CaregiverLogin from "./routes/caregiver/CaregiverLogin";
 
 const router = createBrowserRouter([
 	{
@@ -122,18 +122,32 @@ const router = createBrowserRouter([
 		element: <MemberProfilePictureTest />,
 	},
 
-	// Admin routes
+	// Admin Routes
 	{
 		path: "/admin",
 		element: (
 			<div>
-				<p>Home Page</p>
+				<p>Admin Home Page</p>
 			</div>
 		),
 	},
 	{
 		path: "/admin/login",
 		element: <AdminLogin />,
+	},
+
+	// Caregiver Routes
+	{
+		path: "/",
+		element: (
+			<div>
+				<p>Caregiver Home Page</p>
+			</div>
+		),
+	},
+	{
+		path: "/login",
+		element: <CaregiverLogin />,
 	},
 ]);
 
