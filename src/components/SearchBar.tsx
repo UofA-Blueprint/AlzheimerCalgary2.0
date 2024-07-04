@@ -1,34 +1,36 @@
-import {useState, useRef} from "react";
+//#region imports
 import { MagnifyingGlass } from "@phosphor-icons/react";
+import { capitalizeSearchTerm } from "@/utils";
+//#endregion
 
-export interface SearchBarProps {
-    target: string;
-  }
+//#region interfaces
+interface SearchBarProps {
+	setSearch: React.Dispatch<React.SetStateAction<string>>;
+	handleClick: () => void;
+}
+//#endregion
 
-  
-  function SearchBar({ target }: SearchBarProps) {   
-    // const input = useRef<HTMLDivElement>(null);
-    const [query,setQuery] = useState("")
-    
+function SearchBar({ setSearch, handleClick }: SearchBarProps) {
+	return (
+		<div className="flex flex-row h-full w-full">
+			<input
+				placeholder="Search by member name"
+				className="px-4 md:px-8 rounded-l-lg bg-slate-100 h-full w-full"
+				onChange={(e) =>
+					setSearch(capitalizeSearchTerm(e.target.value))
+				}
+			/>
+			<button
+				className="rounded-r-lg bg-primary-main px-3 hover:bg-primary-light cursor-pointer"
+				onClick={handleClick}
+			>
+				<MagnifyingGlass
+					color="white"
+					size="1.4rem"
+				/>
+			</button>
+		</div>
+	);
+}
 
-    const handleClick = () => {
-        //handle query
-        //redirect to results
-        console.log(query)
-    }
-
-    return <div className={"h-[2.5em] flex flex-row m-[1em]"}>
-            <input 
-                value={query}
-                placeholder={"Search by " + target}  
-                className={"p-[0.5em] rounded-l-lg border  w-[20em]"} 
-                onChange={e => setQuery(e.target.value)}
-            />
-            <button className={"rounded-r-lg bg-primary-main p-[0.5em] hover:bg-primary-light cursor-pointer"} onClick={handleClick} >
-                <MagnifyingGlass color="white" size={"1em"} />
-            </button>
-    </div>;
-  }
-  
-  export default SearchBar;
-  
+export default SearchBar;

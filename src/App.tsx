@@ -26,6 +26,8 @@ import MemberProfilePictureTest from "@/routes/test/MemberProfilePictureTest";
 
 // routes
 import AdminLogin from "./routes/admin/AdminLogin";
+import AdminHome from "./routes/admin/AdminHome";
+
 import CaregiverLogin from "./routes/caregiver/CaregiverLogin";
 
 const router = createBrowserRouter([
@@ -125,11 +127,7 @@ const router = createBrowserRouter([
 	// Admin Routes
 	{
 		path: "/admin",
-		element: (
-			<div>
-				<p>Admin Home Page</p>
-			</div>
-		),
+		element: <AdminHome />,
 	},
 	{
 		path: "/admin/login",
