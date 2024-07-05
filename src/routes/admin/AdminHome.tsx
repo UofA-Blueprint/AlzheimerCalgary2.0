@@ -18,6 +18,7 @@ import {
 	DocumentData,
 	startAt,
 	endAt,
+	OrderByDirection,
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
@@ -37,6 +38,7 @@ const firebaseConfig = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
 const app = initializeApp(firebaseConfig);
 const database = getFirestore(app);
 const auth = getAuth(app);
+const usersRef = collection(database, "users");
 //#endregion
 
 /**
@@ -48,31 +50,44 @@ export default function AdminHome() {
 	const [totalStorageUsed, setTotalStorageUsed] = useState<number>(0);
 	const [members, setMembers] = useState<memberData[]>([]);
 	const [allLoaded, setAllLoaded] = useState<boolean>(false);
+
 	const [lastDoc, setLastDoc] = useState<
 		QueryDocumentSnapshot<DocumentData, DocumentData> | undefined
 	>();
+	const [expanded, setExpanded] = useState<boolean>(false);
+
+	// Sorting
+	const [isSorting, setIsSorting] = useState<boolean>(false);
+	const [sortBy, setSortBy] = useState<{
+		[key: string]: OrderByDirection | undefined;
+	}>({
+		fullName: "asc",
+	});
 
 	// Search
 	const [searchTerm, setSearchTerm] = useState<string>("");
 
 	//#region functions
 	const fetchMembers = async () => {
+		const [category, order] = Object.entries(sortBy)[0];
 		try {
 			let q;
-			if (!lastDoc) {
+			if (lastDoc) {
+				console.log("Fetching more members");
 				q = await getDocs(
 					query(
-						collection(database, "users"),
-						orderBy("lastUpdated", "desc"),
+						usersRef,
+						orderBy(category, order),
+						startAfter(lastDoc),
 						limit(MAX_MEMBER_PER_LOAD),
 					),
 				);
 			} else {
+				console.log("Fetching initial members");
 				q = await getDocs(
 					query(
-						collection(database, "users"),
-						orderBy("lastUpdated", "desc"),
-						startAfter(lastDoc),
+						usersRef,
+						orderBy(category, order),
 						limit(MAX_MEMBER_PER_LOAD),
 					),
 				);
@@ -100,8 +115,14 @@ export default function AdminHome() {
 				});
 			});
 
-			setMembers([...members, ...membersList]);
+			if (isSorting) {
+				setMembers(membersList);
+				setIsSorting(false);
+			} else setMembers([...members, ...membersList]);
+
+			setIsSorting(false);
 			setTotalStorageUsed(storageUsed);
+			console.log("Last doc", lastDoc?.data().fullName);
 		} catch (error) {
 			console.error("Error fetching members: ", error);
 			displayToast("Failed to load members", "error");
@@ -115,8 +136,6 @@ export default function AdminHome() {
 				displayToast("Please enter a search term", "info");
 				return;
 			}
-
-			const usersRef = collection(database, "users");
 
 			// Search by last name
 			const q_lastName = await getDocs(
@@ -180,7 +199,7 @@ export default function AdminHome() {
 				fetchMembers();
 			}
 		});
-	}, []);
+	}, [sortBy, expanded]);
 	//#endregion
 
 	return (
@@ -226,6 +245,24 @@ export default function AdminHome() {
 				<MemberTable
 					data={members}
 					className="my-8"
+					sortbyStorageUsed={() => {
+						sortBy["storageUsed"] === "asc"
+							? setSortBy({ storageUsed: "desc" })
+							: setSortBy({ storageUsed: "asc" });
+
+						setIsSorting(true);
+						setLastDoc(undefined);
+						setAllLoaded(false);
+					}}
+					sortbyLastUpdated={() => {
+						sortBy["lastUpdated"] === "asc"
+							? setSortBy({ lastUpdated: "desc" })
+							: setSortBy({ lastUpdated: "asc" });
+						setIsSorting(true);
+						setLastDoc(undefined);
+						setAllLoaded(false);
+					}}
+					isLoading={isSorting}
 				/>
 
 				{/* Load More Button */}
@@ -237,7 +274,10 @@ export default function AdminHome() {
 								: "cursor-pointer"
 						}`}
 						onClick={() => {
-							if (!allLoaded) fetchMembers();
+							if (!allLoaded) {
+								setExpanded(!expanded);
+								fetchMembers();
+							}
 						}}
 					>
 						<CaretDown

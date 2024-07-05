@@ -1,14 +1,19 @@
 //#region imports
 import { twMerge } from "tailwind-merge";
 import { UserCircle, Folder, ArrowsClockwise } from "@phosphor-icons/react";
-import ProfilePictures from "./ProfilePictures";
 import * as Icon from "@phosphor-icons/react";
+
+import ProfilePictures from "./ProfilePictures";
 //#endregion
 
 //#region interfaces
 interface MemberTableProps {
 	className?: string;
 	data: memberData[];
+
+	isLoading: boolean;
+	sortbyStorageUsed: () => void;
+	sortbyLastUpdated: () => void;
 }
 
 export interface memberData {
@@ -52,13 +57,13 @@ function selectIcon(type: string) {
  * Represents a table component that displays member data.
  * @param data - An array of objects representing each member's data.
  */
-export function MemberTable({ data, className }: MemberTableProps) {
-	const headers = [
-		{ icon: <UserCircle />, label: "Name" },
-		{ icon: <Folder />, label: "Storage Used" },
-		{ icon: <ArrowsClockwise />, label: "Last Updated" },
-	];
-
+export function MemberTable({
+	data,
+	className,
+	isLoading,
+	sortbyStorageUsed,
+	sortbyLastUpdated,
+}: MemberTableProps) {
 	function handleClick(row: any) {
 		alert(`Clicked ${row.name}`);
 	}
@@ -71,22 +76,47 @@ export function MemberTable({ data, className }: MemberTableProps) {
 				{/* Headers */}
 				<thead className="bg-primary-light text-white">
 					<tr>
-						{headers.map((header, index) => (
-							<th
-								scope="col"
-								key={index}
-								className="px-4 py-4 md:py-7"
+						<th
+							scope="col"
+							className="px-4 py-4 md:py-7"
+						>
+							<div className="flex items-center font-normal gap-x-2">
+								<UserCircle size={22} />
+								<span className="font-display text-sm md:text-base">
+									Name
+								</span>
+							</div>
+						</th>
+						<th
+							scope="col"
+							className="px-4 py-4 md:py-7"
+						>
+							<button
+								className="flex items-center font-normal gap-x-2"
+								onClick={sortbyStorageUsed}
+								disabled={isLoading}
 							>
-								<div className="flex items-center font-normal gap-x-2">
-									<span className=" text-xl">
-										{header.icon}
-									</span>
-									<span className="font-display text-sm md:text-base">
-										{header.label}
-									</span>
-								</div>
-							</th>
-						))}
+								<Folder size={22} />
+								<span className="font-display text-sm md:text-base">
+									Storage Used
+								</span>
+							</button>
+						</th>
+						<th
+							scope="col"
+							className="px-4 py-4 md:py-7"
+						>
+							<button
+								className="flex items-center font-normal gap-x-2"
+								onClick={sortbyLastUpdated}
+								disabled={isLoading}
+							>
+								<ArrowsClockwise size={22} />
+								<span className="font-display text-sm md:text-base">
+									Last Updated
+								</span>
+							</button>
+						</th>
 					</tr>
 				</thead>
 

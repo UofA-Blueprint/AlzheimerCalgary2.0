@@ -11,6 +11,12 @@ interface SearchBarProps {
 //#endregion
 
 function SearchBar({ setSearch, handleClick }: SearchBarProps) {
+	const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === "Enter") {
+			handleClick();
+		}
+	};
+
 	return (
 		<div className="flex flex-row h-full w-full">
 			<input
@@ -19,6 +25,7 @@ function SearchBar({ setSearch, handleClick }: SearchBarProps) {
 				onChange={(e) =>
 					setSearch(capitalizeSearchTerm(e.target.value))
 				}
+				onKeyDown={(e) => handleEnterKey(e)}
 			/>
 			<button
 				className="rounded-r-lg bg-primary-main px-3 hover:bg-primary-light cursor-pointer"
