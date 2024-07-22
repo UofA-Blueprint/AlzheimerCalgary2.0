@@ -6,7 +6,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	text?: string;
 	rounded?: boolean;
 	fill?: boolean;
-	disabled: boolean;
+	disabled?: boolean;
 	fontSize?: string;
 	color?: string;
 }
@@ -44,16 +44,21 @@ const Button: React.FC<ButtonProps> = ({
 		>
 			{Icon && !text && (
 				<div className="relative z-20">
-					<Icon />
+					<Icon size={20} />
 				</div>
 			)}
 			{Icon && text && (
-				<>
+				<div className="flex items-center">
 					<div className="relative z-20">
-						<Icon className="mt-0.2" />
+						<Icon
+							className="mt-0.2"
+							size={20}
+						/>
 					</div>
-					<span className="relative z-20 pl-1">{text}</span>
-				</>
+					<span className="relative z-20 pl-1 whitespace-nowrap hidden lg:block">
+						{text}
+					</span>
+				</div>
 			)}
 			{!Icon && text && <span className="relative z-20">{text}</span>}
 		</button>
