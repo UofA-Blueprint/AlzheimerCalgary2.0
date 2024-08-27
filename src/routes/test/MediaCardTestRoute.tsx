@@ -1,8 +1,16 @@
 import MediaCard from "@/components/MediaCard";
+import { ToastContainer } from "react-toastify";
 
 function MediaCardTestRoute() {
 	return (
 		<div className="bg-blue-200 min-h-screen flex justify-center items-center p-4">
+			<ToastContainer
+				position="bottom-right"
+				autoClose={2000}
+				newestOnTop={true}
+				closeButton={false}
+				hideProgressBar={true}
+			/>
 			<div className="grid grid-cols-3 gap-4">
 				<MediaCard
 					src="https://images.unsplash.com/photo-1724579243894-6a8c9bbfe88c"

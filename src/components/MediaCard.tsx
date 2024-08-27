@@ -1,3 +1,4 @@
+import { displayToast } from "@/utils";
 import { Copy } from "@phosphor-icons/react";
 
 interface MediaCardProps {
@@ -14,6 +15,10 @@ const options: Intl.DateTimeFormatOptions = {
 };
 
 function MediaCard({ src, title, date, id }: MediaCardProps) {
+	const copyHandler = () => {
+		navigator.clipboard.writeText(id.toString());
+		displayToast("ID Copied!", "success");
+	};
 	return (
 		<div className=" flex flex-col rounded-lg">
 			<div className="relative rounded-lg">
@@ -31,11 +36,12 @@ function MediaCard({ src, title, date, id }: MediaCardProps) {
 					</span>
 					<div className="flex items-center gap-2">
 						<span className="text-sm text-neutrals-dark-300">
-							Id: {id}
+							ID: {id}
 						</span>
-						<button>
-							<Copy></Copy>
-						</button>
+						<Copy
+							className="hover:cursor-pointer"
+							onClick={copyHandler}
+						></Copy>
 					</div>
 				</div>
 			</div>
