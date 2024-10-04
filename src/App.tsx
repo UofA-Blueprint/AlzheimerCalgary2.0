@@ -29,6 +29,7 @@ import AdminLogin from "./routes/admin/AdminLogin";
 import AdminHome from "./routes/admin/AdminHome";
 
 import CaregiverLogin from "./routes/caregiver/CaregiverLogin";
+import MediaCardTestRoute from "./routes/test/MediaCardTestRoute";
 
 const router = createBrowserRouter([
 	{
@@ -122,6 +123,10 @@ const router = createBrowserRouter([
 	{
 		path: "/member-profile-picture-test",
 		element: <MemberProfilePictureTest />,
+	},
+	{
+		path: "/media-card-test",
+		element: <MediaCardTestRoute />,
 	},
 
 	// Admin Routes

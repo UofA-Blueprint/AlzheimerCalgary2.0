@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  box-sizing: border-box;
+}
+
 @font-face {
   font-family: "Proxima Nova";
   src: url(@/assets/fonts/ProximaNovaRegular.otf);
