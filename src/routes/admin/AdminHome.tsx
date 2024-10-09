@@ -73,7 +73,7 @@ export default function AdminHome() {
 		try {
 			let q;
 			if (lastDoc) {
-				console.log("Fetching more members");
+				console.log("Fetching more members"); 
 				q = await getDocs(
 					query(
 						usersRef,
