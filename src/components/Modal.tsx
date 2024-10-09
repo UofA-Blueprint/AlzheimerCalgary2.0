@@ -18,6 +18,9 @@ interface ModalProps {
 	/* 32x32 Phosphor icon for the title */
 	icon?: React.ReactNode;
 
+	/* Determines if the user can close the modal in any way */
+	closeable?: boolean;
+
 	/* Hides the close button in the top-right corner */
 	hideCloseButton?: boolean;
 
@@ -39,6 +42,7 @@ function Modal({
 	size = "lg",
 	title,
 	icon = null,
+	closeable = true,
 	hideCloseButton = false,
 	disableCloseOnEscape = false,
 	disableCloseOnClickOutside = false,
@@ -77,6 +81,7 @@ function Modal({
 	const handleClickOutside = useCallback(
 		(event: MouseEvent) => {
 			if (
+				closeable &&
 				!disableCloseOnClickOutside &&
 				modalRef.current &&
 				!modalRef.current.contains(event.target as Node)
@@ -84,7 +89,7 @@ function Modal({
 				onClose();
 			}
 		},
-		[disableCloseOnClickOutside, onClose],
+		[closeable, disableCloseOnClickOutside, onClose],
 	);
 
 	// Close modal on click outside
@@ -101,7 +106,7 @@ function Modal({
 	// Close modal on escape keypress
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
-			if (!disableCloseOnEscape && event.key === "Escape") {
+			if (closeable && !disableCloseOnEscape && event.key === "Escape") {
 				onClose();
 			}
 		};
@@ -111,7 +116,7 @@ function Modal({
 		}
 
 		return () => document.removeEventListener("keydown", handleKeyDown);
-	}, [isOpen, disableCloseOnEscape, onClose]);
+	}, [isOpen, closeable, disableCloseOnEscape, onClose]);
 
 	// Encapsulates the visibility of the modal in a prop
 	if (!isOpen) return null;
@@ -126,7 +131,7 @@ function Modal({
 					<i className={clsx(headerTitleIcon)}>{icon}</i>
 					<h3>{title}</h3>
 				</div>
-				{!hideCloseButton && (
+				{closeable && !hideCloseButton && (
 					<div
 						className={clsx(closeButton)}
 						onClick={onClose}
