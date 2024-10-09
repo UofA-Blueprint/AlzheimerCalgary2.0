@@ -18,6 +18,9 @@ interface ModalProps {
 	/* 32x32 Phosphor icon for the title */
 	icon?: React.ReactNode;
 
+	/* Hides the close button in the top-right corner */
+	hideCloseButton?: boolean;
+
 	/* Disables the modal from closing on escape key press */
 	disableCloseOnEscape?: boolean;
 
@@ -36,6 +39,7 @@ function Modal({
 	size = "lg",
 	title,
 	icon = null,
+	hideCloseButton = false,
 	disableCloseOnEscape = false,
 	disableCloseOnClickOutside = false,
 	content,
@@ -122,11 +126,14 @@ function Modal({
 					<i className={clsx(headerTitleIcon)}>{icon}</i>
 					<h3>{title}</h3>
 				</div>
-				<div className={clsx(closeButton)}>
-					<button onClick={onClose}>
+				{!hideCloseButton && (
+					<div
+						className={clsx(closeButton)}
+						onClick={onClose}
+					>
 						<X size={32} />
-					</button>
-				</div>
+					</div>
+				)}
 			</div>
 			<div className={clsx(form)}>
 				{content}
