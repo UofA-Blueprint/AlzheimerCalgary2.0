@@ -12,7 +12,7 @@ import {
 	Coffee,
 } from "@phosphor-icons/react";
 import clsx from "clsx";
-import ProfileColor from "@/types/ProfileColor";
+import { ProfileColor } from "@/types/ProfileColor";
 
 const MemberProfilePicture = () => {
 	const body = "flex flex-col w-full gap-2";

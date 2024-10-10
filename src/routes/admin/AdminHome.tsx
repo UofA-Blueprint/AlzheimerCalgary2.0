@@ -218,26 +218,29 @@ export default function AdminHome() {
 			/>
 
 			<div className="mx-8 my-2 md:mx-16 md:my-4 flex flex-col">
-				<h1 className=" text-4xl font-bold mb-4 md:mb-0">
-					All Members
-				</h1>
-
-				{/* Search Section */}
-				<div className="flex items-center w-full h-14 justify-between">
-					<p className="text-primary-main hidden md:block">
-						Total Storage Used: {totalStorageUsed} MB
-					</p>
-					<div className="flex justify-between gap-x-4 h-full w-full md:w-1/2">
-						<SearchBar
-							setSearch={setSearchTerm}
-							handleClick={searchMember}
-						/>
-						<Button
-							disabled={false}
-							text="Add Member"
-							icon={Plus}
-							className="w-16 md:w-1/2"
-						/>
+				<div className="flex flex-row">
+					<div className="w-full">
+						<div className="text-h1">All Members</div>
+						<div className="text-body-reg text-primary-dark">
+							Total Storage Used: {totalStorageUsed} MB
+						</div>
+					</div>
+					<div className="flex items-end">
+						<div className="flex flex-row gap-4">
+							<div className="h-[3rem] w-[20rem]">
+								<SearchBar
+									setSearch={setSearchTerm}
+									handleClick={searchMember}
+								/>
+							</div>
+							<div className="w-[11rem]">
+								<Button
+									text="Add Member"
+									shape="medium"
+									icon={<Plus size={24} />}
+								/>
+							</div>
+						</div>
 					</div>
 				</div>
 

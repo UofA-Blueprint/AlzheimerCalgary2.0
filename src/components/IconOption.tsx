@@ -1,10 +1,11 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
-import ProfileColor from "@/types/ProfileColor";
+import { ProfileColor } from "@/types/ProfileColor";
 
 interface IconOptionProps {
 	/** The phosphor icon to display in the option component */
-	icon: React.ReactNode;
+	icon?: React.ReactNode;
 
 	/** The background color of the option component */
 	color: ProfileColor;
@@ -25,11 +26,18 @@ const IconOption = ({
 	const body =
 		"flex items-center justify-center w-16 h-16 rounded cursor-pointer";
 
-	const border = "outline outline-2 outline-primary-dark outline-offset-2";
+	const border = "border border-[1px] border-neutrals-dark-200";
+
+	const transition = "transition transition-all duration-75 ease-in-out";
+
+	const outline =
+		"border-none outline outline-2 outline-primary-dark outline-offset-2";
 
 	return (
 		<div
-			className={clsx(body, color, { [border]: selected })}
+			className={twMerge(
+				clsx(body, color, border, transition, { [outline]: selected }),
+			)}
 			onClick={setSelectedIcon}
 		>
 			{icon}

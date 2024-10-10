@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { useState, useEffect, useRef, useCallback } from "react";
-import ProfileColor from "@/types/ProfileColor";
+import { ProfileColor } from "@/types/ProfileColor";
 
 interface ColorCircleProps {
 	/** The color of the circle */
