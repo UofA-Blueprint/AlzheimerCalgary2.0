@@ -2,195 +2,157 @@ import Button from "@/components/Button";
 import { Plus } from "@phosphor-icons/react";
 
 function ButtonTestRoute() {
-  return (
-    <div className="space-x-4 flex flex-row">
-      <div className="space-y-4 flex flex-col justify-center items-center min-h-screen">
-        {/* Put font size inside, depending on you */}
-        <div style={{ fontSize: "20px" }} className=" w-72 h-64">
-          <Button
-            onClick={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            text={"Button"}
-            rounded={false}
-            fill={true}
-            status={"disabled"}
-            icon={Plus}
-          />
-        </div>
-        <div className="text-sm w-48 h-12">
-          <Button
-            onClick={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            text={"Button"}
-            rounded={false}
-            fill={true}
-            status={"disabled"}
-          />
-        </div>
-        <div className="text-sm w-22 h-8">
-          <Button
-            onClick={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            text={"Button"}
-            rounded={false}
-            fill={true}
-            status={"disabled"}
-            icon={Plus}
-          />
-        </div>
-        <div className="text-sm w-22 h-8">
-          <Button
-            onClick={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            text={"Button"}
-            rounded={false}
-            fill={true}
-            status={"disabled"}
-          />
-        </div>
-        <div className="text-sm w-12 h-12">
-          <Button
-            onClick={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            text={""}
-            rounded={false}
-            fill={true}
-            status={"disabled"}
-            icon={Plus}
-          />
-        </div>
-        <div className="text-sm w-12 h-12">
-          <Button
-            onClick={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            text={""}
-            rounded={true}
-            fill={true}
-            status={"disabled"}
-            icon={Plus}
-          />
-        </div>
-      </div>
-      <div className="space-y-4 flex flex-col justify-center items-center min-h-screen">
-        <div className="text-sm w-64 h-12">
-          <Button
-            onClick={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            text={"Button"}
-            rounded={false}
-            fill={true}
-            status={"enabled"}
-            icon={Plus}
-          />
-        </div>
-        <div className="text-sm w-48 h-12">
-          <Button
-            onClick={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            text={"Button"}
-            rounded={false}
-            fill={true}
-            status={"enabled"}
-          />
-        </div>
-        <div className="text-sm w-48 h-12">
-          <Button
-            onClick={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            text={"Button"}
-            rounded={false}
-            fill={true}
-            status={"enabled"}
-            icon={Plus}
-          />
-        </div>
-        <div className="text-sm w-12 h-12">
-          <Button
-            onClick={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            text={""}
-            rounded={false}
-            fill={true}
-            status={"enabled"}
-            icon={Plus}
-          />
-        </div>
-        <div className="text-sm w-12 h-12">
-          <Button
-            onClick={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            text={""}
-            rounded={true}
-            fill={true}
-            status={"enabled"}
-            icon={Plus}
-          />
-        </div>
-      </div>
-      <div className="space-y-4 flex flex-col justify-center items-center min-h-screen">
-        <div className="text-sm w-64 h-12">
-          <Button
-            onClick={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            text={"Button"}
-            rounded={false}
-            fill={false}
-            status={"enabled"}
-            icon={Plus}
-          />
-        </div>
-        <div className="text-sm w-48 h-12">
-          <Button
-            onClick={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            text={"Button"}
-            rounded={false}
-            fill={false}
-            status={"enabled"}
-          />
-        </div>
-        <div className="text-sm w-12 h-12">
-          <Button
-            onClick={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            text={""}
-            rounded={false}
-            fill={false}
-            status={"enabled"}
-            icon={Plus}
-          />
-        </div>
-        <div className="text-sm w-12 h-12">
-          <Button
-            onClick={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            text={""}
-            rounded={true}
-            fill={false}
-            status={"enabled"}
-            icon={Plus}
-            // change color --> change text-{color}, border-{color} and active:bg-{color}, active:text-{color}, before:bg-{color}
-            className="text-red-600 border-red-600 active:bg-red-600 active:text-red-600 before:bg-red-600"
-          />
-        </div>
-      </div>
-    </div>
-  );
+	return (
+		<div className="flex w-[100vw] h-[100vh] justify-center items-center">
+			<div className="flex flex-row flex-wrap gap-4 justify-center">
+				<div className="flex flex-col items-start gap-2 w-[200px]">
+					<Button
+						text="Button"
+						icon={<Plus size={24} />}
+						shape="large"
+						severity="primary"
+						onClick={() => console.log("Button clicked")}
+					/>
+					<Button
+						text="Button"
+						icon={<Plus size={24} />}
+						shape="medium"
+						severity="primary"
+						onClick={() => console.log("Button clicked")}
+					/>
+					<Button
+						text="Button"
+						icon={<Plus size={16} />}
+						shape="small"
+						severity="primary"
+						onClick={() => console.log("Button clicked")}
+					/>
+					<Button
+						icon={<Plus size={32} />}
+						shape="round"
+						severity="primary"
+						onClick={() => console.log("Button clicked")}
+					/>
+					<Button
+						icon={<Plus size={32} />}
+						shape="square"
+						severity="primary"
+						onClick={() => console.log("Button clicked")}
+					/>
+				</div>
+				<div className="flex flex-col items-start gap-2 w-[200px]">
+					<Button
+						text="Button"
+						icon={<Plus size={24} />}
+						shape="large"
+						severity="secondary"
+						onClick={() => console.log("Button clicked")}
+					/>
+					<Button
+						text="Button"
+						icon={<Plus size={24} />}
+						shape="medium"
+						severity="secondary"
+						onClick={() => console.log("Button clicked")}
+					/>
+					<Button
+						text="Button"
+						icon={<Plus size={16} />}
+						shape="small"
+						severity="secondary"
+						onClick={() => console.log("Button clicked")}
+					/>
+					<Button
+						icon={<Plus size={32} />}
+						shape="round"
+						severity="secondary"
+						onClick={() => console.log("Button clicked")}
+					/>
+					<Button
+						icon={<Plus size={32} />}
+						shape="square"
+						severity="secondary"
+						onClick={() => console.log("Button clicked")}
+					/>
+				</div>
+				<div className="flex flex-col items-start gap-2 w-[200px]">
+					<Button
+						text="Button"
+						icon={<Plus size={24} />}
+						shape="large"
+						severity="danger"
+						onClick={() => console.log("Button clicked")}
+					/>
+					<Button
+						text="Button"
+						icon={<Plus size={24} />}
+						shape="medium"
+						severity="danger"
+						onClick={() => console.log("Button clicked")}
+					/>
+					<Button
+						text="Button"
+						icon={<Plus size={16} />}
+						shape="small"
+						severity="danger"
+						onClick={() => console.log("Button clicked")}
+					/>
+					<Button
+						icon={<Plus size={32} />}
+						shape="round"
+						severity="danger"
+						onClick={() => console.log("Button clicked")}
+					/>
+					<Button
+						icon={<Plus size={32} />}
+						shape="square"
+						severity="danger"
+						onClick={() => console.log("Button clicked")}
+					/>
+				</div>
+				<div className="flex flex-col items-start gap-2 w-[200px]">
+					<Button
+						text="Button"
+						icon={<Plus size={24} />}
+						shape="large"
+						severity="danger"
+						disabled={true}
+						onClick={() => console.log("Button clicked")}
+					/>
+					<Button
+						text="Button"
+						icon={<Plus size={24} />}
+						shape="medium"
+						severity="danger"
+						disabled={true}
+						onClick={() => console.log("Button clicked")}
+					/>
+					<Button
+						text="Button"
+						icon={<Plus size={16} />}
+						shape="small"
+						severity="danger"
+						disabled={true}
+						onClick={() => console.log("Button clicked")}
+					/>
+					<Button
+						icon={<Plus size={32} />}
+						shape="round"
+						severity="danger"
+						disabled={true}
+						onClick={() => console.log("Button clicked")}
+					/>
+					<Button
+						icon={<Plus size={32} />}
+						shape="square"
+						severity="danger"
+						disabled={true}
+						onClick={() => console.log("Button clicked")}
+					/>
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default ButtonTestRoute;

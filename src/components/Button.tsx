@@ -1,68 +1,85 @@
-import { useRef } from "react";
+import { ReactNode, useRef } from "react";
 import { twMerge } from "tailwind-merge";
+import clsx from "clsx";
+
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-	onClick?: React.MouseEventHandler<HTMLButtonElement>;
-	icon?: React.ElementType;
+	/* Height of the button */
+	shape: "small" | "medium" | "large" | "round" | "square";
+
+	/* The text to display on the button */
 	text?: string;
-	rounded?: boolean;
-	fill?: boolean;
+
+	/* 32x32 Phosphor icon to display on the button */
+	icon?: React.ReactNode;
+
+	/* Whether the button is disabled */
 	disabled?: boolean;
-	fontSize?: string;
-	color?: string;
+
+	/* The severity of the button */
+	severity?: "primary" | "secondary" | "danger";
+
+	/* The callback to run when the button is clicked */
+	onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const Button: React.FC<ButtonProps> = ({
-	text = null,
-	icon: Icon = null,
+function Button({
+	shape,
+	text,
+	icon,
+	disabled = false,
+	severity = "primary",
 	onClick,
-	rounded = false,
-	fill = true,
-	disabled,
-	fontSize = "1em",
-	className = null,
-}) => {
+}: ButtonProps) {
 	const buttonRef = useRef<HTMLButtonElement>(null);
-	const buttonClassName = twMerge(
-		`flex flex-row items-center justify-center p-4 ${
-			disabled === true
-				? "bg-neutrals-light-200 text-gray-400 cursor-default"
-				: fill
-				? "relative overflow-hidden bg-primary-main text-white z-10 active:bg-primary-main active:text-white transition-colors hover:bg-neutrals-light-100 hover:text-primary-main border-2 border-primary-main hover:border-primary-main rounded-full w-full h-full before:absolute before:right-0 before:top-0 before:w-full before:h-full before:z-0 before:bg-primary-main before:content[''] before:transition-transform before:duration-300 hover:before:transform hover:before:translate-x-full"
-				: "relative overflow-hidden text-primary-dark border-primary-dark border-2 active:bg-white active:text-primary-dark transition-colors before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:origin-top-left before:scale-x-0 before:bg-primary-dark before:transition-transform before:duration-300 before:content-[''] hover:text-white before:hover:scale-x-100"
-		} ${rounded ? "rounded-full" : "rounded-lg"} w-full h-full`,
-		className,
-		// change color --> change text-{color}, border-{color} and active:bg-{color}, active:text-{color}, before:bg-{color}
-	);
+
+	// Button styles
+	const base =
+		"flex flex-row items-center justify-center cursor-pointer w-full rounded-lg gap-2";
+
+	const small = "h-8 py-1 px-6 gap-1 text-sm";
+
+	const medium = "h-12 py-3 px-6 text-base";
+
+	const large = "h-16 py-4 px-6 text-2xl";
+
+	const round = " h-[60px] w-[60px] rounded-full p-4";
+
+	const square = "h-[60px] w-[60px] p-4";
+
+	const primary = "bg-primary-main text-neutrals-light-100";
+
+	const secondary =
+		"bg-transparent text-primary-dark border-2 border-primary-dark ";
+
+	const danger =
+		"bg-transparent text-status-red-main border-2 border-status-red-main";
+
+	const disabledButton =
+		"bg-neutrals-light-500 text-neutrals-dark-200 border-transparent cursor-not-allowed";
 
 	return (
 		<button
 			ref={buttonRef}
-			style={{ fontSize: fontSize }}
-			onClick={onClick}
-			className={buttonClassName}
 			disabled={disabled}
+			className={twMerge(
+				clsx(base, {
+					[small]: shape === "small",
+					[medium]: shape === "medium",
+					[large]: shape === "large",
+					[round]: shape === "round",
+					[square]: shape === "square",
+					[primary]: severity === "primary",
+					[secondary]: severity === "secondary",
+					[danger]: severity === "danger",
+					[disabledButton]: disabled,
+				}),
+			)}
+			onClick={onClick}
 		>
-			{Icon && !text && (
-				<div className="relative z-20">
-					<Icon size={20} />
-				</div>
-			)}
-			{Icon && text && (
-				<div className="flex items-center">
-					<div className="relative z-20">
-						<Icon
-							className="mt-0.2"
-							size={20}
-						/>
-					</div>
-					<span className="relative z-20 pl-1 whitespace-nowrap hidden lg:block">
-						{text}
-					</span>
-				</div>
-			)}
-			{!Icon && text && <span className="relative z-20">{text}</span>}
+			{icon}
+			{text}
 		</button>
 	);
-};
+}
 
 export default Button;

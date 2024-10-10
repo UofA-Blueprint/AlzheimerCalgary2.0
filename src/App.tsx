@@ -41,7 +41,7 @@ const router = createBrowserRouter([
 		element: <SearchBarTest />,
 	},
 	{
-		path: "/testButton",
+		path: "/button-test",
 		element: <ButtonTestRoute />,
 	},
 	{
