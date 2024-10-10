@@ -1,7 +1,7 @@
-import AddMember from "@/components/AddMember";
+import EditMember from "@/components/EditMember";
 import { useState } from "react";
 
-function AddMemberTestRoute() {
+function EditMemberTestRoute() {
 	// State to toggle the modal
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -16,12 +16,12 @@ function AddMemberTestRoute() {
 			>
 				Open Modal
 			</button>
-			<AddMember
+			<EditMember
 				isOpen={isModalOpen}
 				onClose={toggleModal}
-			></AddMember>
+			></EditMember>
 		</div>
 	);
 }
 
-export default AddMemberTestRoute;
+export default EditMemberTestRoute;
