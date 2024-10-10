@@ -23,6 +23,7 @@ import ModalTestRoute from "@/routes/test/ModalTestRoute";
 import GalleryTestRoute from "./routes/test/GalleryTestRoute";
 import { MemberInformation } from "./components/MemberInformation";
 import MemberProfilePictureTest from "@/routes/test/MemberProfilePictureTest";
+import AddMemberTestRoute from "@/routes/test/AddMemberTestRoute";
 
 // routes
 import AdminLogin from "./routes/admin/AdminLogin";
@@ -127,6 +128,10 @@ const router = createBrowserRouter([
 	{
 		path: "/media-card-test",
 		element: <MediaCardTestRoute />,
+	},
+	{
+		path: "/add-member",
+		element: <AddMemberTestRoute />,
 	},
 
 	// Admin Routes
