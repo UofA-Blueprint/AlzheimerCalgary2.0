@@ -23,6 +23,9 @@ import ModalTestRoute from "@/routes/test/ModalTestRoute";
 import GalleryTestRoute from "./routes/test/GalleryTestRoute";
 import { MemberInformation } from "./components/MemberInformation";
 import MemberProfilePictureTest from "@/routes/test/MemberProfilePictureTest";
+import AddMemberTestRoute from "@/routes/test/AddMemberTestRoute";
+import EditMemberTestRoute from "@/routes/test/EditMemberTestRoute";
+import MemberPageBackgroundTestRoute from "./routes/test/MemberPageBackgroundTestRoute";
 
 // routes
 import AdminLogin from "./routes/admin/AdminLogin";
@@ -41,7 +44,7 @@ const router = createBrowserRouter([
 		element: <SearchBarTest />,
 	},
 	{
-		path: "/testButton",
+		path: "/button-test",
 		element: <ButtonTestRoute />,
 	},
 	{
@@ -127,6 +130,18 @@ const router = createBrowserRouter([
 	{
 		path: "/media-card-test",
 		element: <MediaCardTestRoute />,
+	},
+	{
+		path: "/add-member",
+		element: <AddMemberTestRoute />,
+	},
+	{
+		path: "/edit-member",
+		element: <EditMemberTestRoute />,
+	},
+	{
+		path: "/member-background-test",
+		element: <MemberPageBackgroundTestRoute />,
 	},
 
 	// Admin Routes

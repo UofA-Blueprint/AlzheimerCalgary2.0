@@ -63,7 +63,7 @@ function Modal({
 	const header = "flex flex-row w-full justify-between items-center";
 
 	// Header title style
-	const headerTitle = "flex flex-row gap-1 text-h3 text-neutrals-dark-500";
+	const headerTitle = "flex flex-row gap-2 text-h3 text-neutrals-dark-500";
 
 	// Header title icon style
 	const headerTitleIcon = "flex items-center justify-center pb-1";
