@@ -16,15 +16,33 @@ interface AddMemberProps {
 function AddMember({ isOpen, onClose }: AddMemberProps) {
 	const [nameError, setNameError] = useState<boolean>(false);
 	const [idError, setIdError] = useState<boolean>(false);
+	const [name, setName] = useState<string>("");
+	const [id, setId] = useState<string>("");
 
 	// Content style
 	const content = "flex flex-col gap-6";
 
+	// Function to add member
+	const addMember = () => () => {
+		if (!nameError && !idError) {
+			resetAndClose();
+		}
+	};
+
+	const resetAndClose = () => () => {
+		setNameError(false);
+		setIdError(false);
+		setName("");
+		setId("");
+		onClose();
+	};
+
 	return (
 		<Modal
 			isOpen={isOpen}
-			onClose={onClose}
+			onClose={resetAndClose()}
 			title="Add Member"
+			disableCloseOnClickOutside={true}
 			content={
 				<div className={clsx(content)}>
 					<InputField
@@ -34,7 +52,7 @@ function AddMember({ isOpen, onClose }: AddMemberProps) {
 						required={true}
 						placeholder={"John Doe"}
 						setError={setNameError}
-						setInput={() => {}}
+						setInput={setName}
 					/>
 					<InputField
 						type="text"
@@ -43,7 +61,7 @@ function AddMember({ isOpen, onClose }: AddMemberProps) {
 						required={true}
 						placeholder="12345678"
 						setError={setIdError}
-						setInput={() => {}}
+						setInput={setId}
 					/>
 					<MemberProfilePicture />
 				</div>
@@ -53,7 +71,7 @@ function AddMember({ isOpen, onClose }: AddMemberProps) {
 					<Button
 						shape="medium"
 						text="Add Member"
-						onClick={onClose}
+						onClick={addMember()}
 					/>
 					{(idError || nameError) && (
 						<div className="flex flex-row justify-start items-center gap-1 text-red-500 text-body-sm">
