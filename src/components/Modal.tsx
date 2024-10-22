@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
 import { useEffect, useRef, useCallback } from "react";
 import { X } from "@phosphor-icons/react";
 
@@ -56,8 +57,22 @@ function Modal({
 		xl: "w-[37.5rem]",
 	};
 
+	// Background style
+	const background =
+		"fixed inset-0 flex items-center justify-center bg-black bg-opacity-25";
+
 	// Body style
-	const body = `flex flex-col p-8 gap-4 bg-neutrals-light-100 rounded-lg max-w-[80vw] max-h-[95vh] overflow-auto`;
+	const body =
+		"flex flex-col p-8 gap-4 bg-neutrals-light-100 rounded-lg max-w-[80vw] max-h-[95vh] overflow-auto scale-95";
+
+	// Transition style
+	const transition = "transition-all duration-200 ease-in-out";
+
+	// Closed style
+	const closed = "opacity-0 shadow-none pointer-events-none";
+
+	// Open style
+	const open = "opacity-100 shadow-lg pointer-events-auto scale-100";
 
 	// Header style
 	const header = "flex flex-row w-full justify-between items-center";
@@ -118,31 +133,36 @@ function Modal({
 		return () => document.removeEventListener("keydown", handleKeyDown);
 	}, [isOpen, closeable, disableCloseOnEscape, onClose]);
 
-	// Encapsulates the visibility of the modal in a prop
-	if (!isOpen) return null;
-
 	return (
 		<div
-			ref={modalRef}
-			className={clsx(body, sizes[size])}
+			className={twMerge(
+				clsx(background, closed, transition, isOpen && open),
+			)}
 		>
-			<div className={clsx(header)}>
-				<div className={clsx(headerTitle)}>
-					<i className={clsx(headerTitleIcon)}>{icon}</i>
-					<h3>{title}</h3>
-				</div>
-				{closeable && !hideCloseButton && (
-					<div
-						className={clsx(closeButton)}
-						onClick={onClose}
-					>
-						<X size={32} />
-					</div>
+			<div
+				ref={modalRef}
+				className={twMerge(
+					clsx(body, sizes[size], closed, transition, isOpen && open),
 				)}
-			</div>
-			<div className={clsx(form)}>
-				{content}
-				{actions}
+			>
+				<div className={clsx(header)}>
+					<div className={clsx(headerTitle)}>
+						<i className={clsx(headerTitleIcon)}>{icon}</i>
+						<h3>{title}</h3>
+					</div>
+					{closeable && !hideCloseButton && (
+						<div
+							className={clsx(closeButton)}
+							onClick={onClose}
+						>
+							<X size={32} />
+						</div>
+					)}
+				</div>
+				<div className={clsx(form)}>
+					{content}
+					{actions}
+				</div>
 			</div>
 		</div>
 	);
