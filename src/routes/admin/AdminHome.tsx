@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Plus, CaretDown } from "@phosphor-icons/react";
 import { ToastContainer } from "react-toastify";
+import AddMember from "@/components/AddMember";
 import "react-toastify/dist/ReactToastify.css";
 
 import { initializeApp } from "firebase/app";
@@ -67,13 +68,17 @@ export default function AdminHome() {
 	// Search
 	const [searchTerm, setSearchTerm] = useState<string>("");
 
+	// Add member modal control
+	const [isAddMemberModalOpen, setIsAddMemberModalOpen] =
+		useState<boolean>(false);
+
 	//#region functions
 	const fetchMembers = async () => {
 		const [category, order] = Object.entries(sortBy)[0];
 		try {
 			let q;
 			if (lastDoc) {
-				console.log("Fetching more members"); 
+				console.log("Fetching more members");
 				q = await getDocs(
 					query(
 						usersRef,
@@ -219,27 +224,34 @@ export default function AdminHome() {
 
 			<div className="mx-8 my-2 md:mx-16 md:my-4 flex flex-col">
 				<div className="flex flex-row">
-					<div className="w-full">
+					<div className="flex flex-col min-w-max grow">
 						<div className="text-h1">All Members</div>
 						<div className="text-body-reg text-primary-dark">
 							Total Storage Used: {totalStorageUsed} MB
 						</div>
 					</div>
-					<div className="flex items-end">
-						<div className="flex flex-row gap-4">
-							<div className="h-[3rem] w-[20rem]">
+					<div className="flex items-end justify-end grow">
+						<div className="flex flex-row gap-4 grow justify-end">
+							<div className="h-12 max-w-[20rem] grow">
 								<SearchBar
 									setSearch={setSearchTerm}
 									handleClick={searchMember}
 								/>
 							</div>
-							<div className="w-[11rem]">
+							<div className="min-w-max">
 								<Button
 									text="Add Member"
 									shape="medium"
 									icon={<Plus size={24} />}
+									onClick={() =>
+										setIsAddMemberModalOpen(true)
+									}
 								/>
 							</div>
+							<AddMember
+								isOpen={isAddMemberModalOpen}
+								onClose={() => setIsAddMemberModalOpen(false)}
+							/>
 						</div>
 					</div>
 				</div>

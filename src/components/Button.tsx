@@ -57,6 +57,8 @@ function Button({
 	const disabledButton =
 		"bg-neutrals-light-500 text-neutrals-dark-200 border-transparent cursor-not-allowed";
 
+	const textStyle = "text-body-reg text-center min-w-max";
+
 	return (
 		<button
 			ref={buttonRef}
@@ -76,8 +78,8 @@ function Button({
 			)}
 			onClick={onClick}
 		>
-			{icon}
-			{text}
+			<span>{icon}</span>
+			<span className={clsx(textStyle)}>{text}</span>
 		</button>
 	);
 }
