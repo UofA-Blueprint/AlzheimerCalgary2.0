@@ -107,12 +107,13 @@ function MediaCard({
 								);
 							}}
 						/>
-						<div className="flex w-1/4 self-end justify-center items-end gap-2">
+						<div className="flex self-end justify-center items-end gap-2">
 							<Button
 								text="Cancel"
 								className="h-1/4"
-								fill={false}
+								severity="secondary"
 								onClick={() => setIsEditingCaption(false)}
+								shape={"small"}
 							/>
 							<Button
 								className="h-1/4"
@@ -135,6 +136,7 @@ function MediaCard({
 										setIsEditingCaption(false);
 									}
 								}}
+								shape={"small"}
 							/>
 						</div>
 					</div>
