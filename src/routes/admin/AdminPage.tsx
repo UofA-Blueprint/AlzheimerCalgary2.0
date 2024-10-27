@@ -225,6 +225,7 @@ export default function AdminPage() {
 					/>
 				</div>
 
+				{/* Media Grid */}
 				<MediaGrid
 					data={data}
 					sortOrder={"latest"}
