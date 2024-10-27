@@ -119,7 +119,7 @@ const usersRef = collection(database, "users");
 
 export default function MemberPage() {
 	const navigate = useNavigate();
-	const [sortOrder, setSortOrder] = useState<'latest' | 'oldest'>('latest');
+    const [sortOrder, setSortOrder] = useState<"latest" | "oldest" | null>(null);
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [userData, setUserData] = useState<DocumentData | null>(null); 
 
@@ -155,11 +155,11 @@ export default function MemberPage() {
         fetchData();
     }, [navigate]);
 
-    // Function to update sortOrder and close the dropdown menu
-	const handleSortSelect = (order:SortOrder) => {
-		setSortOrder(order);  // Update sort order (latest or oldest)
-		setIsDropdownOpen(false); // Close dropdown after selection
-	};
+        // Function to update sortOrder and close the dropdown menu
+        const handleSortSelect = (order: "latest" | "oldest" | null) => {
+            setSortOrder(order);  // Update sort order (latest or oldest)
+            setIsDropdownOpen(false); // Close dropdown after selection
+        };
 
 	return (
 		<div className="font-display relative">

@@ -2,14 +2,14 @@ import { CaretDown } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 
 interface SortDropdownProps {
-  onSelect: (sortOrder: string) => void; // Callback prop for selecting sort order
+  onSelect: (sortOrder: string | null) => void; // null for default sorting
 }
 
 function SortDropdown({ onSelect }: SortDropdownProps) {
   // State to manage the dropdown open/closed state
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   // State to keep track of the current sort order
-  const [sortOrder, setSortOrder] = useState<string>("latest");
+  const [sortOrder, setSortOrder] = useState<string | null>(null); // Default to null
   // Ref to handle clicks outside the dropdown
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -30,7 +30,7 @@ function SortDropdown({ onSelect }: SortDropdownProps) {
   }, []);
 
   // Function to handle selection of sort order
-  const handleSortSelect = (order: string) => {
+  const handleSortSelect = (order: string | null) => {
     setSortOrder(order); // Update the sort order
     onSelect(order); // Call the passed in prop to update sort order
     setIsDropdownOpen(false); // Close the dropdown after selection
@@ -49,18 +49,26 @@ function SortDropdown({ onSelect }: SortDropdownProps) {
 
       {/* Dropdown Menu */}
       {isDropdownOpen && (
-        <div className="absolute right-0 mt-2 w-full bg-white rounded-md shadow-lg z-10 ">
+        <div className="absolute right-0 mt-2 w-full bg-white rounded-md shadow-lg z-10  pt-2 pb-4 px-4">
           <div
             className="py-1 cursor-pointer hover:bg-gray-100 px-4 text-gray-700 rounded-lg"
             onClick={() => handleSortSelect("latest")} // Sort by latest
           >
-            Latest
+            Newest to Oldest
           </div>
           <div
-            className="py-1 cursor-pointer hover:bg-gray-100 px-4 text-gray-700 w-full rounded-lg"
+            className="py-1 cursor-pointer hover:bg-gray-100 px-4 text-gray-700 w-full rounded-lg gap-2"
             onClick={() => handleSortSelect("oldest")} // Sort by oldest
           >
-            Oldest
+            Oldest to Newest 
+          </div>
+          <div>
+            <div 
+              className="py-1 cursor-pointer hover:bg-primary-dark px-4 text-white rounded-lg text-center h-10/12 bg-primary-main"
+              onClick={() => handleSortSelect(null)} // Reset to no sorting
+            >
+              Reset
+            </div>
           </div>
         </div>
       )}

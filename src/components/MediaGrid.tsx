@@ -10,16 +10,18 @@ interface Media {
 
 interface MediaGridProps {
 	data: Media[];
-	sortOrder: "latest" | "oldest"; // Sorting order as a prop
+	sortOrder: "latest" | "oldest" | null; // Sorting order as a prop
 }
 
 function MediaGrid({ data, sortOrder }: MediaGridProps) {
 	// Sort data based on sortOrder
-	const sortedData = [...data].sort((a, b) => {
-		return sortOrder === "latest" 
-			? b.date.getTime() - a.date.getTime() // Descending for latest
-			: a.date.getTime() - b.date.getTime(); // Ascending for oldest
-	});
+	const sortedData = sortOrder
+    ? [...data].sort((a, b) => {
+        return sortOrder === "latest" 
+          ? b.date.getTime() - a.date.getTime() // Descending for latest
+          : a.date.getTime() - b.date.getTime(); // Ascending for oldest
+      })
+    : data; // Use default order if sortOrder is null
 
 	return (
 		<div className="w-full h-full">
