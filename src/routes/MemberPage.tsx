@@ -197,6 +197,7 @@ export default function MemberPage() {
 					<MediaGrid
 						data={data}
 						sortOrder={sortOrder}
+						selectable={false}
 					/>
 				</div>
 			</div>
