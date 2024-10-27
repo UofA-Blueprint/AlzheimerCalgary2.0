@@ -31,9 +31,10 @@ import MemberPageBackgroundTestRoute from "./routes/test/MemberPageBackgroundTes
 import AdminLogin from "./routes/admin/AdminLogin";
 import AdminHome from "./routes/admin/AdminHome";
 // import Admin
-
 import CaregiverLogin from "./routes/caregiver/CaregiverLogin";
 import MediaCardTestRoute from "./routes/test/MediaCardTestRoute";
+// User page
+import MemberPage from "./routes/MemberPage";
 import ConfirmationModalTestRoute from "./routes/test/ConfirmationModalTestRoute";
 
 const router = createBrowserRouter([
@@ -148,6 +149,10 @@ const router = createBrowserRouter([
 	{
 		path: "/member-background-test",
 		element: <MemberPageBackgroundTestRoute />,
+	},
+	{
+		path: "/",
+		element: <MemberPage />,
 	},
 
 	// Admin Routes

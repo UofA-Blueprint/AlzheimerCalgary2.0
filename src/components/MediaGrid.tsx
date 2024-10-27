@@ -1,19 +1,38 @@
 import { Masonry } from "masonic";
 import MediaCard from "./MediaCard";
 
-interface MediaGridProps {
-	data: Media[];
+interface Media {
+	src: string;
+	caption: string;
+	id: number;
+	date: Date;
 }
 
-function MediaGrid({ data }: MediaGridProps) {
+interface MediaGridProps {
+	data: Media[];
+	sortOrder: "latest" | "oldest" | null; // Sorting order as a prop
+}
+
+function MediaGrid({ data, sortOrder }: MediaGridProps) {
+	// Sort data based on sortOrder
+	const sortedData = sortOrder
+    ? [...data].sort((a, b) => {
+        return sortOrder === "latest" 
+          ? b.date.getTime() - a.date.getTime() // Descending for latest
+          : a.date.getTime() - b.date.getTime(); // Ascending for oldest
+      })
+    : data; // Use default order if sortOrder is null
+
 	return (
-		<Masonry
-			items={data}
-			render={MasonryItem}
-			columnGutter={12}
-			columnWidth={320}
-			overscanBy={5}
-		/>
+		<div className="w-full h-full">
+			<Masonry
+				items={sortedData}
+				render={MasonryItem}
+				columnGutter={12}
+				columnWidth={320}
+				overscanBy={5}
+			/>
+		</div>
 	);
 }
 

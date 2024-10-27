@@ -31,7 +31,7 @@ function MemberHeader({
           {profilePicChildren}
         </ProfilePictures>
       </div>
-      <div className=" pl-2 font-bold justify-center flex pb-2 w-20">
+      <div className=" pl-4 font-bold justify-start flex pb-2 w-40 text-2xl ">
         <h1>{username}</h1>
       </div>
     </div>

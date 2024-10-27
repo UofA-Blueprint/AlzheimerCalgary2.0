@@ -54,7 +54,10 @@ export default function CaregiverLogin() {
 		// User found
 		if (user.docs.length > 0) {
 			console.log("Signed in as: ", user.docs[0].data().lastName);
+			localStorage.setItem("lastName", userLastName);
+			localStorage.setItem("passcode", userPasscode);
 			navigate("/");
+			
 		}
 
 		// User not found

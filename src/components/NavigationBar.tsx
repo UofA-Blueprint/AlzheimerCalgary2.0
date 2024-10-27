@@ -42,27 +42,27 @@ export function NavigationBar({
 	//#region Functions
 	function signOut() {
 		// Sign out logic for user
-		if (
-			localStorage.getItem("lastName") &&
-			localStorage.getItem("passcode")
-		) {
+		if (userType === "user") {
+
 			localStorage.removeItem("lastName");
 			localStorage.removeItem("passcode");
 			displayToast("Successfully signed out", "success");
 			setTimeout(() => {
 				navigate("/login");
 			}, 2000);
-		}
 
-		// Sign out logic for admin
-		auth.signOut().then(() => {
-			displayToast("Successfully signed out", "success");
-			setTimeout(() => {
+		} else if (userType === "admin") {
+
+			// Sign out logic for admin
+			auth.signOut().then(() => {
+				displayToast("Successfully signed out", "success");
+				setTimeout(() => {
+					navigate("/admin/login");
+				}, 2000);
 				navigate("/admin/login");
-			}, 2000);
-			navigate("/admin/login");
 		});
 	}
+}
 	//#endregion
 
 	return (
