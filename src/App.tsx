@@ -35,6 +35,7 @@ import CaregiverLogin from "./routes/caregiver/CaregiverLogin";
 import MediaCardTestRoute from "./routes/test/MediaCardTestRoute";
 // User page
 import MemberPage from "./routes/MemberPage";
+import ConfirmationModalTestRoute from "./routes/test/ConfirmationModalTestRoute";
 
 const router = createBrowserRouter([
 	{
@@ -134,6 +135,10 @@ const router = createBrowserRouter([
 		element: <MediaCardTestRoute />,
 	},
 	{
+		path: "/confirmationModal",
+		element: <ConfirmationModalTestRoute />,
+	},
+	{
 		path: "/add-member",
 		element: <AddMemberTestRoute />,
 	},
@@ -147,7 +152,7 @@ const router = createBrowserRouter([
 	},
 	{
 		path: "/",
-        element: <MemberPage />,
+		element: <MemberPage />,
 	},
 
 	// Admin Routes
