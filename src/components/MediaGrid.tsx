@@ -11,9 +11,10 @@ interface Media {
 interface MediaGridProps {
 	data: Media[];
 	sortOrder: string | null; // Sorting order as a prop
+	selectable: boolean;
 }
 
-function MediaGrid({ data, sortOrder }: MediaGridProps) {
+function MediaGrid({ data, sortOrder, selectable }: MediaGridProps) {
 	// Sort data based on sortOrder
 	const sortedData = sortOrder
 		? [...data].sort((a, b) => {

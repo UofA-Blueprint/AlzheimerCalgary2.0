@@ -167,7 +167,7 @@ const router = createBrowserRouter([
 		element: <AdminLogin />,
 	},
 	{
-		path: "/admin/members/:lastName",
+		path: "/admin/members/:id",
 		element: <AdminPage />,
 	},
 

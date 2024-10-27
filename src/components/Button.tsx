@@ -3,6 +3,8 @@ import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+	className?: string;
+
 	/* Height of the button */
 	shape: "small" | "medium" | "large" | "round" | "square";
 
@@ -23,6 +25,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 function Button({
+	className,
 	shape,
 	text,
 	icon,
@@ -34,19 +37,20 @@ function Button({
 
 	// Button styles
 	const base =
-		"flex flex-row items-center justify-center cursor-pointer w-full rounded-lg gap-2";
+		"flex flex-row items-center justify-center cursor-pointer w-full rounded-lg h-full";
 
 	const small = "h-8 py-1 px-6 gap-1 text-sm";
 
-	const medium = "h-12 py-3 px-6 text-base";
+	const medium = "py-4 px-6 text-base ";
 
 	const large = "h-16 py-4 px-6 text-2xl";
 
-	const round = " h-[60px] w-[60px] rounded-full p-4";
+	const round = "h-[60px] w-[60px] rounded-full p-4";
 
-	const square = "h-[60px] w-[60px] p-4";
+	const square = "aspect-square p-4";
 
-	const primary = "bg-primary-main text-neutrals-light-100";
+	const primary =
+		"bg-primary-main text-white hover:bg-primary-light duration-300";
 
 	const secondary =
 		"bg-transparent text-primary-dark border-2 border-primary-dark ";
@@ -75,10 +79,11 @@ function Button({
 					[danger]: severity === "danger",
 					[disabledButton]: disabled,
 				}),
+				className,
 			)}
 			onClick={onClick}
 		>
-			<span>{icon}</span>
+			<span className="text-xl">{icon}</span>
 			<span className={clsx(textStyle)}>{text}</span>
 		</button>
 	);

@@ -43,16 +43,13 @@ export function NavigationBar({
 	function signOut() {
 		// Sign out logic for user
 		if (userType === "user") {
-
 			localStorage.removeItem("lastName");
 			localStorage.removeItem("passcode");
 			displayToast("Successfully signed out", "success");
 			setTimeout(() => {
 				navigate("/login");
 			}, 2000);
-
 		} else if (userType === "admin") {
-
 			// Sign out logic for admin
 			auth.signOut().then(() => {
 				displayToast("Successfully signed out", "success");
@@ -60,9 +57,9 @@ export function NavigationBar({
 					navigate("/admin/login");
 				}, 2000);
 				navigate("/admin/login");
-		});
+			});
+		}
 	}
-}
 	//#endregion
 
 	return (
@@ -91,7 +88,7 @@ export function NavigationBar({
 				<div className="space-x-[40px] flex">
 					{userType === "admin" ? (
 						<a
-							href="/dashboard"
+							href="/admin"
 							className="hover:text-primary-main hidden sm:block transition ease-in-out duration-75 font-display font-semibold"
 						>
 							Members

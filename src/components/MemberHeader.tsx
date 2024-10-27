@@ -1,41 +1,90 @@
-// MemberHeader.tsx
-import { ReactNode } from "react";
+//# region Imports
 import ProfilePictures from "./ProfilePictures";
 import { twMerge } from "tailwind-merge";
+import * as Icon from "@phosphor-icons/react";
+//#endregion
 
+//#region Interfaces
 interface MemberHeaderProp {
-  profilePicChildren: ReactNode;
-  backgroundColor:
-    | "tulip"
-    | "gold"
-    | "lime"
-    | "jade"
-    | "water"
-    | "air"
-    | "lilac"
-    | "candy";
-  username: string;
+	profilePicture: {
+		type: "img" | "icon" | string;
+		src: string;
+		backgroundColor?: string;
+	};
+
+	username: string;
+
+	// Optional
+	usernameExtra?: string; // Additional CSS classes for the username
+	className?: string; // Additional CSS classes for the component
 }
+//#endregion
+
+//#region helpers
+function selectIcon(type: string) {
+	const iconStyling =
+		"w-full h-full rounded-full p-2 object-cover text-white";
+	switch (type) {
+		case "PawPrint":
+			return <Icon.PawPrint className={iconStyling} />;
+		case "Tree":
+			return <Icon.Tree className={iconStyling} />;
+		case "Pizza":
+			return <Icon.Pizza className={iconStyling} />;
+		case "Camera":
+			return <Icon.Camera className={iconStyling} />;
+		case "Atom":
+			return <Icon.Atom className={iconStyling} />;
+		case "Binoculars":
+			return <Icon.Binoculars className={iconStyling} />;
+		case "SoccerBall":
+			return <Icon.SoccerBall className={iconStyling} />;
+		case "Coffee":
+			return <Icon.Coffee className={iconStyling} />;
+	}
+}
+//#endregion
 
 function MemberHeader({
-  profilePicChildren,
-  backgroundColor,
-  username,
+	profilePicture,
+	username,
+	usernameExtra,
+	className,
 }: MemberHeaderProp) {
-  return (
-    <div
-      className={twMerge("flex flex-col md:flex-row items-center w-full h-36")}
-    >
-      <div className="w-32 h-32">
-        <ProfilePictures backgroundColor={backgroundColor}>
-          {profilePicChildren}
-        </ProfilePictures>
-      </div>
-      <div className=" pl-4 font-bold justify-start flex pb-2 w-40 text-2xl ">
-        <h1>{username}</h1>
-      </div>
-    </div>
-  );
+	return (
+		<div
+			className={twMerge(
+				"flex flex-col lg:flex-row items-center w-full",
+				className,
+			)}
+		>
+			{/* Profile Picture */}
+			<ProfilePictures
+				className="w-36 md:w-44 aspect-square"
+				backgroundColor={profilePicture?.backgroundColor}
+			>
+				{profilePicture?.type === "img" ? (
+					<img
+						src={profilePicture?.src}
+						alt="profile"
+						className="w-full h-full rounded-full object-cover"
+					/>
+				) : (
+					selectIcon(profilePicture?.src as string)
+				)}
+			</ProfilePictures>
+
+			{/* Username */}
+			<div
+				className={twMerge(
+					"font-bold justify-center pt-4 md:pl-8 lg:pt-0 md:justify-start flex whitespace-nowrap font-display",
+					usernameExtra,
+				)}
+			>
+				<h1>{username}</h1>
+			</div>
+		</div>
+	);
 }
 
 export default MemberHeader;

@@ -18,6 +18,7 @@ interface MemberTableProps {
 }
 
 export interface memberData {
+	id: string;
 	profilePicture: {
 		type: "img" | "icon" | string;
 		src: string;
@@ -68,8 +69,7 @@ export function MemberTable({
 	const navigate = useNavigate();
 
 	function handleClick(row: any) {
-		const nameParts = row.name.split(" ");
-		navigate(`/admin/members/${nameParts[nameParts.length - 1]}`);
+		navigate(`/admin/members/${row.id}`);
 	}
 
 	return (
