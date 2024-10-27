@@ -26,16 +26,18 @@ import MemberProfilePictureTest from "@/routes/test/MemberProfilePictureTest";
 import AddMemberTestRoute from "@/routes/test/AddMemberTestRoute";
 import EditMemberTestRoute from "@/routes/test/EditMemberTestRoute";
 import MemberPageBackgroundTestRoute from "./routes/test/MemberPageBackgroundTestRoute";
+import MediaCardTestRoute from "./routes/test/MediaCardTestRoute";
+import ConfirmationModalTestRoute from "./routes/test/ConfirmationModalTestRoute";
 
 // routes
+// Admin
 import AdminLogin from "./routes/admin/AdminLogin";
 import AdminHome from "./routes/admin/AdminHome";
-// import Admin
-import CaregiverLogin from "./routes/caregiver/CaregiverLogin";
-import MediaCardTestRoute from "./routes/test/MediaCardTestRoute";
+import AdminPage from "./routes/admin/AdminPage";
+
 // User page
+import CaregiverLogin from "./routes/caregiver/CaregiverLogin";
 import MemberPage from "./routes/MemberPage";
-import ConfirmationModalTestRoute from "./routes/test/ConfirmationModalTestRoute";
 
 const router = createBrowserRouter([
 	{
@@ -163,6 +165,10 @@ const router = createBrowserRouter([
 	{
 		path: "/admin/login",
 		element: <AdminLogin />,
+	},
+	{
+		path: "/admin/members/:lastName",
+		element: <AdminPage />,
 	},
 
 	// Caregiver Routes

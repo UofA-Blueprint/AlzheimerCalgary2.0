@@ -1,5 +1,6 @@
 //#region imports
 import { twMerge } from "tailwind-merge";
+import { useNavigate } from "react-router-dom";
 import { UserCircle, Folder, ArrowsClockwise } from "@phosphor-icons/react";
 import * as Icon from "@phosphor-icons/react";
 
@@ -64,8 +65,11 @@ export function MemberTable({
 	sortbyStorageUsed,
 	sortbyLastUpdated,
 }: MemberTableProps) {
+	const navigate = useNavigate();
+
 	function handleClick(row: any) {
-		alert(`Clicked ${row.name}`);
+		const nameParts = row.name.split(" ");
+		navigate(`/admin/members/${nameParts[nameParts.length - 1]}`);
 	}
 
 	return (
