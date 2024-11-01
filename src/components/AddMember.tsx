@@ -69,7 +69,7 @@ function AddMember({ isOpen, onClose }: AddMemberProps) {
 			actions={
 				<div className="flex flex-col gap-1 w-full">
 					<Button
-						shape="medium"
+						size="medium"
 						text="Add Member"
 						onClick={addMember()}
 					/>

@@ -204,7 +204,7 @@ export default function AdminPage() {
 						{buttons.map((button, index) => (
 							<Button
 								key={index}
-								shape={button.shape as "medium" | "square"}
+								size="medium"
 								text={button.text}
 								icon={button.icon}
 								severity={

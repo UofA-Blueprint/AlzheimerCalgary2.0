@@ -27,7 +27,7 @@ function ModalTestRoute() {
 				icon={<Truck size={24} />}
 				content={
 					<div className="flex flex-col gap-6">
-						<InputField
+						{/* <InputField
 							type="text"
 							error={false}
 							label="Name"
@@ -46,19 +46,21 @@ function ModalTestRoute() {
 							label="Phone"
 							required={false}
 							setInput={() => {}}
-						/>
+						/> */}
 					</div>
 				}
 				actions={
 					<div className="flex flex-row gap-6 h-4">
 						<Button
 							text="Cancel"
-							fill={false}
+							size="medium"
+							severity="secondary"
 							onClick={toggleModal}
 						/>
 						<Button
 							text="Submit"
-							fill={true}
+							size="medium"
+							severity="primary"
 							onClick={toggleModal}
 						/>
 					</div>

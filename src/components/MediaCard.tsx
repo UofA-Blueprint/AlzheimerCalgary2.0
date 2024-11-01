@@ -113,7 +113,7 @@ function MediaCard({ src, caption, date, id, selectable }: MediaCardProps) {
 								className="h-1/4"
 								severity="secondary"
 								onClick={() => setIsEditingCaption(false)}
-								shape={"small"}
+								size="small"
 							/>
 							<Button
 								className="h-1/4"
@@ -136,7 +136,7 @@ function MediaCard({ src, caption, date, id, selectable }: MediaCardProps) {
 										setIsEditingCaption(false);
 									}
 								}}
-								shape={"small"}
+								size="small"
 							/>
 						</div>
 					</div>

@@ -241,7 +241,7 @@ export default function AdminHome() {
 							<div className="min-w-max">
 								<Button
 									text="Add Member"
-									shape="medium"
+									size="medium"
 									icon={<Plus size={24} />}
 									onClick={() =>
 										setIsAddMemberModalOpen(true)
