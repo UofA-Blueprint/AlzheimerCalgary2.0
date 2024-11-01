@@ -3,6 +3,7 @@ import { Copy, Check, WarningCircle } from "@phosphor-icons/react";
 import { useLayoutEffect, useRef, useState } from "react";
 import Button from "./Button";
 import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
 
 interface MediaCardProps {
 	src: string;
@@ -18,13 +19,7 @@ const options: Intl.DateTimeFormatOptions = {
 	day: "numeric",
 };
 
-function MediaCard({
-	src,
-	caption,
-	date,
-	id,
-	selectable = false,
-}: MediaCardProps) {
+function MediaCard({ src, caption, date, id, selectable }: MediaCardProps) {
 	const [isEditingCaption, setIsEditingCaption] = useState(false);
 	const [newCaption, setNewCaption] = useState<string | null | undefined>(
 		caption,
@@ -85,7 +80,12 @@ function MediaCard({
 					className={clsx("object-fit rounded-t-lg")}
 				/>
 			</div>
-			<div className="bg-white p-2 rounded-b-lg flex flex-col gap-4">
+			<div
+				className={twMerge(
+					"bg-white rounded-b-lg flex flex-col gap-4 focus:outline-none",
+					isEditingCaption ? "" : "p-4",
+				)}
+			>
 				{!isEditingCaption ? (
 					<div
 						className="text-body-reg whitespace-pre-line"
@@ -94,9 +94,9 @@ function MediaCard({
 						{newCaption}
 					</div>
 				) : (
-					<div className="flex flex-col justify-center bg-neutrals-light-300">
+					<div className="flex flex-col justify-center bg-neutrals-light-300 rounded-lg">
 						<textarea
-							className="w-full bg-neutrals-light-300 p-2 resize-none overflow-hidden"
+							className="w-full bg-neutrals-light-300 p-4 resize-none overflow-hidden"
 							defaultValue={
 								newCaption || caption || "Add Text..."
 							}

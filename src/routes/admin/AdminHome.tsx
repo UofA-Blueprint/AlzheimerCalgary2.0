@@ -78,7 +78,6 @@ export default function AdminHome() {
 		try {
 			let q;
 			if (lastDoc) {
-				console.log("Fetching more members");
 				q = await getDocs(
 					query(
 						usersRef,
@@ -88,7 +87,6 @@ export default function AdminHome() {
 					),
 				);
 			} else {
-				console.log("Fetching initial members");
 				q = await getDocs(
 					query(
 						usersRef,
@@ -108,6 +106,7 @@ export default function AdminHome() {
 			q.forEach((doc) => {
 				storageUsed += doc.data().storageUsed;
 				membersList.push({
+					id: doc.id,
 					profilePicture: {
 						type: doc.data().profilePicture.type,
 						src: doc.data().profilePicture.src,
@@ -172,6 +171,7 @@ export default function AdminHome() {
 				combined_q.forEach((doc) => {
 					storageUsed += doc.data().storageUsed;
 					membersList.push({
+						id: doc.id,
 						profilePicture: {
 							type: doc.data().profilePicture.type,
 							src: doc.data().profilePicture.src,

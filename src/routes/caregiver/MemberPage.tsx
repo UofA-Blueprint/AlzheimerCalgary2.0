@@ -4,8 +4,6 @@ import { NavigationBar } from "@/components/NavigationBar";
 import MediaGrid from "@/components/MediaGrid";
 import MemberHeader from "@/components/MemberHeader";
 import { useNavigate } from "react-router-dom";
-import profilePic from "@/assets/images/face2.jpg";
-import { CaretDown } from "@phosphor-icons/react";
 import SortDropdownList from "@/components/SortDropdownList";
 import {
 	getFirestore,
@@ -116,9 +114,7 @@ const usersRef = collection(database, "users");
 
 export default function MemberPage() {
 	const navigate = useNavigate();
-	const [sortOrder, setSortOrder] = useState<
-		"latest" | "oldest" | string | null
-	>(null);
+	const [sortOrder, setSortOrder] = useState<string | null>(null);
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const [userData, setUserData] = useState<DocumentData | null>(null);
 
@@ -179,9 +175,15 @@ export default function MemberPage() {
 				<div className="flex flex-col space-y-4 py-6">
 					{userData && (
 						<MemberHeader
+							backgroundColor="tulip"
 							username={userData.fullName}
-							profilePicture={userData.profilePicture}
-							usernameExtra="text-2xl md:text-3xl lg:text-4xl"
+							profilePicChildren={
+								<img
+									className="w-32 h-32 object-cover rounded-full"
+									src={userData.profilePicture?.src}
+									alt="Profile pic"
+								/>
+							}
 						/>
 					)}
 				</div>
@@ -197,7 +199,6 @@ export default function MemberPage() {
 					<MediaGrid
 						data={data}
 						sortOrder={sortOrder}
-						selectable={false}
 					/>
 				</div>
 			</div>
