@@ -4,7 +4,10 @@ import clsx from "clsx";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	/* Height of the button */
-	shape: "small" | "medium" | "large" | "round" | "square";
+	size: "small" | "medium" | "large";
+
+	/* Special button shapes */
+	shape?: "round" | "square";
 
 	/* The text to display on the button */
 	text?: string;
@@ -16,13 +19,14 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	disabled?: boolean;
 
 	/* The severity of the button */
-	severity?: "primary" | "secondary" | "danger";
+	severity?: "primary" | "secondary" | "danger" | "dangerPrimary";
 
 	/* The callback to run when the button is clicked */
 	onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 function Button({
+	size,
 	shape,
 	text,
 	icon,
@@ -40,11 +44,19 @@ function Button({
 
 	const medium = "h-12 py-3 px-6 text-base";
 
-	const large = "h-16 py-4 px-6 text-2xl";
+	const large = "h-16 py-4 px-6 text-2xl leading-6";
 
-	const round = " h-[60px] w-[60px] rounded-full p-4";
+	const round = clsx("rounded-full p-4", {
+		"w-[60px] h-[60px]": size === "large",
+		"w-[48px] h-[48px]": size === "medium",
+		"w-[32px] h-[32px]": size === "small",
+	});
 
-	const square = "h-[60px] w-[60px] p-4";
+	const square = clsx("p-4", {
+		"w-[60px] h-[60px]": size === "large",
+		"w-[48px] h-[48px]": size === "medium",
+		"w-[32px] h-[32px]": size === "small",
+	});
 
 	const primary = "bg-primary-main text-neutrals-light-100";
 
@@ -54,10 +66,12 @@ function Button({
 	const danger =
 		"bg-transparent text-status-red-main border-2 border-status-red-main";
 
+	const dangerPrimary = "bg-status-red-main text-neutrals-light-100";
+
 	const disabledButton =
 		"bg-neutrals-light-500 text-neutrals-dark-200 border-transparent cursor-not-allowed";
 
-	const textStyle = "text-body-reg text-center min-w-max";
+	const textStyle = "text-center min-w-max";
 
 	return (
 		<button
@@ -65,21 +79,22 @@ function Button({
 			disabled={disabled}
 			className={twMerge(
 				clsx(base, {
-					[small]: shape === "small",
-					[medium]: shape === "medium",
-					[large]: shape === "large",
+					[small]: size === "small",
+					[medium]: size === "medium",
+					[large]: size === "large",
 					[round]: shape === "round",
 					[square]: shape === "square",
 					[primary]: severity === "primary",
 					[secondary]: severity === "secondary",
 					[danger]: severity === "danger",
+					[dangerPrimary]: severity === "dangerPrimary",
 					[disabledButton]: disabled,
 				}),
 			)}
 			onClick={onClick}
 		>
 			<span>{icon}</span>
-			<span className={clsx(textStyle)}>{text}</span>
+			{text && !shape && <span className={clsx(textStyle)}>{text}</span>}
 		</button>
 	);
 }

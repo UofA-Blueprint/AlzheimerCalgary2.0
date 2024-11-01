@@ -43,19 +43,19 @@ function EditMember({ isOpen, onClose }: EditMemberProps) {
 					<div className="flex flex-col gap-4">
 						<div>
 							<Button
-								shape="medium"
+								size="medium"
 								text="Save Changes"
 								onClick={onClose}
 							/>
 						</div>
 						<div className="flex flex-row gap-4">
 							<Button
-								shape="medium"
+								size="medium"
 								text="Delete Member Page"
 								severity="danger"
 							/>
 							<Button
-								shape="medium"
+								size="medium"
 								text="Reset Member Page"
 								severity="secondary"
 							/>

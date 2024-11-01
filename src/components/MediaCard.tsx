@@ -113,7 +113,7 @@ function MediaCard({
 								className="h-1/4"
 								severity="secondary"
 								onClick={() => setIsEditingCaption(false)}
-								shape={"small"}
+								size="small"
 							/>
 							<Button
 								className="h-1/4"
@@ -136,7 +136,7 @@ function MediaCard({
 										setIsEditingCaption(false);
 									}
 								}}
-								shape={"small"}
+								size="small"
 							/>
 						</div>
 					</div>
