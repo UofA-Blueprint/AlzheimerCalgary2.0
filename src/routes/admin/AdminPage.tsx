@@ -114,6 +114,15 @@ const database = getFirestore(app);
 const auth = getAuth(app);
 //#endregion
 
+interface buttonProps {
+	size: "small" | "medium" | "large";
+	text?: string;
+	shape?: "round" | "square";
+	icon?: React.ReactNode;
+	severity: "primary" | "secondary" | "danger" | "dangerPrimary";
+	onClick: () => void;
+}
+
 export default function AdminPage() {
 	const navigate = useNavigate();
 	const { id } = useParams();
@@ -122,9 +131,9 @@ export default function AdminPage() {
 	const [isSelectable, setIsSelectable] = useState<boolean>(false);
 
 	// Button lists
-	const buttons = [
+	const buttons: buttonProps[] = [
 		{
-			shape: "medium",
+			size: "medium",
 			text: "Add media",
 			icon: <Plus />,
 			severity: "primary",
@@ -132,12 +141,14 @@ export default function AdminPage() {
 		},
 		{
 			shape: "square",
+			size: "medium",
 			icon: <Info />,
 			severity: "secondary",
 			onClick: () => {},
 		},
 		{
 			shape: "square",
+			size: "medium",
 			icon: isSelectable ? <CheckCircle /> : <PencilSimple />,
 			severity: "secondary",
 			onClick: () => setIsSelectable(!isSelectable),
@@ -204,13 +215,7 @@ export default function AdminPage() {
 						{buttons.map((button, index) => (
 							<Button
 								key={index}
-								size="medium"
-								text={button.text}
-								icon={button.icon}
-								severity={
-									button.severity as "primary" | "secondary"
-								}
-								onClick={button.onClick}
+								{...button}
 							/>
 						))}
 					</div>

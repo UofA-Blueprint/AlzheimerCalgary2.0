@@ -3,8 +3,6 @@ import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-	className?: string;
-
 	/* Height of the button */
 	size: "small" | "medium" | "large";
 
@@ -40,11 +38,11 @@ function Button({
 
 	// Button styles
 	const base =
-		"flex flex-row items-center justify-center cursor-pointer w-full rounded-lg h-full";
+		"flex flex-row items-center justify-center cursor-pointer w-full rounded-lg gap-2";
 
 	const small = "h-8 py-1 px-6 gap-1 text-sm";
 
-	const medium = "py-4 px-6 text-base";
+	const medium = "h-12 py-3 px-6 text-base";
 
 	const large = "h-16 py-4 px-6 text-2xl leading-6";
 
@@ -60,8 +58,7 @@ function Button({
 		"w-[32px] h-[32px]": size === "small",
 	});
 
-	const primary =
-		"bg-primary-main text-white hover:bg-primary-light duration-300";
+	const primary = "bg-primary-main text-neutrals-light-100";
 
 	const secondary =
 		"bg-transparent text-primary-dark border-2 border-primary-dark ";
