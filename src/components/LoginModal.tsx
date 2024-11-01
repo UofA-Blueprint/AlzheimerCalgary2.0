@@ -125,7 +125,7 @@ const LoginModal = ({
 			{/* Login Button */}
 			<Button
 				text="Login"
-				shape="medium"
+				size="medium"
 				severity="primary"
 				disabled={invalidUsername || invalidPassword}
 				onClick={onClick}

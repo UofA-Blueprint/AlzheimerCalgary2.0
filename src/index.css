@@ -30,7 +30,7 @@
   }
 
   .scroller {
-    scrollbar-color: #555770 #fffff;
+    scrollbar-color: #555770 #ffffff;
     scrollbar-width: auto;
     scroll-behavior: smooth;
 
