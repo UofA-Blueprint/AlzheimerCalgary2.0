@@ -9,83 +9,6 @@ const data = [
 		id: 1234,
 		date: new Date("Oct 5, 2024"),
 	},
-	{
-		src: "https://images.unsplash.com/photo-1723984834599-5357b87f727c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1235,
-		date: new Date("Oct 4, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724505599369-2c1d43324fdc",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1236,
-		date: new Date("Oct 3, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724579243894-6a8c9bbfe88c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1237,
-		date: new Date("Oct 7, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1723984834599-5357b87f727c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1238,
-		date: new Date("Oct 8, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724505599369-2c1d43324fdc",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1239,
-		date: new Date("Oct 2, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724579243894-6a8c9bbfe88c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1240,
-		date: new Date("Oct 2, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1723984834599-5357b87f727c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1241,
-		date: new Date("Oct 2, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724505599369-2c1d43324fdc",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1242,
-		date: new Date("Oct 9, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724579243894-6a8c9bbfe88c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1240,
-		date: new Date("Oct 10, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1723984834599-5357b87f727c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1241,
-		date: new Date("Oct 2, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724505599369-2c1d43324fdc",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1242,
-		date: new Date("Oct 2, 2024"),
-	},
 ];
 
 //#region Imports
@@ -94,7 +17,7 @@ import { useEffect, useState } from "react";
 import { Plus, PencilSimple, Info, CheckCircle } from "@phosphor-icons/react";
 
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 // Components
@@ -126,9 +49,10 @@ interface buttonProps {
 export default function AdminPage() {
 	const navigate = useNavigate();
 	const { id } = useParams();
-
+	console.log(id)
 	const [patient, setPatient] = useState<memberData>();
 	const [isSelectable, setIsSelectable] = useState<boolean>(false);
+	const [images, setImages] = useState<ImageData[]>([]);
 
 	// Button lists
 	const buttons: buttonProps[] = [
@@ -154,7 +78,12 @@ export default function AdminPage() {
 			onClick: () => setIsSelectable(!isSelectable),
 		},
 	];
-
+	interface ImageData {
+		src: string;
+		caption: string;
+		id: string;
+		date: Date;
+	}
 	// Search
 	const [searchTerm, setSearchTerm] = useState<string>("");
 
@@ -165,6 +94,8 @@ export default function AdminPage() {
 
 		if (docSnap.exists()) {
 			console.log("Patient Found");
+			// console.log(docSnap)
+			// console.log(docRef)
 			setPatient({
 				id: docSnap.id,
 				name: docSnap.data().fullName,
@@ -177,9 +108,24 @@ export default function AdminPage() {
 				storageUsed: docSnap.data().storageUsed,
 				lastUpdated: docSnap.data().lastUpdated,
 			});
+			const imagesRef = collection(database, `users/${id}/images`);
+			const imageDocs = await getDocs(imagesRef);
+			// null warning not resolved
+			const imagesData: Media[] = imageDocs.docs.map((imageDoc) => ({
+				src: imageDoc.data().src,
+				caption: imageDoc.data().caption || "No caption available",
+				id: parseInt(imageDoc.id, 10),
+				date: imageDoc.data().date
+				  ? new Date(imageDoc.data().date.seconds * 1000)
+				  : new Date(),
+			  }));
+
+			  setImages(imagesData);		
 		} else {
 			console.log("Patient Not Found");
 		}
+
+		
 	};
 
 	const searchPhotoById = async () => {
@@ -232,7 +178,7 @@ export default function AdminPage() {
 
 				{/* Media Grid */}
 				<MediaGrid
-					data={data}
+					data={images}
 					sortOrder={"latest"}
 					selectable={isSelectable}
 				/>

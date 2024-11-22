@@ -37,7 +37,7 @@ import AdminPage from "./routes/admin/AdminPage";
 
 // User page
 import CaregiverLogin from "./routes/caregiver/CaregiverLogin";
-import MemberPage from "./routes/MemberPage";
+import MemberPage from "./routes/admin/MemberPage";
 
 const router = createBrowserRouter([
 	{
