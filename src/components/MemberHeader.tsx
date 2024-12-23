@@ -21,10 +21,10 @@ interface MemberHeaderProp {
 //#endregion
 
 //#region helpers
-function selectIcon(type: string) {
+function selectIcon(src: string) {
 	const iconStyling =
 		"w-full h-full rounded-full p-2 object-cover text-white";
-	switch (type) {
+	switch (src) {
 		case "PawPrint":
 			return <Icon.PawPrint className={iconStyling} />;
 		case "Tree":

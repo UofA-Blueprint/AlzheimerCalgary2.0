@@ -72,6 +72,8 @@ export function MemberTable({
 		navigate(`/admin/members/${row.id}`);
 	}
 
+	console.log(data);
+
 	return (
 		<div
 			className={twMerge("rounded-lg w-full overflow-hidden", className)}

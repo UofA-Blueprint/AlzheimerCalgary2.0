@@ -110,6 +110,8 @@ export default function AdminHome() {
 					profilePicture: {
 						type: doc.data().profilePicture.type,
 						src: doc.data().profilePicture.src,
+						backgroundColor:
+							doc.data().profilePicture.backgroundColor,
 					},
 					name: doc.data().fullName,
 					storageUsed: String(doc.data().storageUsed),
