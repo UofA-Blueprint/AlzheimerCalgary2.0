@@ -176,10 +176,7 @@ export default function MemberPage() {
 					{userData && (
 						<MemberHeader
 							username={userData.fullName}
-							profilePicture={{
-								type: "img",
-								src: userData.profilePicture,
-							}}
+							profilePicture={userData.profilePicture}
 						/>
 					)}
 				</div>
