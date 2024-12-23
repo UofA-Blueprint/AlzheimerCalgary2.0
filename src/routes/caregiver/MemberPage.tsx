@@ -175,15 +175,11 @@ export default function MemberPage() {
 				<div className="flex flex-col space-y-4 py-6">
 					{userData && (
 						<MemberHeader
-							backgroundColor="tulip"
 							username={userData.fullName}
-							profilePicChildren={
-								<img
-									className="w-32 h-32 object-cover rounded-full"
-									src={userData.profilePicture?.src}
-									alt="Profile pic"
-								/>
-							}
+							profilePicture={{
+								type: "img",
+								src: userData.profilePicture,
+							}}
 						/>
 					)}
 				</div>
@@ -199,6 +195,7 @@ export default function MemberPage() {
 					<MediaGrid
 						data={data}
 						sortOrder={sortOrder}
+						selectable={false}
 					/>
 				</div>
 			</div>
