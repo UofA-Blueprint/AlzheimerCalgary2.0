@@ -252,7 +252,10 @@ export default function AdminHome() {
 							</div>
 							<AddMember
 								isOpen={isAddMemberModalOpen}
-								onClose={() => setIsAddMemberModalOpen(false)}
+								onClose={() => {
+									setIsAddMemberModalOpen(false);
+								}}
+								usersRef={usersRef}
 							/>
 						</div>
 					</div>
