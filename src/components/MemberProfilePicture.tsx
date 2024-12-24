@@ -1,4 +1,4 @@
-import { ReactNode, useState, useCallback } from "react";
+import { ReactNode, useState, useContext } from "react";
 import IconOption from "./IconOption";
 import ColorPicker from "./ColorPicker";
 import {
@@ -13,8 +13,27 @@ import {
 } from "@phosphor-icons/react";
 import clsx from "clsx";
 import { ProfileColor } from "@/types/ProfileColor";
+import { profile } from "console";
 
-const MemberProfilePicture = () => {
+interface MemberProfilePictureProps {
+	/** The profile picture */
+	profilePicture: {
+		type: "icon" | "img";
+		src: string;
+		backgroundColor: string;
+	};
+	/** The function to set the profile picture */
+	setProfilePicture: (profilePicture: {
+		type: "icon" | "img";
+		src: string;
+		backgroundColor: string;
+	}) => void;
+}
+
+const MemberProfilePicture = ({
+	profilePicture,
+	setProfilePicture,
+}: MemberProfilePictureProps) => {
 	const body = "flex flex-col w-full gap-2";
 
 	const controls = "flex flex-row items-start justify-between w-full";
@@ -41,14 +60,21 @@ const MemberProfilePicture = () => {
 	};
 
 	const iconList = Object.keys(iconMap);
-
 	return (
 		<div className={clsx(body)}>
 			<div className={clsx(controls)}>
 				<h2 className={clsx(header)}>Member Profile Picture</h2>
 				<ColorPicker
 					backgroundColor={backgroundColor}
-					setBackgroundColor={setBackgroundColor}
+					setBackgroundColor={(color) => {
+						setBackgroundColor(color);
+						let colorSplit = color.split("-");
+						let colorName = colorSplit[colorSplit.length - 1];
+						setProfilePicture({
+							...profilePicture,
+							backgroundColor: colorName,
+						});
+					}}
 				/>
 			</div>
 			<div className={clsx(icons)}>
@@ -58,7 +84,14 @@ const MemberProfilePicture = () => {
 						icon={iconMap[iconName]}
 						color={backgroundColor}
 						selected={selectedIcon === iconName}
-						setSelectedIcon={() => setSelectedIcon(iconName)}
+						setSelectedIcon={() => {
+							setSelectedIcon(iconName);
+							setProfilePicture({
+								...profilePicture,
+								type: "icon",
+								src: iconName,
+							});
+						}}
 					/>
 				))}
 			</div>

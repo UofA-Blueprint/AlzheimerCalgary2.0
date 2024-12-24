@@ -23,6 +23,15 @@ function AddMember({ isOpen, onClose, usersRef }: AddMemberProps) {
 	const [idError, setIdError] = useState<boolean>(false);
 	const [name, setName] = useState<string>("");
 	const [id, setId] = useState<string>("");
+	const [profilePicture, setProfilePicture] = useState<{
+		type: "icon" | "img";
+		src: string;
+		backgroundColor: string;
+	}>({
+		type: "icon",
+		src: "PawPrint",
+		backgroundColor: "water",
+	});
 
 	// Content style
 	const content = "flex flex-col gap-6";
@@ -39,11 +48,7 @@ function AddMember({ isOpen, onClose, usersRef }: AddMemberProps) {
 				lastUpdated: new Date(),
 				id: id,
 				passcode: rString(),
-				profilePicture: {
-					type: "icon",
-					src: "PawPrint",
-					backgroundColor: "tulip",
-				},
+				profilePicture: profilePicture,
 			});
 			resetAndClose();
 		}
@@ -83,7 +88,10 @@ function AddMember({ isOpen, onClose, usersRef }: AddMemberProps) {
 						setError={setIdError}
 						setInput={setId}
 					/>
-					<MemberProfilePicture />
+					<MemberProfilePicture
+						profilePicture={profilePicture}
+						setProfilePicture={setProfilePicture}
+					/>
 				</div>
 			}
 			actions={
