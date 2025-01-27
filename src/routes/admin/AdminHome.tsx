@@ -62,7 +62,7 @@ export default function AdminHome() {
 	const [sortBy, setSortBy] = useState<{
 		[key: string]: OrderByDirection | undefined;
 	}>({
-		fullName: "asc",
+		lastUpdated: "desc",
 	});
 
 	// Search
@@ -75,6 +75,7 @@ export default function AdminHome() {
 	//#region functions
 	const fetchMembers = async () => {
 		const [category, order] = Object.entries(sortBy)[0];
+		// console.log("Category: ", category, "Order: ", order);
 		try {
 			let q;
 			if (lastDoc) {
@@ -207,6 +208,7 @@ export default function AdminHome() {
 			}
 		});
 	}, [sortBy, expanded]);
+
 	//#endregion
 
 	return (

@@ -7,6 +7,7 @@ import Button from "@/components/Button";
 import { WarningCircle } from "@phosphor-icons/react";
 import { CollectionReference, doc, setDoc } from "firebase/firestore";
 import rString from "@/helpers/generatePasscode";
+import { useNavigate } from "react-router-dom";
 
 interface AddMemberProps {
 	/* Toggles the modal's visibility */
@@ -19,8 +20,9 @@ interface AddMemberProps {
 	usersRef: CollectionReference;
 }
 function AddMember({ isOpen, onClose, usersRef }: AddMemberProps) {
-	const [nameError, setNameError] = useState<boolean>(false);
-	const [idError, setIdError] = useState<boolean>(false);
+	const navigate = useNavigate();
+	const [nameError, setNameError] = useState<boolean>(true);
+	const [idError, setIdError] = useState<boolean>(true);
 	const [name, setName] = useState<string>("");
 	const [id, setId] = useState<string>("");
 	const [profilePicture, setProfilePicture] = useState<{
@@ -38,8 +40,10 @@ function AddMember({ isOpen, onClose, usersRef }: AddMemberProps) {
 
 	// Function to add member
 	const addMember = async () => {
+		console.log("Adding member", idError, nameError);
 		if (!nameError && !idError) {
 			// Add member to Firestore
+			// TODO: CHECK IF ID AND NAME ARE UNIQUE
 			const memberRef = doc(usersRef, id);
 			await setDoc(memberRef, {
 				fullName: name,
@@ -51,12 +55,13 @@ function AddMember({ isOpen, onClose, usersRef }: AddMemberProps) {
 				profilePicture: profilePicture,
 			});
 			resetAndClose();
+			navigate(`/admin/members/${id}`);
 		}
 	};
 
 	const resetAndClose = () => {
-		setNameError(false);
-		setIdError(false);
+		setNameError(true);
+		setIdError(true);
 		setName("");
 		setId("");
 		onClose();

@@ -38,25 +38,25 @@ function Button({
 
 	// Button styles
 	const base =
-		"flex flex-row items-center justify-center cursor-pointer w-full rounded-lg gap-2";
+		"flex flex-row items-center justify-center cursor-pointer w-full rounded-lg gap-2 p-2 lg:p-4 xl:p-6 text-sm lg:text-base xl:text-2xl xl:leading-6";
 
-	const small = "h-8 py-1 px-6 gap-1 text-sm";
+	// const small = "h-8 py-1 px-6 gap-1 text-sm";
 
-	const medium = "h-12 py-3 px-6 text-base";
+	// const medium = "h-12 py-3 px-6 text-base";
 
-	const large = "h-16 py-4 px-6 text-2xl leading-6";
+	// const large = "h-16 py-4 px-6 text-2xl leading-6";
 
-	const round = clsx("rounded-full p-4", {
-		"w-[60px] h-[60px]": size === "large",
-		"w-[48px] h-[48px]": size === "medium",
-		"w-[32px] h-[32px]": size === "small",
-	});
+	// const round = clsx("rounded-full p-4", {
+	// 	"w-[60px] h-[60px]": size === "large",
+	// 	"w-[48px] h-[48px]": size === "medium",
+	// 	"w-[32px] h-[32px]": size === "small",
+	// });
 
-	const square = clsx("p-4", {
-		"w-[60px] h-[60px]": size === "large",
-		"w-[48px] h-[48px]": size === "medium",
-		"w-[32px] h-[32px]": size === "small",
-	});
+	// const square = clsx("p-4", {
+	// 	"w-[60px] h-[60px]": size === "large",
+	// 	"w-[48px] h-[48px]": size === "medium",
+	// 	"w-[32px] h-[32px]": size === "small",
+	// });
 
 	const primary = "bg-primary-main text-neutrals-light-100";
 
@@ -79,11 +79,11 @@ function Button({
 			disabled={disabled}
 			className={twMerge(
 				clsx(base, {
-					[small]: size === "small",
-					[medium]: size === "medium",
-					[large]: size === "large",
-					[round]: shape === "round",
-					[square]: shape === "square",
+					// [small]: size === "small",
+					// [medium]: size === "medium",
+					// [large]: size === "large",
+					// [round]: shape === "round",
+					// [square]: shape === "square",
 					[primary]: severity === "primary",
 					[secondary]: severity === "secondary",
 					[danger]: severity === "danger",

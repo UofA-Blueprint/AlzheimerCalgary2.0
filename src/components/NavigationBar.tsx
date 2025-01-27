@@ -17,6 +17,7 @@ import { displayToast } from "@/utils";
 interface NavigationBarProps {
 	userType?: "user" | "admin";
 	className?: string;
+	outerDivClassName?: string;
 }
 //#endregion
 
@@ -36,6 +37,7 @@ const auth = getAuth(app);
 export function NavigationBar({
 	userType = "user",
 	className,
+	outerDivClassName: outer = "",
 }: NavigationBarProps): JSX.Element {
 	const navigate = useNavigate();
 
@@ -63,7 +65,7 @@ export function NavigationBar({
 	//#endregion
 
 	return (
-		<div>
+		<div className={twMerge("w-full z-50", outer)}>
 			<ToastContainer
 				position="bottom-right"
 				autoClose={2000}
@@ -73,7 +75,7 @@ export function NavigationBar({
 			/>
 			<nav
 				className={twMerge(
-					"flex justify-between items-center py-2 md:py-1 px-8 md:px-16 borer border-b-2 w-full md:text-body-reg bg-white",
+					"flex h-full justify-between items-center py-2 md:py-1 px-8 md:px-16 borer border-b-2 w-full md:text-body-reg bg-white",
 					className,
 				)}
 			>

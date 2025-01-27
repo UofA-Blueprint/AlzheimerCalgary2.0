@@ -1,5 +1,5 @@
-import { Masonry } from "masonic";
 import MediaCard from "./MediaCard";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 interface Media {
 	src: string;
@@ -10,39 +10,43 @@ interface Media {
 
 interface MediaGridProps {
 	data: Media[];
-	sortOrder: string | null; // Sorting order as a prop
 	selectable: boolean;
+	fullWidth: number;
 }
 
-function MediaGrid({ data, sortOrder, selectable }: MediaGridProps) {
-	// Sort data based on sortOrder
-	const sortedData = sortOrder
-		? [...data].sort((a, b) => {
-				return sortOrder === "latest"
-					? b.date.getTime() - a.date.getTime() // Descending for latest
-					: a.date.getTime() - b.date.getTime(); // Ascending for oldest
-		  })
-		: data; // Use default order if sortOrder is null
+function splitIntoColumns(arr: Media[], nColumns: number) {
+	const columnSize = Math.ceil(arr.length / nColumns); // Size of each column
+	const result: Media[][] = [];
+	for (let i = 0; i < nColumns; i++) {
+		result.push(arr.slice(i * columnSize, (i + 1) * columnSize));
+	}
 
+	return result;
+}
+
+function MediaGrid({ data, selectable, fullWidth, ...props }: MediaGridProps) {
+	const dataTable = useMemo(() => splitIntoColumns(data, 4), [data]);
 	return (
-		<div className="w-full h-full">
-			<Masonry
-				items={sortedData}
-				render={MasonryItem}
-				columnGutter={12}
-				columnWidth={320}
-				overscanBy={5}
-			/>
+		<div className="w-full h-[80vh] flex gap-8">
+			{
+				// Create a grid container with columns based on the width of the container
+				// and render each item in the grid
+				dataTable.map((column, i) => (
+					<div
+						key={i}
+						className="grid grid-cols-1 gap-4"
+					>
+						{column.map((item, j) => (
+							<MediaCard
+								key={j}
+								{...item}
+							/>
+						))}
+					</div>
+				))
+			}
 		</div>
 	);
-}
-
-interface MasonryItemProps {
-	data: Media;
-}
-
-function MasonryItem({ data }: MasonryItemProps) {
-	return <MediaCard {...data} />;
 }
 
 export default MediaGrid;

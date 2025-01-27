@@ -60,7 +60,7 @@ function MemberHeader({
 		>
 			{/* Profile Picture */}
 			<ProfilePictures
-				className="w-36 md:w-44 aspect-square"
+				className="w-32 xl:w-44 aspect-square"
 				backgroundColor={profilePicture?.backgroundColor}
 			>
 				{profilePicture?.type === "img" ? (

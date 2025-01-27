@@ -1,10 +1,15 @@
 //#region Imports
-import { CaretLeft } from "@phosphor-icons/react";
+import { CaretLeft, X } from "@phosphor-icons/react";
 import MediaUploadZone from "./MediaUploadZone";
 import picture from "@/assets/images/pic1.jpg";
 //#endregion
 
-function Gallery() {
+interface GalleryProps {
+	handleClose: () => void;
+	returning: boolean;
+}
+
+function Gallery({ handleClose, returning }: GalleryProps) {
 	//TODO: Configure the local gallery to display images here
 	const imgList: string[] = [picture, picture, picture, picture, picture];
 
@@ -13,7 +18,6 @@ function Gallery() {
 	/**
 	 * Close the gallery
 	 */
-	const handleClose = () => {};
 
 	/**
 	 * Handle an image in the gallery being clicked
@@ -23,17 +27,26 @@ function Gallery() {
 	//#endregion
 
 	return (
-		<div className="flex flex-col items-center justify-center gap-y-6 max-w-5xl px-6 rounded-xl py-8 bg-white">
+		<div className="h-full flex flex-col items-center justify-center gap-y-6 max-w-5xl px-6 py-8 bg-neutrals-light-200">
 			{/* Title */}
-			<div className="w-full">
+			<div className="w-full flex justify-between items-center">
 				<div className="flex gap-x-2 items-center font-display text-2xl font-bold">
-					<CaretLeft
-						className="cursor-pointer hover:text-primary-main transition ease-in-out"
+					{returning && (
+						<CaretLeft
+							className="cursor-pointer hover:text-primary-main transition ease-in-out"
+							weight="bold"
+							onClick={handleClose}
+						/>
+					)}
+					<h1 className="">Gallery</h1>
+				</div>
+				{!returning && (
+					<X
+						className="cursor-pointer text-2xl hover:text-primary-main transition ease-in-out"
 						weight="bold"
 						onClick={handleClose}
 					/>
-					<h1 className="">Gallery</h1>
-				</div>
+				)}
 			</div>
 
 			{/* Image gallery */}
@@ -58,7 +71,7 @@ function Gallery() {
 
 			{/* Upload media */}
 			<h2 className="w-full text-xl">Upload Media</h2>
-			<MediaUploadZone />
+			<MediaUploadZone onFilesAdded={() => {}} />
 		</div>
 	);
 }

@@ -38,6 +38,34 @@ const data = [
 		date: new Date("Oct 8, 2024"),
 	},
 	{
+		src: "https://images.unsplash.com/photo-1724579243894-6a8c9bbfe88c",
+		caption:
+			"Channeling their inner artist with a paintbrush and a splash of color!",
+		id: 1237,
+		date: new Date("Oct 7, 2024"),
+	},
+	{
+		src: "https://images.unsplash.com/photo-1723984834599-5357b87f727c",
+		caption:
+			"Channeling their inner artist with a paintbrush and a splash of color!",
+		id: 1238,
+		date: new Date("Oct 8, 2024"),
+	},
+	{
+		src: "https://images.unsplash.com/photo-1724579243894-6a8c9bbfe88c",
+		caption:
+			"Channeling their inner artist with a paintbrush and a splash of color!",
+		id: 1237,
+		date: new Date("Oct 7, 2024"),
+	},
+	{
+		src: "https://images.unsplash.com/photo-1723984834599-5357b87f727c",
+		caption:
+			"Channeling their inner artist with a paintbrush and a splash of color!",
+		id: 1238,
+		date: new Date("Oct 8, 2024"),
+	},
+	{
 		src: "https://images.unsplash.com/photo-1724505599369-2c1d43324fdc",
 		caption:
 			"Channeling their inner artist with a paintbrush and a splash of color!",
@@ -90,7 +118,7 @@ const data = [
 
 //#region Imports
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { Plus, PencilSimple, Info, CheckCircle } from "@phosphor-icons/react";
 
 import { initializeApp } from "firebase/app";
@@ -105,6 +133,8 @@ import MemberHeader from "@/components/MemberHeader";
 import Button from "@/components/Button";
 
 import { memberData } from "@/components/MemberTable";
+import { Gallery } from "@/components/Gallery";
+import { twMerge } from "tailwind-merge";
 //#endregion
 
 //#region Firebase
@@ -123,12 +153,15 @@ interface buttonProps {
 	onClick: () => void;
 }
 
-export default function AdminPage() {
+export default function AdminMemberPage() {
 	const navigate = useNavigate();
 	const { id } = useParams();
 
 	const [patient, setPatient] = useState<memberData>();
 	const [isSelectable, setIsSelectable] = useState<boolean>(false);
+	const [isAddingMedia, setIsAddingMedia] = useState<boolean>(false);
+	const [masonryWidth, setMasonryWidth] = useState<number>(0);
+	const masonryContainerRef = useRef<HTMLDivElement>(null);
 
 	// Button lists
 	const buttons: buttonProps[] = [
@@ -137,7 +170,9 @@ export default function AdminPage() {
 			text: "Add media",
 			icon: <Plus />,
 			severity: "primary",
-			onClick: () => {},
+			onClick: () => {
+				setIsAddingMedia(true);
+			},
 		},
 		{
 			shape: "square",
@@ -164,7 +199,6 @@ export default function AdminPage() {
 		const docSnap = await getDoc(docRef);
 
 		if (docSnap.exists()) {
-			console.log("Patient Found");
 			setPatient({
 				id: docSnap.id,
 				name: docSnap.data().fullName,
@@ -178,13 +212,13 @@ export default function AdminPage() {
 				lastUpdated: docSnap.data().lastUpdated,
 			});
 		} else {
-			console.log("Patient Not Found");
 		}
 	};
 
 	const searchPhotoById = async () => {
 		alert("Searching for photo with ID: " + searchTerm);
 	};
+
 	//#endregion
 
 	//#region UseEffect
@@ -198,45 +232,73 @@ export default function AdminPage() {
 
 		fetchMember();
 	}, []);
+
+	// useEffect(() => {
+	// 	const timer = setTimeout(() => {
+	// 		setMasonryWidth(masonryContainerRef.current!.clientWidth);
+	// 	}, 500); // Delay of 300 milliseconds
+
+	// 	// Cleanup function to clear timeout
+	// 	return () => clearTimeout(timer);
+	// }, [isAddingMedia]);
+
 	//#endregion
 
 	return (
-		<div className="flex flex-col">
-			<NavigationBar userType="admin" />
-			<div className="mx-8 my-8 md:mx-16 flex flex-col gap-y-8">
-				{/* User Display */}
-				<div className="flex flex-col lg:flex-row items-center justify-between gap-y-4">
-					<MemberHeader
-						username={patient?.name!}
-						profilePicture={patient?.profilePicture!}
-						usernameExtra="text-2xl md:text-3xl lg:text-4xl"
+		<main>
+			<NavigationBar
+				userType="admin"
+				outerDivClassName=""
+			/>
+			<div className="flex">
+				<div
+					className={twMerge(
+						"overflow-hidden transition-all",
+						isAddingMedia ? "w-[36vw]" : "w-0",
+					)}
+				>
+					<Gallery
+						handleClose={() => setIsAddingMedia(false)}
+						returning={false}
 					/>
-					<div className="flex items-center gap-x-4">
-						{buttons.map((button, index) => (
-							<Button
-								key={index}
-								{...button}
-							/>
-						))}
+				</div>
+				<div
+					className="flex-1 m-8 xl:m-12 flex flex-col md:gap-y-8 "
+					ref={masonryContainerRef}
+				>
+					{/* User Display */}
+					<div className="flex flex-col lg:flex-row items-center justify-between lg:gap-y-4">
+						<MemberHeader
+							username={patient?.name!}
+							profilePicture={patient?.profilePicture!}
+							usernameExtra="text-lg lg:text-xl xl:text-3xl"
+						/>
+						<div className="flex items-center gap-x-4 md:gap-x-2">
+							{buttons.map((button, index) => (
+								<Button
+									key={index}
+									{...button}
+									disabled={isAddingMedia}
+								/>
+							))}
+						</div>
 					</div>
-				</div>
-
-				{/* Search Bar */}
-				<div className="flex w-full lg:w-1/3 h-12 mt-4">
-					<SearchBar
-						setSearch={setSearchTerm}
-						handleClick={searchPhotoById}
-						placeholder="Search by Photo ID"
+					{/* Search Bar */}
+					<div className="flex w-full lg:w-1/3 h-12 my-4">
+						<SearchBar
+							setSearch={setSearchTerm}
+							handleClick={searchPhotoById}
+							placeholder="Search by Photo ID"
+						/>
+					</div>
+					{/* Media Grid */}
+					<MediaGrid
+						data={data}
+						selectable={isSelectable}
+						fullWidth={masonryWidth}
 					/>
 				</div>
-
-				{/* Media Grid */}
-				<MediaGrid
-					data={data}
-					sortOrder={"latest"}
-					selectable={isSelectable}
-				/>
 			</div>
-		</div>
+		</main>
 	);
 }

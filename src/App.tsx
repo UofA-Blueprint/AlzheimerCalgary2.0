@@ -33,7 +33,7 @@ import ConfirmationModalTestRoute from "./routes/test/ConfirmationModalTestRoute
 // Admin
 import AdminLogin from "./routes/admin/AdminLogin";
 import AdminHome from "./routes/admin/AdminHome";
-import AdminPage from "./routes/admin/AdminPage";
+import AdminMemberPage from "./routes/admin/AdminMemberPage";
 
 // User page
 import CaregiverLogin from "./routes/caregiver/CaregiverLogin";
@@ -168,7 +168,7 @@ const router = createBrowserRouter([
 	},
 	{
 		path: "/admin/members/:id",
-		element: <AdminPage />,
+		element: <AdminMemberPage />,
 	},
 
 	// Caregiver Routes
