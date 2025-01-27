@@ -31,6 +31,8 @@ function SearchBar({ setSearch, handleClick, placeholder }: SearchBarProps) {
 			<button
 				className="rounded-r-xl bg-primary-main px-3 hover:bg-primary-light cursor-pointer"
 				onClick={handleClick}
+				type="button"
+				title="Search"
 			>
 				<MagnifyingGlass
 					color="white"

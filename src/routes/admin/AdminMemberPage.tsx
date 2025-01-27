@@ -151,6 +151,7 @@ interface buttonProps {
 	icon?: React.ReactNode;
 	severity: "primary" | "secondary" | "danger" | "dangerPrimary";
 	onClick: () => void;
+	title?: string;
 }
 
 export default function AdminMemberPage() {
@@ -180,6 +181,7 @@ export default function AdminMemberPage() {
 			icon: <Info />,
 			severity: "secondary",
 			onClick: () => {},
+			title: "View patient information",
 		},
 		{
 			shape: "square",
@@ -187,6 +189,7 @@ export default function AdminMemberPage() {
 			icon: isSelectable ? <CheckCircle /> : <PencilSimple />,
 			severity: "secondary",
 			onClick: () => setIsSelectable(!isSelectable),
+			title: "Edit patient information",
 		},
 	];
 
@@ -233,28 +236,30 @@ export default function AdminMemberPage() {
 		fetchMember();
 	}, []);
 
-	// useEffect(() => {
-	// 	const timer = setTimeout(() => {
-	// 		setMasonryWidth(masonryContainerRef.current!.clientWidth);
-	// 	}, 500); // Delay of 300 milliseconds
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setMasonryWidth(masonryContainerRef.current!.offsetWidth);
+		}, 500); // Delay of 300 milliseconds
 
-	// 	// Cleanup function to clear timeout
-	// 	return () => clearTimeout(timer);
-	// }, [isAddingMedia]);
+		// Cleanup function to clear timeout
+		return () => clearTimeout(timer);
+	}, [isAddingMedia]);
 
 	//#endregion
 
 	return (
-		<main>
+		<main className="overflow-hidden h-[100vh]">
 			<NavigationBar
 				userType="admin"
 				outerDivClassName=""
 			/>
-			<div className="flex">
+			<div className="flex h-full">
 				<div
 					className={twMerge(
-						"overflow-hidden transition-all",
-						isAddingMedia ? "w-[36vw]" : "w-0",
+						"h-[90vh] transition-gpu duration-150 overflow-hidden",
+						isAddingMedia
+							? "w-[36vw] opacity-100"
+							: "w-[0] opacity-0",
 					)}
 				>
 					<Gallery
@@ -263,11 +268,11 @@ export default function AdminMemberPage() {
 					/>
 				</div>
 				<div
-					className="flex-1 m-8 xl:m-12 flex flex-col md:gap-y-8 "
+					className="flex-1 h-[90vh] px-4 mx-8 xl:m-12 flex flex-col md:gap-y-8 overflow-y-scroll"
 					ref={masonryContainerRef}
 				>
 					{/* User Display */}
-					<div className="flex flex-col lg:flex-row items-center justify-between lg:gap-y-4">
+					<div className="flex flex-col my-4 lg:flex-row items-center justify-between lg:gap-y-4">
 						<MemberHeader
 							username={patient?.name!}
 							profilePicture={patient?.profilePicture!}
@@ -279,12 +284,13 @@ export default function AdminMemberPage() {
 									key={index}
 									{...button}
 									disabled={isAddingMedia}
+									title={button.title}
 								/>
 							))}
 						</div>
 					</div>
 					{/* Search Bar */}
-					<div className="flex w-full lg:w-1/3 h-12 my-4">
+					<div className="flex w-1/2 xl:w-1/3 h-12 my-4">
 						<SearchBar
 							setSearch={setSearchTerm}
 							handleClick={searchPhotoById}

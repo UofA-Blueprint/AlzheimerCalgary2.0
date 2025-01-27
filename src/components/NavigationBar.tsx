@@ -65,7 +65,7 @@ export function NavigationBar({
 	//#endregion
 
 	return (
-		<div className={twMerge("w-full z-50", outer)}>
+		<div className={twMerge("w-full z-50 sticky top-0", outer)}>
 			<ToastContainer
 				position="bottom-right"
 				autoClose={2000}

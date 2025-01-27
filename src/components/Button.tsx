@@ -23,6 +23,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 	/* The callback to run when the button is clicked */
 	onClick?: React.MouseEventHandler<HTMLButtonElement>;
+
+	title?: string;
 }
 
 function Button({
@@ -33,6 +35,7 @@ function Button({
 	disabled = false,
 	severity = "primary",
 	onClick,
+	title,
 }: ButtonProps) {
 	const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -92,6 +95,8 @@ function Button({
 				}),
 			)}
 			onClick={onClick}
+			type="button"
+			title={title}
 		>
 			<span>{icon}</span>
 			{text && !shape && <span className={clsx(textStyle)}>{text}</span>}

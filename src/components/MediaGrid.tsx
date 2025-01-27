@@ -15,7 +15,7 @@ interface MediaGridProps {
 }
 
 function splitIntoColumns(arr: Media[], nColumns: number) {
-	const columnSize = Math.ceil(arr.length / nColumns); // Size of each column
+	const columnSize = Math.floor(arr.length / nColumns); // Size of each column
 	const result: Media[][] = [];
 	for (let i = 0; i < nColumns; i++) {
 		result.push(arr.slice(i * columnSize, (i + 1) * columnSize));
@@ -25,16 +25,20 @@ function splitIntoColumns(arr: Media[], nColumns: number) {
 }
 
 function MediaGrid({ data, selectable, fullWidth, ...props }: MediaGridProps) {
-	const dataTable = useMemo(() => splitIntoColumns(data, 4), [data]);
+	const dataTable = useMemo(
+		() => splitIntoColumns(data, Math.floor(fullWidth / 256)),
+		[data, fullWidth],
+	);
+	console.log(dataTable);
 	return (
-		<div className="w-full h-[80vh] flex gap-8">
+		<div className="w-full flex gap-4">
 			{
 				// Create a grid container with columns based on the width of the container
 				// and render each item in the grid
 				dataTable.map((column, i) => (
 					<div
 						key={i}
-						className="grid grid-cols-1 gap-4"
+						className="flex flex-col gap-4 items-center"
 					>
 						{column.map((item, j) => (
 							<MediaCard
