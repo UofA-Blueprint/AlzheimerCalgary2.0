@@ -25,35 +25,35 @@ function splitIntoColumns(arr: Media[], nColumns: number) {
 }
 
 function MediaGrid({ data, selectable, fullWidth, ...props }: MediaGridProps) {
-	// const dataTable = useMemo(
-	// 	() => splitIntoColumns(data, Math.floor(fullWidth / 256)),
-	// 	[data, fullWidth],
-	// );
+	const dataTable = useMemo(
+		() => splitIntoColumns(data, Math.floor(fullWidth / 256)),
+		[data, fullWidth],
+	);
 
 	return (
-		<div className="w-full grid grid-cols-4 grid-rows-auto gap-4">
+		<div className="w-full grid grid-cols-4 grid-rows-auto gap-4  overflow-y-scroll">
 			{
 				// Create a grid container with columns based on the width of the container
 				// and render each item in the grid
-				// dataTable.map((column, i) => (
-				// 	<div
-				// 		key={i}
-				// 		className="flex flex-col gap-4 items-center"
-				// 	>
-				// 		{column.map((item, j) => (
-				// 			<MediaCard
-				// 				key={j}
-				// 				{...item}
-				// 			/>
-				// 		))}
-				// 	</div>
-				// ))
-				data.map((item, i) => (
-					<MediaCard
+				dataTable.map((column, i) => (
+					<div
 						key={i}
-						{...item}
-					/>
+						className="flex flex-col gap-4 items-center"
+					>
+						{column.map((item, j) => (
+							<MediaCard
+								key={j}
+								{...item}
+							/>
+						))}
+					</div>
 				))
+				// data.map((item, i) => (
+				// 	<MediaCard
+				// 		key={i}
+				// 		{...item}
+				// 	/>
+				// ))
 			}
 		</div>
 	);

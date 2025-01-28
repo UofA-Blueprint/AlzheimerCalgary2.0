@@ -22,7 +22,7 @@ function SearchBar({ setSearch, handleClick, placeholder }: SearchBarProps) {
 		<div className="flex flex-row h-full w-full">
 			<input
 				placeholder={placeholder}
-				className="px-4 md:px-8 rounded-l-xl bg-slate-100 h-full w-full"
+				className="px-4 py-4 md:px-8 rounded-l-xl bg-slate-100 h-full w-full"
 				onChange={(e) =>
 					setSearch(capitalizeSearchTerm(e.target.value))
 				}

@@ -239,7 +239,7 @@ export default function AdminMemberPage() {
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setMasonryWidth(masonryContainerRef.current!.offsetWidth);
-		}, 500); // Delay of 300 milliseconds
+		}, 300); // Delay of 300 milliseconds
 
 		// Cleanup function to clear timeout
 		return () => clearTimeout(timer);
@@ -268,7 +268,7 @@ export default function AdminMemberPage() {
 					)}
 				</div>
 				<div
-					className="flex-1 p-8 flex flex-col md:gap-y-8 overflow-y-scroll"
+					className="flex-1 p-8 flex flex-col md:gap-y-8"
 					ref={masonryContainerRef}
 				>
 					{/* User Display */}
@@ -290,7 +290,7 @@ export default function AdminMemberPage() {
 						</div>
 					</div>
 					{/* Search Bar */}
-					<div className="flex w-1/2 xl:w-1/3 h-12 my-4">
+					<div className="flex w-1/2 xl:w-1/3 my-4">
 						<SearchBar
 							setSearch={setSearchTerm}
 							handleClick={searchPhotoById}
