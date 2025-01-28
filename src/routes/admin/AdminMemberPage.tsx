@@ -251,24 +251,24 @@ export default function AdminMemberPage() {
 		<main className="overflow-hidden h-[100vh]">
 			<NavigationBar
 				userType="admin"
-				outerDivClassName=""
+				outerDivClassName="h-[10%] xl:h-[5%]"
 			/>
-			<div className="flex h-full">
+			<div className="flex h-[90%] xl:h-[95%]">
 				<div
 					className={twMerge(
-						"h-[90vh] transition-gpu duration-150 overflow-hidden",
-						isAddingMedia
-							? "w-[36vw] opacity-100"
-							: "w-[0] opacity-0",
+						"h-full transition-gpu duration-300 overflow-hidden",
+						isAddingMedia ? "w-[36vw]" : "w-[0]",
 					)}
 				>
-					<Gallery
-						handleClose={() => setIsAddingMedia(false)}
-						returning={false}
-					/>
+					{isAddingMedia && (
+						<Gallery
+							handleClose={() => setIsAddingMedia(false)}
+							returning={false}
+						/>
+					)}
 				</div>
 				<div
-					className="flex-1 h-[90vh] px-4 mx-8 xl:m-12 flex flex-col md:gap-y-8 overflow-y-scroll"
+					className="flex-1 p-8 flex flex-col md:gap-y-8 overflow-y-scroll"
 					ref={masonryContainerRef}
 				>
 					{/* User Display */}
