@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { UploadSimple, WarningCircle } from "@phosphor-icons/react";
-import MediaUploadStatus from "./MediaUploadStatus";
 
 interface MediaUploadZoneProps {
 	onFilesAdded: (files: File[]) => void;
