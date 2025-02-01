@@ -9,6 +9,7 @@ interface MediaUploadStatusProps {
 	// status
 	uploadProgress: number;
 	setUploadProgress: React.Dispatch<React.SetStateAction<number>>;
+	onCancel?: () => void;
 }
 
 // Format bytes into its corresponding format
@@ -27,11 +28,17 @@ const MediaUploadStatus: React.FC<MediaUploadStatusProps> = ({
 	fileSize,
 	uploadProgress,
 	setUploadProgress,
+	onCancel, 
 }) => {
-	const [isFailed, setIsFailed] = useState(false); // Example failed condition
+	const [isFailed, setIsFailed] = useState(false); 
 	const [isCompleted, setIsCompleted] = useState(false);
 	const [showDoneStatus, setShowDoneStatus] = useState(false);
-
+    const handleCancel = () => {
+        if (onCancel) {
+            onCancel();
+            setIsFailed(true); 
+        }
+    };
 	// For the trash icon to appear when it complete
 	useEffect(() => {
 		let timer: ReturnType<typeof setTimeout>;
@@ -113,19 +120,21 @@ const MediaUploadStatus: React.FC<MediaUploadStatusProps> = ({
 					)}
 				</div>
 			</div>
-
-			{/* X Button */}
-			{isCompleted ? (
-				showDoneStatus ? (
-					<button className=" pl-2 text-neutrals-dark-200 hover:text-neutrals-dark-500 transition ease-in-out duration-300">
-						<Trash size={24} />
-					</button>
-				) : null
-			) : (
-				<button className=" pl-2 text-neutrals-dark-200 hover:text-neutrals-dark-500">
-					<X size={24} />
+		{/* X Button */}
+		{isCompleted ? (
+			showDoneStatus ? (
+				<button className="pl-2 text-neutrals-dark-200 hover:text-neutrals-dark-500 transition ease-in-out duration-300">
+					<Trash size={24} />
 				</button>
-			)}
+			) : null
+		) : (
+			<button 
+				className="pl-2 text-neutrals-dark-200 hover:text-neutrals-dark-500"
+				onClick={handleCancel}
+			>
+				<X size={24} />
+			</button>
+		)}
 		</div>
 	);
 };

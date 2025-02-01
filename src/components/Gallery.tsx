@@ -7,18 +7,21 @@ import { clear } from "console";
 import MediaUploadStatus from "./MediaUploadStatus";
 import { useParams, useNavigate } from "react-router-dom";
 
+
 import { memberData } from "@/components/MemberTable";
 // firebase import
 import { 
     getStorage, 
     ref, 
     listAll, 
-    getDownloadURL 
+    getDownloadURL,
+	UploadTask  
 } from "firebase/storage";
 import { 
-    uploadBytesResumable
+    uploadBytesResumable,
+	deleteObject 
 } from "firebase/storage";
-
+import { v4 as uuid } from 'uuid';
 //#endregion
 
 interface GalleryProps {
@@ -31,17 +34,17 @@ function Gallery({ handleClose, returning }: GalleryProps) {
 	// const imgList: string[] = [picture, picture, picture, picture, picture];
 	const [images, setImages] = useState<string[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
+	
 	const { id } = useParams();
 	//#region Firebase
 
 	//#endregion
 
-	const [uploadingFiles, setUploadingFiles] = useState<
-    Array<{
-      file: File;
-      progress: number;
-    }>
-  >([]);
+	const [uploadingFiles, setUploadingFiles] = useState<Array<{
+		file: File;
+		progress: number;
+		uploadTask?: UploadTask;  
+	}>>([]);
 	// Firebase
 	
 	const [patient, setPatient] = useState<memberData>();
@@ -56,25 +59,52 @@ function Gallery({ handleClose, returning }: GalleryProps) {
 	 */
 	const handleImageClicked = () => {};
 
+	// handle image being deleted
+	const handleDeleteImage = async (imageUrl: string) => {
+		try {
+			const storage = getStorage();
+			const imageRef = ref(storage, imageUrl);
+			await deleteObject(imageRef);
+			
+			// Remove the image from the state
+			setImages(prev => prev.filter(url => url !== imageUrl));
+		} catch (error) {
+			console.error("Error deleting image:", error);
+		}
+	};
+
+
 	const handleFilesAdded = (files: File[]) => {
 		const storage = getStorage();
 		
-		const newFiles = files.map((file) => ({
-			file,
-			progress: 0,
-		}));
+		const newFiles = files.map((file) => {
+			const extension = file.name.split('.').pop();
+			const uniqueFileName = `${uuid()}.${extension}`;  // Generate unique ID
+			return {
+				file,
+				progress: 0,
+				uniqueFileName
+			};
+		});
 		setUploadingFiles((prev) => [...prev, ...newFiles]);
 	
 		newFiles.forEach((fileInfo, index) => {
-			const fileRef = ref(storage, `${id}/images/${fileInfo.file.name}`);
+			const fileRef = ref(storage, `${id}/images/${fileInfo.uniqueFileName}`);
 			const uploadTask = uploadBytesResumable(fileRef, fileInfo.file);
+	
+			// Store the upload task
+			setUploadingFiles(prev => prev.map((file, i) => 
+				i === index 
+					? { ...file, uploadTask, progress: 0 }
+					: file
+			));
 	
 			uploadTask.on('state_changed',
 				(snapshot) => {
 					const currentProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 					setUploadingFiles(prev => prev.map((file, i) => 
 						i === index 
-							? { ...file, progress: currentProgress } // Use currentProgress directly
+							? { ...file, progress: currentProgress }
 							: file
 					));
 				},
@@ -161,25 +191,35 @@ function Gallery({ handleClose, returning }: GalleryProps) {
 			</div>
 
             {/* Image gallery */}
-            {isLoading ? (
-                <p className="w-full flex items-center justify-center">Loading...</p>
-            ) : images.length > 0 ? (
-                <div className="grid h-96 w-full px-2 grid-cols-2 md:grid-cols-4 gap-6 items-center overflow-y-auto scroller">
-                    {images.map((imageUrl, index) => (
-                        <img
-                            key={index}
-                            src={imageUrl}
-                            alt={`gallery-image-${index}`}
-                            className="w-56 aspect-square rounded-xl cursor-pointer hover:scale-95 transition ease-in-out duration-200"
-                            onClick={() => handleImageClicked()}
-                        />
-                    ))}
-                </div>
-            ) : (
-                <p className="w-full flex items-center justify-center">
-                    No images found
-                </p>
-            )}
+			{isLoading ? (
+					<p className="w-full flex items-center justify-center">Loading...</p>
+					) : images.length > 0 ? (			
+					<div className="grid h-96 w-full px-2 grid-cols-2 md:grid-cols-4 gap-6 items-center overflow-y-auto scroller">
+						{images.map((imageUrl, index) => (
+							<div key={index} className="relative group">
+								<img
+									src={imageUrl}
+									alt={`gallery-image-${index}`}
+									className="w-56 aspect-square rounded-xl cursor-pointer hover:scale-95 transition ease-in-out duration-200"
+									onClick={() => handleImageClicked()}
+								/>
+								<button
+									onClick={(e) => {
+										e.stopPropagation();
+										handleDeleteImage(imageUrl);
+									}}
+									className="absolute -top-1 -right-1 p-1.5 rounded-full bg-neutrals-light-200 text-neutrals-dark-500 opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-red-400 hover:text-white"
+								>
+									<X size={16} weight="bold" />
+								</button>
+							</div>
+						))}
+					</div>
+				) : (
+					<p className="w-full flex items-center justify-center">
+						No images found
+					</p>
+				)}
 
 			{/* Or */}
 			<div className="flex w-full items-center gap-x-4">
@@ -210,7 +250,17 @@ function Gallery({ handleClose, returning }: GalleryProps) {
 								? { ...file, progress: newProgress }
 								: file
 						));
-					}} 				
+					}} 	
+					onCancel={() => {
+						// Cancel the upload task if exists
+						if (fileInfo.uploadTask) {
+							fileInfo.uploadTask.cancel();
+						}
+						// Remove this file from uploadingFiles
+						setUploadingFiles(prev => 
+							prev.filter((_, i) => i !== index)
+						);
+					}}					
 				/>
 				))}
 			</div>
