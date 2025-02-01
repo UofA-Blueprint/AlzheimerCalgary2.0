@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { clear } from "console";
 import MediaUploadStatus from "./MediaUploadStatus";
 import { useParams, useNavigate } from "react-router-dom";
+import ConfirmationModal from "@/components/ConfirmationModal";
+import { Trash } from "@phosphor-icons/react";
 
 
 import { memberData } from "@/components/MemberTable";
@@ -31,14 +33,28 @@ interface GalleryProps {
 
 function Gallery({ handleClose, returning }: GalleryProps) {
 	//TODO: Configure the local gallery to display images here
-	// const imgList: string[] = [picture, picture, picture, picture, picture];
+	
+	// load the gallery
 	const [images, setImages] = useState<string[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
-	
 	const { id } = useParams();
-	//#region Firebase
 
-	//#endregion
+	// confirmation handling  
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const openModal = () => setIsModalOpen(true);
+	const closeModal = () => setIsModalOpen(false);
+
+	// image delete
+	const [imageToDelete, setImageToDelete] = useState<string | null>(null);
+
+	// handle confirm delete
+	const handleConfirm = async () => {
+		if (imageToDelete) {
+			await handleDeleteImage(imageToDelete);
+			setImageToDelete(null);
+			closeModal();
+		}
+	};
 
 	const [uploadingFiles, setUploadingFiles] = useState<Array<{
 		file: File;
@@ -190,6 +206,21 @@ function Gallery({ handleClose, returning }: GalleryProps) {
 				)}
 			</div>
 
+			{/* confirmation pop up */}
+			<div className="z-50">
+				<ConfirmationModal
+					isOpen={isModalOpen}
+					onClose={closeModal}
+					headerText="Delete Item"
+					description="Are you sure you want to delete this item? This action cannot be undone."
+					buttonText="Delete"
+					onConfirm={handleConfirm}
+					icon={<Trash size={24}/>}
+					errorText="Please confirm your devious action!"
+					primaryColor="primary" // The severity like primary, secondary or danger
+					secondaryColor="secondary"
+				/>
+			</div>
             {/* Image gallery */}
 			{isLoading ? (
 					<p className="w-full flex items-center justify-center">Loading...</p>
@@ -206,7 +237,9 @@ function Gallery({ handleClose, returning }: GalleryProps) {
 								<button
 									onClick={(e) => {
 										e.stopPropagation();
-										handleDeleteImage(imageUrl);
+										// handleDeleteImage(imageUrl);
+										setImageToDelete(imageUrl); 
+										openModal();
 									}}
 									className="absolute -top-1 -right-1 p-1.5 rounded-full bg-neutrals-light-200 text-neutrals-dark-500 opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-red-400 hover:text-white"
 								>
@@ -220,6 +253,7 @@ function Gallery({ handleClose, returning }: GalleryProps) {
 						No images found
 					</p>
 				)}
+
 
 			{/* Or */}
 			<div className="flex w-full items-center gap-x-4">
