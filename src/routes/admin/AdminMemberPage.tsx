@@ -1,128 +1,10 @@
-// Temporary data for media grid
-const data = [
-	// Array of media items with image source, caption, ID, and date
-
-	{
-		src: "https://images.unsplash.com/photo-1724579243894-6a8c9bbfe88c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1234,
-		date: new Date("Oct 5, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1723984834599-5357b87f727c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1235,
-		date: new Date("Oct 4, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724505599369-2c1d43324fdc",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1236,
-		date: new Date("Oct 3, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724579243894-6a8c9bbfe88c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1237,
-		date: new Date("Oct 7, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1723984834599-5357b87f727c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1238,
-		date: new Date("Oct 8, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724579243894-6a8c9bbfe88c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1237,
-		date: new Date("Oct 7, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1723984834599-5357b87f727c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1238,
-		date: new Date("Oct 8, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724579243894-6a8c9bbfe88c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1237,
-		date: new Date("Oct 7, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1723984834599-5357b87f727c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1238,
-		date: new Date("Oct 8, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724505599369-2c1d43324fdc",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1239,
-		date: new Date("Oct 2, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724579243894-6a8c9bbfe88c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1240,
-		date: new Date("Oct 2, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1723984834599-5357b87f727c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1241,
-		date: new Date("Oct 2, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724505599369-2c1d43324fdc",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1242,
-		date: new Date("Oct 9, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724579243894-6a8c9bbfe88c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1240,
-		date: new Date("Oct 10, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1723984834599-5357b87f727c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1241,
-		date: new Date("Oct 2, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724505599369-2c1d43324fdc",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1242,
-		date: new Date("Oct 2, 2024"),
-	},
-];
-
 //#region Imports
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Plus, PencilSimple, Info, CheckCircle } from "@phosphor-icons/react";
 
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, collection, getDocs, DocumentSnapshot } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 // Components
@@ -162,6 +44,7 @@ export default function AdminMemberPage() {
 	const [isSelectable, setIsSelectable] = useState<boolean>(false);
 	const [isAddingMedia, setIsAddingMedia] = useState<boolean>(false);
 	const [masonryWidth, setMasonryWidth] = useState<number>(0);
+	const [data, setData] = useState<Media[]>([]);
 	const masonryContainerRef = useRef<HTMLDivElement>(null);
 
 	// Button lists
@@ -180,7 +63,7 @@ export default function AdminMemberPage() {
 			size: "medium",
 			icon: <Info />,
 			severity: "secondary",
-			onClick: () => {},
+			onClick: () => { },
 			title: "View patient information",
 		},
 		{
@@ -197,8 +80,8 @@ export default function AdminMemberPage() {
 	const [searchTerm, setSearchTerm] = useState<string>("");
 
 	//#region functions
-	const fetchMember = async () => {
-		const docRef = doc(database, "users", id!);
+	const fetchMember = async (id: string) => {
+		const docRef = doc(database, "users", id);
 		const docSnap = await getDoc(docRef);
 
 		if (docSnap.exists()) {
@@ -218,6 +101,25 @@ export default function AdminMemberPage() {
 		}
 	};
 
+	const fetchImages = async (id: string) => {
+		const collectionRef = collection(database, 'users', id, 'images');
+		const querySnapshot = await getDocs(collectionRef);
+		const newData: Media[] = [];
+		querySnapshot.forEach((doc: DocumentSnapshot) => {
+			const docData = doc.data();
+			console.log(docData);
+			if (docData)
+				newData.push({
+					src: docData.src,
+					id: doc.id,
+					caption: docData.caption,
+					date: docData.date.toDate(),
+				});
+		});
+		setData(newData);
+
+	}
+
 	const searchPhotoById = async () => {
 		alert("Searching for photo with ID: " + searchTerm);
 	};
@@ -233,13 +135,20 @@ export default function AdminMemberPage() {
 			}
 		});
 
-		fetchMember();
+		if (id) {
+			fetchMember(id);
+			fetchImages(id);
+		}
+		else {
+			navigate("/admin")
+		}
+
 	}, []);
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setMasonryWidth(masonryContainerRef.current!.offsetWidth);
-		}, 300); // Delay of 300 milliseconds
+		}, 300); // Delay of 300 millisecondsi
 
 		// Cleanup function to clear timeout
 		return () => clearTimeout(timer);
@@ -268,7 +177,7 @@ export default function AdminMemberPage() {
 					)}
 				</div>
 				<div
-					className="flex-1 p-8 flex flex-col md:gap-y-8"
+					className="flex-1 p-8 flex flex-col md:gap-y-8 overflow-y-scroll"
 					ref={masonryContainerRef}
 				>
 					{/* User Display */}
