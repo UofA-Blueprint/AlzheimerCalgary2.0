@@ -69,10 +69,10 @@ function Modal({
 	const transition = "transition-all duration-200 ease-in-out";
 
 	// Closed style
-	const closed = "opacity-0 shadow-none pointer-events-none";
+	const closed = "opacity-0 shadow-none pointer-events-none z-50";
 
 	// Open style
-	const open = "opacity-100 shadow-lg pointer-events-auto scale-100";
+	const open = "opacity-100 shadow-lg pointer-events-auto scale-100 z-50";
 
 	// Header style
 	const header = "flex flex-row w-full justify-between items-center";

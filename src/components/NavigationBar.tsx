@@ -1,5 +1,5 @@
 //#region Imports
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,6 +11,7 @@ import { getAuth } from "firebase/auth";
 import logoUrl from "@/assets/images/asc_logo.svg";
 
 import { displayToast } from "@/utils";
+
 //#endregion
 
 //#region Interface
@@ -40,8 +41,18 @@ export function NavigationBar({
 	outerDivClassName: outer = "",
 }: NavigationBarProps): JSX.Element {
 	const navigate = useNavigate();
-
+	const location = useLocation(); 
 	//#region Functions
+
+	const handleLogoClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        // Check if current path includes '/admin'
+        if (location.pathname.includes('/admin')) {
+            navigate('/admin');
+        } else {
+            navigate('/');
+        }
+    };
 	function signOut() {
 		// Sign out logic for user
 		if (userType === "user") {
@@ -80,12 +91,12 @@ export function NavigationBar({
 				)}
 			>
 				{/* Logo  */}
-				<a href="/">
-					<img
-						src={logoUrl}
-						alt="ASC Logo"
-					/>
-				</a>
+                <div onClick={handleLogoClick} className="cursor-pointer">
+                    <img
+                        src={logoUrl}
+                        alt="ASC Logo"
+                    />
+                </div>
 				{/* Navigation bar */}
 				<div className="space-x-[40px] flex">
 					{userType === "admin" ? (

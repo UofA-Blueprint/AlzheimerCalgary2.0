@@ -235,14 +235,14 @@ export default function AdminHome() {
 						</div>
 					</div>
 					<div className="flex items-end justify-end grow">
-						<div className="flex flex-row gap-4 grow justify-end">
+						<div className="flex flex-row gap-4 grow justify-end items-center">
 							<div className="h-12 max-w-[20rem] grow">
 								<SearchBar
 									setSearch={setSearchTerm}
 									handleClick={searchMember}
 								/>
 							</div>
-							<div className="min-w-max">
+							<div className="min-w-max self-center">
 								<Button
 									text="Add Member"
 									size="medium"
