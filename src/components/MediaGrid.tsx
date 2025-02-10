@@ -15,7 +15,7 @@ function splitIntoColumns(arr: Media[], nColumns: number) {
 	}
 
 	for (let i = 0; i < arr.length; ++i) {
-		result[i % 3].push(arr[i]);
+		result[i % nColumns].push(arr[i]);
 	}
 
 	return result;

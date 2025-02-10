@@ -46,7 +46,7 @@ function MediaCard({ src, caption, date, id, selectable }: MediaCardProps) {
 	return (
 		<div
 			className={clsx(
-				"flex flex-col rounded-lg relative",
+				"flex flex-col rounded-lg relative min-w-[72px]",
 				selectable && "hover:shadow-zero hover:shadow-primary-main",
 				isSelected && "shadow-zero shadow-primary-main",
 			)}
@@ -77,7 +77,7 @@ function MediaCard({ src, caption, date, id, selectable }: MediaCardProps) {
 				<img
 					src={src}
 					alt="Image"
-					className={clsx("object-fit rounded-t-lg")}
+					className={clsx("object-fit rounded-t-lg min-w-[172px]")}
 				/>
 			</div>
 			<div

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { ToastContainer } from "react-toastify";
 import { NavigationBar } from "@/components/NavigationBar";
 import MediaGrid from "@/components/MediaGrid";
@@ -14,99 +14,11 @@ import {
 	query,
 	where,
 	DocumentData,
+	DocumentSnapshot,
 } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 
 // Temporary data for media grid
-const data = [
-	// Array of media items with image source, caption, ID, and date
-
-	{
-		src: "https://images.unsplash.com/photo-1724579243894-6a8c9bbfe88c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1234,
-		date: new Date("Oct 5, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1723984834599-5357b87f727c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1235,
-		date: new Date("Oct 4, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724505599369-2c1d43324fdc",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1236,
-		date: new Date("Oct 3, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724579243894-6a8c9bbfe88c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1237,
-		date: new Date("Oct 7, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1723984834599-5357b87f727c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1238,
-		date: new Date("Oct 8, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724505599369-2c1d43324fdc",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1239,
-		date: new Date("Oct 2, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724579243894-6a8c9bbfe88c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1240,
-		date: new Date("Oct 2, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1723984834599-5357b87f727c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1241,
-		date: new Date("Oct 2, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724505599369-2c1d43324fdc",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1242,
-		date: new Date("Oct 9, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724579243894-6a8c9bbfe88c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1240,
-		date: new Date("Oct 10, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1723984834599-5357b87f727c",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1241,
-		date: new Date("Oct 2, 2024"),
-	},
-	{
-		src: "https://images.unsplash.com/photo-1724505599369-2c1d43324fdc",
-		caption:
-			"Channeling their inner artist with a paintbrush and a splash of color!",
-		id: 1242,
-		date: new Date("Oct 2, 2024"),
-	},
-];
-
 //#region firebase
 const firebaseConfig = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
 const app = initializeApp(firebaseConfig);
@@ -121,9 +33,27 @@ export default function MemberPage() {
 	>(null);
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const [userData, setUserData] = useState<DocumentData | null>(null);
+	const [data, setData] = useState<Media[]>([]);
+	const [masonryWidth, setMasonryWidth] = useState<number>(0);
 
+	const masonryContainerRef = useRef<HTMLDivElement>(null);
 	type SortOrder = "latest" | "oldest";
-
+	const fetchImages = async (id: string) => {
+		const collectionRef = collection(usersRef, id, "images");
+		const snapshot = await getDocs(collectionRef);
+		const newData: Media[] = [];
+		snapshot.forEach((doc: DocumentSnapshot) => {
+			const docData = doc.data();
+			if (docData)
+				newData.push({
+					src: docData.src,
+					id: doc.id,
+					date: docData.date.toDate(),
+					caption: docData.caption,
+				});
+		});
+		setData(newData)
+	}
 	// Check for user login info in localStorage and fetch user data from Firebase
 	useEffect(() => {
 		const fetchData = async () => {
@@ -143,12 +73,14 @@ export default function MemberPage() {
 
 			const querySnapshot = await getDocs(q);
 			if (!querySnapshot.empty) {
-				const userDoc = querySnapshot.docs[0].data(); // Set retrieved user data to userData state
-				setUserData(userDoc);
+				const userDoc = querySnapshot.docs[0]; // Set retrieved user data to userData state
+				setUserData(userDoc.data());
+				fetchImages(userDoc.id)
 			} else {
 				navigate("/login"); // Redirect to login if no user matches
 			}
 		};
+
 
 		fetchData();
 	}, [navigate]);
@@ -158,6 +90,12 @@ export default function MemberPage() {
 		setSortOrder(order); // Update sort order (latest or oldest)
 		setIsDropdownOpen(false); // Close dropdown after selection
 	};
+
+	useEffect(() => {
+		if (masonryContainerRef.current !== null) {
+			setMasonryWidth(masonryContainerRef.current.clientWidth);
+		}
+	}, []);
 
 	return (
 		<div className="font-display relative">
@@ -194,11 +132,14 @@ export default function MemberPage() {
 						></SortDropdownList>
 					</div>
 					{/* MediaGrid component to display sorted media items */}
-					<MediaGrid
-						data={data}
-						sortOrder={sortOrder}
-						selectable={false}
-					/>
+					<div className="w-full" ref={masonryContainerRef}>
+						<MediaGrid
+							data={data}
+							selectable={false}
+							fullWidth={masonryWidth}
+						/>
+					</div>
+
 				</div>
 			</div>
 		</div>
