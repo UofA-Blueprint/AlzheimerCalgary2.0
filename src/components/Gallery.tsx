@@ -6,8 +6,9 @@ import MediaUploadStatus from "./MediaUploadStatus";
 import { useParams } from "react-router-dom";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import { Trash } from "@phosphor-icons/react";
-
-
+import { initializeApp } from "firebase/app";
+import { collection, getCountFromServer, getFirestore } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { memberData } from "@/components/MemberTable";
 // firebase import
 import {
@@ -22,6 +23,14 @@ import {
 	deleteObject
 } from "firebase/storage";
 import { v4 as uuid } from 'uuid';
+//#endregion
+
+
+//#region Firebase
+const firebaseConfig = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
+const app = initializeApp(firebaseConfig);
+const database = getFirestore(app);
+
 //#endregion
 
 interface GalleryProps {
@@ -128,7 +137,25 @@ function Gallery({ handleClose, returning }: GalleryProps) {
 				() => {
 					getDownloadURL(uploadTask.snapshot.ref).then(url => {
 						setImages(prev => [...prev, url]);
+						const userRef = doc(database, "users", id!);
+						const collectionRef = collection(userRef, "images");
+						let count = 0;
+						getCountFromServer(collectionRef).then(snapshot => {
+							count = snapshot.data().count;
+							const docRef = doc(collectionRef, count.toString());
+							setDoc(docRef, {
+								src: url,
+								caption: "",
+								date: new Date(),
+								isDisplayed: false,
+							}).then(() => { });
+						})
+
+
+
 					});
+
+
 
 					setTimeout(() => {
 						setUploadingFiles(prev =>

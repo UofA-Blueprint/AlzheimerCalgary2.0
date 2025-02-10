@@ -8,7 +8,6 @@ interface MediaGridProps {
 }
 
 function splitIntoColumns(arr: Media[], nColumns: number) {
-	const columnSize = Math.floor(arr.length / nColumns); // Size of each column
 	const result: Media[][] = [];
 
 	for (let i = 0; i < nColumns; ++i) {
@@ -18,9 +17,6 @@ function splitIntoColumns(arr: Media[], nColumns: number) {
 	for (let i = 0; i < arr.length; ++i) {
 		result[i % 3].push(arr[i]);
 	}
-	//for (let i = 0; i < nColumns; i++) {
-	//	result.push(arr.slice(i * columnSize, (i + 1) * columnSize));
-	//}
 
 	return result;
 }
@@ -30,8 +26,6 @@ function MediaGrid({ data, selectable, fullWidth }: MediaGridProps) {
 		() => splitIntoColumns(data, Math.floor(fullWidth / 256)),
 		[data, fullWidth],
 	);
-
-	console.log(dataTable);
 
 	return (
 		<div className="w-full flex justify-between gap-4">
@@ -51,12 +45,6 @@ function MediaGrid({ data, selectable, fullWidth }: MediaGridProps) {
 						))}
 					</div>
 				))
-				// data.map((item, i) => (
-				// 	<MediaCard
-				// 		key={i}
-				// 		{...item}
-				// 	/>
-				// ))
 			}
 		</div>
 	);

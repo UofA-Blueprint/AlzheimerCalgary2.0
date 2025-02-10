@@ -107,7 +107,6 @@ export default function AdminMemberPage() {
 		const newData: Media[] = [];
 		querySnapshot.forEach((doc: DocumentSnapshot) => {
 			const docData = doc.data();
-			console.log(docData);
 			if (docData)
 				newData.push({
 					src: docData.src,
