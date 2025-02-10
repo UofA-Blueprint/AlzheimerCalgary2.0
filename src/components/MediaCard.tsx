@@ -9,7 +9,7 @@ interface MediaCardProps {
 	src: string;
 	caption?: string | null;
 	date: Date;
-	id: number;
+	id: string;
 	selectable?: boolean;
 }
 
@@ -61,7 +61,7 @@ function MediaCard({ src, caption, date, id, selectable }: MediaCardProps) {
 						isSelected
 							? " bg-primary-light border-2 border-primary-dark hover:bg-primary-main"
 							: isHovered &&
-									"bg-white border-neutrals-dark-300 border-2 hover:bg-neutrals-dark-100",
+							"bg-white border-neutrals-dark-300 border-2 hover:bg-neutrals-dark-100",
 					)}
 					onClick={() => setIsSelected(!isSelected)}
 				>
