@@ -147,7 +147,7 @@ export default function AdminMemberPage() {
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setMasonryWidth(masonryContainerRef.current!.offsetWidth);
-		}, 300); // Delay of 300 millisecondsi
+		}, 30); // Delay in milliseconds
 
 		// Cleanup function to clear timeout
 		return () => clearTimeout(timer);

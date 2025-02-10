@@ -7,23 +7,27 @@ interface MediaGridProps {
 	fullWidth: number;
 }
 
-function splitIntoColumns(arr: Media[], nColumns: number) {
+function splitIntoColumns(arr: Media[], nColumns: number = 3) {
 	const result: Media[][] = [];
+
 
 	for (let i = 0; i < nColumns; ++i) {
 		result.push([]);
 	}
 
-	for (let i = 0; i < arr.length; ++i) {
-		result[i % nColumns].push(arr[i]);
-	}
+
+	if (nColumns > 0)
+		for (let i = 0; i < arr.length; ++i) {
+			result[i % nColumns].push(arr[i]);
+		}
 
 	return result;
 }
 
 function MediaGrid({ data, selectable, fullWidth }: MediaGridProps) {
+	console.log("fullWidth", fullWidth);
 	const dataTable = useMemo(
-		() => splitIntoColumns(data, Math.floor(fullWidth / 256)),
+		() => splitIntoColumns(data, Math.ceil(fullWidth / 250)),
 		[data, fullWidth],
 	);
 
