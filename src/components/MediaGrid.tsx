@@ -25,7 +25,6 @@ function splitIntoColumns(arr: Media[], nColumns: number = 3) {
 }
 
 function MediaGrid({ data, selectable, fullWidth }: MediaGridProps) {
-	console.log("fullWidth", fullWidth);
 	const dataTable = useMemo(
 		() => splitIntoColumns(data, Math.ceil(fullWidth / 250)),
 		[data, fullWidth],
