@@ -227,39 +227,33 @@ export default function AdminHome() {
 			/>
 
 			<div className="mx-8 my-2 md:mx-16 md:my-4 flex flex-col">
-				<div className="flex flex-row">
+				<div className="flex flex-row justify-between">
 					<div className="flex flex-col min-w-max grow">
 						<div className="text-h1">All Members</div>
 						<div className="text-body-reg text-primary-dark">
 							Total Storage Used: {totalStorageUsed} MB
 						</div>
 					</div>
-					<div className="flex items-end justify-end grow">
-						<div className="flex flex-row gap-4 grow justify-end items-center">
-							<div className="h-12 max-w-[20rem] grow">
-								<SearchBar
-									setSearch={setSearchTerm}
-									handleClick={searchMember}
-								/>
-							</div>
-							<div className="min-w-max self-center">
-								<Button
-									text="Add Member"
-									size="medium"
-									icon={<Plus size={24} />}
-									onClick={() =>
-										setIsAddMemberModalOpen(true)
-									}
-								/>
-							</div>
-							<AddMember
-								isOpen={isAddMemberModalOpen}
-								onClose={() => {
-									setIsAddMemberModalOpen(false);
-								}}
-								usersRef={usersRef}
+					<div className="flex h-14 self-end items-center justify-end gap-4">
+						<SearchBar
+							placeholder="Search member"
+							setSearch={setSearchTerm}
+							handleClick={searchMember}
+						/>
+
+						<div className="flex flex-row h-full w-full">
+							<Button
+								text="Add Member"
+								size="medium"
+								icon={<Plus size={24} />}
+								onClick={() =>
+									setIsAddMemberModalOpen(true)
+								}
 							/>
 						</div>
+
+
+
 					</div>
 				</div>
 
@@ -290,11 +284,10 @@ export default function AdminHome() {
 				{/* Load More Button */}
 				<div className="w-full flex items-center justify-center">
 					<button
-						className={`flex items-center justify-center flex-col ${
-							allLoaded
-								? "cursor-not-allowed opacity-30"
-								: "cursor-pointer"
-						}`}
+						className={`flex items-center justify-center flex-col ${allLoaded
+							? "cursor-not-allowed opacity-30"
+							: "cursor-pointer"
+							}`}
 						onClick={() => {
 							if (!allLoaded) {
 								setExpanded(!expanded);
@@ -309,6 +302,13 @@ export default function AdminHome() {
 					</button>
 				</div>
 			</div>
+			<AddMember
+				isOpen={isAddMemberModalOpen}
+				onClose={() => {
+					setIsAddMemberModalOpen(false);
+				}}
+				usersRef={usersRef}
+			/>
 		</div>
 	);
 }

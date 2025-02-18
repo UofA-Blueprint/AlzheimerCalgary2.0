@@ -28,7 +28,6 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 function Button({
-	size,
 	shape,
 	text,
 	icon,
@@ -41,7 +40,7 @@ function Button({
 
 	// Button styles
 	const base =
-		"flex flex-row items-center justify-center cursor-pointer w-full rounded-lg gap-2 p-2 lg:p-4 xl:p-6 text-sm lg:text-base xl:text-2xl xl:leading-6";
+		"flex flex-row items-center justify-center w-full h-full cursor-pointer rounded-lg gap-2 p-2 lg:p-4 xl:p-6 text-sm lg:text-base xl:text-xl xl:leading-6";
 
 	// const small = "h-8 py-1 px-6 gap-1 text-sm";
 
@@ -61,7 +60,7 @@ function Button({
 	// 	"w-[32px] h-[32px]": size === "small",
 	// });
 
-	const primary = "bg-primary-main text-neutrals-light-100";
+	const primary = "bg-primary-main text-neutrals-light-100 border-2 border-primary-main";
 
 	const secondary =
 		"bg-transparent text-primary-dark border-2 border-primary-dark ";
@@ -76,6 +75,8 @@ function Button({
 
 	const textStyle = "text-center min-w-max";
 
+	const square = "w-12 h-12 aspect-square"
+
 	return (
 		<button
 			ref={buttonRef}
@@ -86,7 +87,7 @@ function Button({
 					// [medium]: size === "medium",
 					// [large]: size === "large",
 					// [round]: shape === "round",
-					// [square]: shape === "square",
+					[square]: shape === "square",
 					[primary]: severity === "primary",
 					[secondary]: severity === "secondary",
 					[danger]: severity === "danger",

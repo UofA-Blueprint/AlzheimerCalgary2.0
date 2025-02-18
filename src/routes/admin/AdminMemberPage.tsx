@@ -186,7 +186,7 @@ export default function AdminMemberPage() {
 							profilePicture={patient?.profilePicture!}
 							usernameExtra="text-lg lg:text-xl xl:text-3xl"
 						/>
-						<div className="flex items-center gap-x-4 md:gap-x-2">
+						<div className="flex items-center h-12 gap-x-4 md:gap-x-2">
 							{buttons.map((button, index) => (
 								<Button
 									key={index}
