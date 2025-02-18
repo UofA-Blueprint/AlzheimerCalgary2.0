@@ -3,4 +3,5 @@ interface Media {
 	caption?: string | null;
 	date: Date;
 	id: string;
+	isDisplayed?: boolean;
 }

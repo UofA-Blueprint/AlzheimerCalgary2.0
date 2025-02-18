@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import { Trash } from "@phosphor-icons/react";
 import { initializeApp } from "firebase/app";
-import { collection, getCountFromServer, getFirestore } from "firebase/firestore";
+import { collection, getCountFromServer, getDocs, getFirestore } from "firebase/firestore";
 import { doc, setDoc } from "firebase/firestore";
 import { memberData } from "@/components/MemberTable";
 // firebase import
@@ -23,6 +23,8 @@ import {
 	deleteObject
 } from "firebase/storage";
 import { v4 as uuid } from 'uuid';
+import { toast, ToastContainer } from "react-toastify";
+import Toast from "./Toast";
 //#endregion
 
 
@@ -132,7 +134,15 @@ function Gallery({ handleClose, returning }: GalleryProps) {
 					));
 				},
 				(error) => {
-					console.error("Upload error:", error);
+					toast(<Toast message={error.toString()} severity="success" />, {
+						toastId: "error",
+						style: {
+							background: "transparent",
+							boxShadow: "none",
+						},
+					}
+					);
+
 				},
 				() => {
 					getDownloadURL(uploadTask.snapshot.ref).then(url => {
@@ -169,36 +179,10 @@ function Gallery({ handleClose, returning }: GalleryProps) {
 	// Fetch images from Firebase Storage
 	useEffect(() => {
 		const fetchImages = async () => {
-			try {
-				const storage = getStorage();
-				const galleryRef = ref(storage, `${id}/images`);
-
-				try {
-					// Try to list items in the folder
-					const result = await listAll(galleryRef);
-
-					// Get download URLs for all images
-					const urlPromises = result.items.map(imageRef =>
-						getDownloadURL(imageRef)
-					);
-
-					const imageUrls = await Promise.all(urlPromises);
-					setImages(imageUrls);
-				} catch (error: any) {
-					// If error is because folder doesn't exist, that's okay
-					// Firebase will automatically create the folder when we upload first file
-					if (error.code === 'storage/object-not-found') {
-						console.log(`Folder ${id} does not exist yet. Will be created on first upload.`);
-						setImages([]);
-					} else {
-						throw error; // Re-throw if it's a different error
-					}
-				}
-			} catch (error) {
-				console.error("Error fetching images:", error);
-			} finally {
-				setIsLoading(false);
-			}
+			const querySnapshot = await getDocs(collection(database, "users", id!, "images"));
+			querySnapshot.forEach((doc) => {
+				console.log(doc.id, "=>", doc.data());
+			});
 		};
 
 		if (id) {
@@ -323,6 +307,13 @@ function Gallery({ handleClose, returning }: GalleryProps) {
 					/>
 				))}
 			</div>
+			<ToastContainer
+				position="bottom-right"
+				autoClose={2000}
+				newestOnTop={true}
+				closeButton={false}
+				hideProgressBar={true}
+			/>
 		</div>
 	);
 }

@@ -107,12 +107,13 @@ export default function AdminMemberPage() {
 		const newData: Media[] = [];
 		querySnapshot.forEach((doc: DocumentSnapshot) => {
 			const docData = doc.data();
-			if (docData)
+			if (docData && docData.isDisplayed)
 				newData.push({
 					src: docData.src,
 					id: doc.id,
 					caption: docData.caption,
 					date: docData.date.toDate(),
+					isDisplayed: docData.isDisplayed,
 				});
 		});
 		setData(newData);
