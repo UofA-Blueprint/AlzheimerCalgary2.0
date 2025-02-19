@@ -1,19 +1,19 @@
 //#region Imports
 import { CaretLeft, X } from "@phosphor-icons/react";
 import MediaUploadZone from "./MediaUploadZone";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import MediaUploadStatus from "./MediaUploadStatus";
 import { useParams } from "react-router-dom";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import { Trash } from "@phosphor-icons/react";
 import { initializeApp } from "firebase/app";
-import { collection, getCountFromServer, getDocs, getFirestore } from "firebase/firestore";
-import { doc, setDoc } from "firebase/firestore";
+import { collection, getCountFromServer, getDocs, getFirestore, deleteDoc, query, where  } from "firebase/firestore";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { memberData } from "@/components/MemberTable";
 // firebase import
 import {
 	getStorage,
-	ref,
+	ref,	 
 	listAll,
 	getDownloadURL,
 	UploadTask
@@ -38,9 +38,11 @@ const database = getFirestore(app);
 interface GalleryProps {
 	handleClose: () => void;
 	returning: boolean;
+	isStateUpdate: boolean;
+	setIsStateUpdate: Dispatch<SetStateAction<boolean>>;
 }
 
-function Gallery({ handleClose, returning }: GalleryProps) {
+function Gallery({ handleClose, returning, isStateUpdate, setIsStateUpdate }: GalleryProps) {
 	//TODO: Configure the local gallery to display images here
 
 	// load the gallery
@@ -82,8 +84,30 @@ function Gallery({ handleClose, returning }: GalleryProps) {
 	/**
 	 * Handle an image in the gallery being clicked
 	 */
-	const handleImageClicked = () => { };
+	const handleImageClicked = async (imageUrl:string) => {
+		try {
+			console.log("Image clicked:")
+			const userRef = doc(database, "users", id! )
+			const collectionRef = collection(userRef, "images")
+			const q = query(collectionRef, where("src","==", imageUrl));	
+			// docRef = 
+			const querySnapshot = await getDocs(q);	
+			querySnapshot.forEach( async (document) => {
+				const currentData = document.data();
+                await updateDoc(doc(collectionRef, document.id),
+			{
+                isDisplayed: !currentData.isDisplayed,
 
+			});
+			console.log("Current isDisplayed value after the click:", currentData.isDisplayed);
+			setIsStateUpdate(!isStateUpdate);
+            });
+		}
+		catch (error) {
+            console.error("Error getting:", error);
+        }
+	}
+		
 	// handle image being deleted
 	const handleDeleteImage = async (imageUrl: string) => {
 		try {
@@ -93,6 +117,18 @@ function Gallery({ handleClose, returning }: GalleryProps) {
 
 			// Remove the image from the state
 			setImages(prev => prev.filter(url => url !== imageUrl));
+			
+			// remove image from document
+			const userRef = doc(database, "users", id!);
+			const collectionRef = collection(userRef, "images");
+			
+			const q = query(collectionRef, where("src","==", imageUrl));
+            const querySnapshot = await getDocs(q)
+			
+			querySnapshot.forEach( async (document) => {
+				console.log(document.id)
+                await deleteDoc(doc(collectionRef, document.id));
+            });
 		} catch (error) {
 			console.error("Error deleting image:", error);
 		}
@@ -180,13 +216,17 @@ function Gallery({ handleClose, returning }: GalleryProps) {
 	useEffect(() => {
 		const fetchImages = async () => {
 			const querySnapshot = await getDocs(collection(database, "users", id!, "images"));
+			const images: string[] = [];
 			querySnapshot.forEach((doc) => {
-				console.log(doc.id, "=>", doc.data());
+				images.push(doc.data().src);		
 			});
+			setImages(images);
+			console.log(images)
 		};
 
 		if (id) {
 			fetchImages();
+			setIsLoading(false);
 		}
 	}, [id]);
 
@@ -241,7 +281,7 @@ function Gallery({ handleClose, returning }: GalleryProps) {
 								src={imageUrl}
 								alt={`gallery-image-${index}`}
 								className="w-56 aspect-square rounded-xl cursor-pointer hover:scale-95 transition ease-in-out duration-200"
-								onClick={() => handleImageClicked()}
+								onClick={() => handleImageClicked(imageUrl)}
 							/>
 							<button
 								onClick={(e) => {
