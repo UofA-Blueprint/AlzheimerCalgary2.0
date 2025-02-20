@@ -129,7 +129,6 @@ export default function AdminHome() {
 
 			setIsSorting(false);
 			setTotalStorageUsed(storageUsed);
-			console.log("Last doc", lastDoc?.data().fullName);
 		} catch (error) {
 			console.error("Error fetching members: ", error);
 			displayToast("Failed to load members", "error");
@@ -224,6 +223,7 @@ export default function AdminHome() {
 			<NavigationBar
 				userType="admin"
 				className="sticky top-0 left-0"
+				outerDivClassName="min-h-[10%] xl:min-h-[5%]"
 			/>
 
 			<div className="mx-8 my-2 md:mx-16 md:my-4 flex flex-col">

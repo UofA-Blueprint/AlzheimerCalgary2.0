@@ -44,6 +44,7 @@ function MediaGrid({ data, selectable, fullWidth }: MediaGridProps) {
 							<MediaCard
 								key={j}
 								{...item}
+								selectable={selectable}
 							/>
 						))}
 					</div>

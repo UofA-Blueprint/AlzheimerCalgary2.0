@@ -293,7 +293,7 @@ function Gallery({ handleClose, returning, isStateUpdate, setIsStateUpdate }: Ga
 							<img
 								src={image.src}
 								alt={`gallery-image-${index}`}
-								className={clsx("w-56 aspect-square rounded-xl cursor-pointer hover:scale-95 transition ease-in-out duration-200", image.isDisplayed && "border-4 border-primary-dark")}
+								className={clsx("w-56 object-cover object-center aspect-square rounded-xl cursor-pointer hover:scale-95 transition ease-in-out duration-200", image.isDisplayed && "border-4 border-primary-dark")}
 								onClick={() => handleImageClicked(image.src)}
 							/>
 							<button

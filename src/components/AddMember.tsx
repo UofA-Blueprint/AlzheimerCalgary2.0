@@ -40,7 +40,6 @@ function AddMember({ isOpen, onClose, usersRef }: AddMemberProps) {
 
 	// Function to add member
 	const addMember = async () => {
-		console.log("Adding member", idError, nameError);
 		if (!nameError && !idError) {
 			// Add member to Firestore
 			// TODO: CHECK IF ID AND NAME ARE UNIQUE
@@ -113,10 +112,10 @@ function AddMember({ isOpen, onClose, usersRef }: AddMemberProps) {
 								{idError && nameError
 									? "Name and ID should not be empty"
 									: idError
-									? "ID should be unique and not empty"
-									: nameError
-									? "Name should not be empty"
-									: "Error"}
+										? "ID should be unique and not empty"
+										: nameError
+											? "Name should not be empty"
+											: "Error"}
 							</span>
 						</div>
 					)}

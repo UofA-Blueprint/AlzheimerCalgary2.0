@@ -4,6 +4,16 @@ import { useLayoutEffect, useRef, useState } from "react";
 import Button from "./Button";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
+import { useParams } from "react-router-dom";
+import { initializeApp } from "@firebase/app";
+import { doc, getFirestore, updateDoc } from "firebase/firestore";
+
+
+//#region Firebase
+const firebaseConfig = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
+const app = initializeApp(firebaseConfig);
+const database = getFirestore(app);
+//#endregion
 
 interface MediaCardProps {
 	src: string;
@@ -20,6 +30,8 @@ const options: Intl.DateTimeFormatOptions = {
 };
 
 function MediaCard({ src, caption, date, id, selectable }: MediaCardProps) {
+	const params = useParams();
+	const userId = params.id;
 	const [isEditingCaption, setIsEditingCaption] = useState(false);
 	const [newCaption, setNewCaption] = useState<string | null | undefined>(
 		caption,
@@ -29,6 +41,13 @@ function MediaCard({ src, caption, date, id, selectable }: MediaCardProps) {
 	const [temporaryCaption, setTemporaryCaption] = useState(caption);
 	const [error, setError] = useState<string | null>(null);
 	const captionTextAreaRef = useRef<HTMLTextAreaElement | null>(null);
+
+	const handleCaption = async (cap: string) => {
+		const docRef = doc(database, "users", userId!, "images", id);
+		await updateDoc(docRef, {
+			caption: cap,
+		});
+	}
 
 	const copyHandler = () => {
 		navigator.clipboard.writeText(id.toString());
@@ -91,7 +110,7 @@ function MediaCard({ src, caption, date, id, selectable }: MediaCardProps) {
 						className="text-body-reg whitespace-pre-line"
 						onDoubleClick={() => setIsEditingCaption(true)}
 					>
-						{newCaption}
+						{newCaption ? newCaption : "Add Text..."}
 					</div>
 				) : (
 					<div className="flex flex-col justify-center bg-neutrals-light-300 rounded-lg">
@@ -134,6 +153,7 @@ function MediaCard({ src, caption, date, id, selectable }: MediaCardProps) {
 											captionTextAreaRef.current?.value.trim(),
 										);
 										setIsEditingCaption(false);
+										handleCaption(captionTextAreaRef.current?.value.trim());
 									}
 								}}
 								size="small"
