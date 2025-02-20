@@ -115,7 +115,7 @@ export default function AdminHome() {
 							doc.data().profilePicture.backgroundColor,
 					},
 					name: doc.data().fullName,
-					storageUsed: String(doc.data().storageUsed),
+					storageUsed: String(doc.data().storageUsed.toFixed(2)),
 					lastUpdated: String(
 						convertTimestamp(doc.data().lastUpdated.toDate()),
 					),
@@ -231,7 +231,7 @@ export default function AdminHome() {
 					<div className="flex flex-col min-w-max grow">
 						<div className="text-h1">All Members</div>
 						<div className="text-body-reg text-primary-dark">
-							Total Storage Used: {totalStorageUsed} MB
+							Total Storage Used: {totalStorageUsed.toFixed(2)} MB
 						</div>
 					</div>
 					<div className="flex h-14 self-end items-center justify-end gap-4">
