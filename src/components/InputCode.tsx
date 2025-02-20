@@ -203,7 +203,7 @@ export function InputCode({
 							}`}
 						onClick={() => checkError(index)}
 						onKeyDown={(e) => handleKeyDown(e, index)}
-						onPaste={(e) => handlePaste(e, index)}
+						onPaste={(e) => handlePaste(e)}
 						onChange={(e) => {
 							if (e.target.value) {
 								e.target.value = e.target.value.toUpperCase();
