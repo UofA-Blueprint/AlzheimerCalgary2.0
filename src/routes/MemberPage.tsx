@@ -4,8 +4,6 @@ import { NavigationBar } from "@/components/NavigationBar";
 import MediaGrid from "@/components/MediaGrid";
 import MemberHeader from "@/components/MemberHeader";
 import { useNavigate } from "react-router-dom";
-import profilePic from "@/assets/images/face2.jpg";
-import { CaretDown } from "@phosphor-icons/react";
 import SortDropdownList from "@/components/SortDropdownList";
 import {
 	getFirestore,
@@ -15,6 +13,7 @@ import {
 	where,
 	DocumentData,
 	DocumentSnapshot,
+	orderBy,
 } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 
@@ -30,17 +29,16 @@ export default function MemberPage() {
 	const navigate = useNavigate();
 	const [sortOrder, setSortOrder] = useState<
 		"latest" | "oldest" | string | null
-	>(null);
-	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+	>("latest");
 	const [userData, setUserData] = useState<DocumentData | null>(null);
 	const [data, setData] = useState<Media[]>([]);
 	const [masonryWidth, setMasonryWidth] = useState<number>(0);
 
 	const masonryContainerRef = useRef<HTMLDivElement>(null);
-	type SortOrder = "latest" | "oldest";
 	const fetchImages = async (id: string) => {
 		const collectionRef = collection(usersRef, id, "images");
-		const snapshot = await getDocs(collectionRef);
+		const q = query(collectionRef, orderBy("date", sortOrder === "latest" ? "desc" : "asc"));
+		const snapshot = await getDocs(q);
 		const newData: Media[] = [];
 		snapshot.forEach((doc: DocumentSnapshot) => {
 			const docData = doc.data();
@@ -83,12 +81,11 @@ export default function MemberPage() {
 
 
 		fetchData();
-	}, [navigate]);
+	}, [navigate, sortOrder]);
 
 	// Function to update sortOrder and close the dropdown menu
 	const handleSortSelect = (order: "latest" | "oldest" | string | null) => {
 		setSortOrder(order); // Update sort order (latest or oldest)
-		setIsDropdownOpen(false); // Close dropdown after selection
 	};
 
 	useEffect(() => {
