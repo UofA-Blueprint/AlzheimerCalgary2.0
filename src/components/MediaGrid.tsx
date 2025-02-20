@@ -10,7 +10,6 @@ interface MediaGridProps {
 function splitIntoColumns(arr: Media[], nColumns: number = 3) {
 	const result: Media[][] = [];
 
-
 	for (let i = 0; i < nColumns; ++i) {
 		result.push([]);
 	}
@@ -38,7 +37,7 @@ function MediaGrid({ data, selectable, fullWidth }: MediaGridProps) {
 				dataTable.map((column, i) => (
 					<div
 						key={i}
-						className="flex flex-col gap-4 items-center"
+						className="flex flex-col max-w-[250px] gap-4 items-center"
 					>
 						{column.map((item, j) => (
 							<MediaCard

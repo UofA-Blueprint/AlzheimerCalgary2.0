@@ -86,15 +86,18 @@ export default function AdminMemberPage() {
 		const docSnap = await getDoc(docRef);
 
 		if (docSnap.exists()) {
+			const docData = docSnap.data();
 			setPatient({
 				id: docSnap.id,
-				name: docSnap.data().fullName,
+				name: docData.fullName,
+				lastName: docData.lastName,
 				profilePicture: {
-					type: docSnap.data().profilePicture.type,
-					src: docSnap.data().profilePicture.src,
+					type: docData.profilePicture.type,
+					src: docData.profilePicture.src,
 					backgroundColor:
-						docSnap.data().profilePicture.backgroundColor,
+						docData.profilePicture.backgroundColor,
 				},
+				passcode: docData.passcode,
 				storageUsed: docSnap.data().storageUsed,
 				lastUpdated: docSnap.data().lastUpdated,
 			});
@@ -149,7 +152,7 @@ export default function AdminMemberPage() {
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setMasonryWidth(masonryContainerRef.current!.offsetWidth);
-		}, 30); // Delay in milliseconds
+		}, 300); // Delay in milliseconds
 
 		// Cleanup function to clear timeout
 		return () => clearTimeout(timer);

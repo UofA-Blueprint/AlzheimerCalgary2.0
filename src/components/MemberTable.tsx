@@ -25,6 +25,8 @@ export interface memberData {
 		backgroundColor?: string;
 	};
 	name: string;
+	lastName: string;
+	passcode: string;
 	storageUsed: string;
 	lastUpdated: string;
 }
@@ -57,7 +59,6 @@ function selectIcon(type: string) {
 
 /**
  * Represents a table component that displays member data.
- * @param data - An array of objects representing each member's data.
  */
 export function MemberTable({
 	data,
@@ -159,7 +160,7 @@ export function MemberTable({
 								</div>
 							</td>
 							<td className="px-4 py-6 font-display text-sm md:text-base">
-								{row.storageUsed} MB
+								{Number(row.storageUsed).toFixed(3)} MB
 							</td>
 							<td className="px-4 py-6 font-display text-sm md:text-base">
 								{row.lastUpdated}

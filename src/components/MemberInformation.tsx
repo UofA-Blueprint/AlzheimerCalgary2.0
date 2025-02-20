@@ -5,10 +5,12 @@ import {
   Copy,
   ArrowsCounterClockwise,
 } from "@phosphor-icons/react";
+import { memberData } from "./MemberTable";
 //#endregion
 
 //#region Interfaces
 interface MemberInformationProps {
+  member: memberData;
   className?: string;
 }
 //#endregion
@@ -18,10 +20,10 @@ interface MemberInformationProps {
  * @param errorText - The error text to be displayed.
  * @returns
  */
-const MemberInformation = ({ className }: MemberInformationProps) => {
-  const [lastName, setLastName] = useState<string>("Lastname");
-  const [link, setLink] = useState<string>("Link");
-  const [errorText, setErrorText] = useState<string>("Error message");
+const MemberInformation = ({ member, className }: MemberInformationProps) => {
+  const [lastName, setLastName] = useState<string>(member.name);
+  const [link, setLink] = useState<string>(window.location.href);
+  const [errorText, setErrorText] = useState<string>("");
 
   const [password, setPassword] = useState<string>();
   const [copied, setCopied] = useState<boolean>(false);
@@ -115,9 +117,8 @@ const MemberInformation = ({ className }: MemberInformationProps) => {
 
       {/* Copied Alert*/}
       <p
-        className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-white py-2 px-3 rounded-lg transition ease-in-out ${
-          copied ? "opacity-100" : "opacity-0"
-        }`}
+        className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-white py-2 px-3 rounded-lg transition ease-in-out ${copied ? "opacity-100" : "opacity-0"
+          }`}
       >
         Copied
       </p>

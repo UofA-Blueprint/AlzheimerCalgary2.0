@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import { Trash } from "@phosphor-icons/react";
 import { initializeApp } from "firebase/app";
-import { collection, getCountFromServer, getDocs, getFirestore, deleteDoc, query, where, getDoc } from "firebase/firestore";
+import { collection, getCountFromServer, getDocs, getFirestore, deleteDoc, query, where, getDoc, increment } from "firebase/firestore";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
 
 // Firebase import
@@ -15,7 +15,8 @@ import {
 	getStorage,
 	ref,
 	getDownloadURL,
-	UploadTask
+	UploadTask,
+	getMetadata
 } from "firebase/storage";
 import {
 	uploadBytesResumable,
@@ -47,6 +48,7 @@ function Gallery({ handleClose, returning, isStateUpdate, setIsStateUpdate }: Ga
 	// load the gallery
 	const [images, setImages] = useState<Media[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const [increasedByte, setIncreasedBye] = useState(0);
 	const { id } = useParams();
 
 	// confirmation handling  
@@ -108,6 +110,8 @@ function Gallery({ handleClose, returning, isStateUpdate, setIsStateUpdate }: Ga
 		try {
 			const storage = getStorage();
 			const imageRef = ref(storage, imageUrl);
+			const metadata = await getMetadata(imageRef);
+			const byte = metadata.size;
 			await deleteObject(imageRef);
 
 			// Remove the image from the state
@@ -116,7 +120,9 @@ function Gallery({ handleClose, returning, isStateUpdate, setIsStateUpdate }: Ga
 			// remove image from document
 			const userRef = doc(database, "users", id!);
 			const collectionRef = collection(userRef, "images");
-
+			updateDoc(userRef, {
+				storageUsed: increment(-byte / 1048576)
+			})
 			const q = query(collectionRef, where("src", "==", imageUrl));
 			const querySnapshot = await getDocs(q)
 
@@ -202,6 +208,10 @@ function Gallery({ handleClose, returning, isStateUpdate, setIsStateUpdate }: Ga
 
 								setImages(prev => [...prev, newImage]);
 							});
+							updateDoc(userRef, {
+								storageUsed: increment(uploadTask.snapshot.totalBytes / 1048576),
+							}).then(() => { });
+
 						})
 
 

@@ -44,7 +44,6 @@ const usersRef = collection(database, "users");
 
 /**
  * Represents the admin home page.
- * @returns {JSX.Element} The rendered admin home page.
  */
 export default function AdminHome() {
 	const navigate = useNavigate();
@@ -179,6 +178,8 @@ export default function AdminHome() {
 							src: doc.data().profilePicture.src,
 						},
 						name: doc.data().fullName,
+						lastName: doc.data().lastName,
+						passcode: doc.data().passcode,
 						storageUsed: String(doc.data().storageUsed),
 						lastUpdated: String(
 							convertTimestamp(doc.data().lastUpdated.toDate()),
@@ -231,7 +232,7 @@ export default function AdminHome() {
 					<div className="flex flex-col min-w-max grow">
 						<div className="text-h1">All Members</div>
 						<div className="text-body-reg text-primary-dark">
-							Total Storage Used: {totalStorageUsed.toFixed(2)} MB
+							Total Storage Used: {totalStorageUsed.toFixed(3)} MB
 						</div>
 					</div>
 					<div className="flex h-14 self-end items-center justify-end gap-4">

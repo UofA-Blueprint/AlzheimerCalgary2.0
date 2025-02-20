@@ -5,7 +5,7 @@ import InputField from "@/components/InputField";
 import MemberProfilePicture from "@/components/MemberProfilePicture";
 import Button from "@/components/Button";
 import { WarningCircle } from "@phosphor-icons/react";
-import { CollectionReference, doc, setDoc } from "firebase/firestore";
+import { CollectionReference, doc, getDoc, getDocs, query, setDoc, where } from "firebase/firestore";
 import rString from "@/helpers/generatePasscode";
 import { useNavigate } from "react-router-dom";
 
@@ -42,11 +42,19 @@ function AddMember({ isOpen, onClose, usersRef }: AddMemberProps) {
 	const addMember = async () => {
 		if (!nameError && !idError) {
 			// Add member to Firestore
-			// TODO: CHECK IF ID AND NAME ARE UNIQUE
 			const memberRef = doc(usersRef, id);
+			const docSnap = await getDoc(memberRef);
+			const parts = name.split(" ");
+			const lastName = parts[parts.length - 1];
+			if (docSnap.exists()) {
+				setIdError(true);
+				return;
+			}
+			const q = query(usersRef, where("lastName", "==", lastName));
+			const querySnapshot = await getDocs(q);
 			await setDoc(memberRef, {
 				fullName: name,
-				lastName: name.split(" ")[name.split(" ").length - 1],
+				lastName: querySnapshot.empty ? lastName : `${lastName}${querySnapshot.size}`,
 				storageUsed: 0,
 				lastUpdated: new Date(),
 				id: id,
