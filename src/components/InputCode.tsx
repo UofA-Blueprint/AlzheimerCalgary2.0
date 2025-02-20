@@ -67,6 +67,10 @@ export function InputCode({
 		const currentInput = inputRefs[index]?.current;
 		if (!currentInput) return;
 	
+		if (e.ctrlKey && e.key.toLowerCase() === 'v') {
+			return;
+		}
+		
 		if (e.key === "Backspace") {
 			if (currentInput.value === "" && index > 0) {
 				const prevInput = inputRefs[index - 1]?.current;
@@ -75,11 +79,16 @@ export function InputCode({
 					prevInput.select();
 				}
 			}
-		} else if (index < 5 && /^[A-Za-z0-9]$/.test(e.key)) {
+		} else if (/^[A-Za-z0-9]$/.test(e.key)) {
+			e.preventDefault(); 
+			currentInput.value = e.key.toUpperCase();
+			updateInputStates();
 			const nextInput = inputRefs[index + 1]?.current;
-			if (nextInput) {
-				nextInput.focus();
-				nextInput.select();
+			if (index < 5) {
+				if (nextInput) {
+					nextInput.focus();
+					nextInput.select();
+				}
 			}
 		}
 	};
@@ -188,6 +197,7 @@ export function InputCode({
 						onChange={(e) => {
 							if (e.target.value) {
 								e.target.value = e.target.value.toUpperCase();
+								updateInputStates();
 							}
 							handleInputChange(index);
 						}}
