@@ -52,7 +52,7 @@ const MemberInformation = ({ member, className, isStateUpdate, setIsStateUpdate 
    */
   const handleGeneratePassword = async () => {
     const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     let result = "";
 
     for (let i = 0; i < 6; i++) {
