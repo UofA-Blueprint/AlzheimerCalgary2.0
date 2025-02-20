@@ -46,6 +46,7 @@ export default function AdminMemberPage() {
 	const [masonryWidth, setMasonryWidth] = useState<number>(0);
 	const [data, setData] = useState<Media[]>([]);
 	const masonryContainerRef = useRef<HTMLDivElement>(null);
+	const [isStateUpdate, setIsStateUpdate] = useState(false)
 
 	// Button lists
 	const buttons: buttonProps[] = [
@@ -143,7 +144,7 @@ export default function AdminMemberPage() {
 			navigate("/admin")
 		}
 
-	}, []);
+	}, [isStateUpdate]);
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
@@ -173,6 +174,8 @@ export default function AdminMemberPage() {
 						<Gallery
 							handleClose={() => setIsAddingMedia(false)}
 							returning={false}
+							isStateUpdate={isStateUpdate}
+							setIsStateUpdate={setIsStateUpdate}
 						/>
 					)}
 				</div>
