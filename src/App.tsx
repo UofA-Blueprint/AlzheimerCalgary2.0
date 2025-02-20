@@ -97,14 +97,6 @@ const router = createBrowserRouter([
 		element: <ProfilePictureTest />,
 	},
 	{
-		path: "/member-information-test",
-		element: (
-			<div className="flex flex-col gap-y-20 items-center justify-center w-full h-[100vh] bg-slate-400">
-				<MemberInformation />
-			</div>
-		),
-	},
-	{
 		path: "/input-field-test",
 		element: <InputFieldTestRoute />,
 	},

@@ -51,9 +51,9 @@ export function InputCode({
 		useRef<HTMLInputElement>(null),
 	);
 
-	const [value, setValue] = useState<string>("");
+	const [value,] = useState<string>("");
 	const [showError, setShowError] = useState<boolean>(false);
-	
+
 	//#region Functions
 	/**
 	 * This function handles inputs based on the selected key.
@@ -66,11 +66,11 @@ export function InputCode({
 	) => {
 		const currentInput = inputRefs[index]?.current;
 		if (!currentInput) return;
-	
+
 		if (e.ctrlKey && e.key.toLowerCase() === 'v') {
 			return;
 		}
-		
+
 		if (e.key === "Backspace") {
 			if (currentInput.value === "" && index > 0) {
 				const prevInput = inputRefs[index - 1]?.current;
@@ -80,7 +80,7 @@ export function InputCode({
 				}
 			}
 		} else if (/^[A-Za-z0-9]$/.test(e.key)) {
-			e.preventDefault(); 
+			e.preventDefault();
 			currentInput.value = e.key.toUpperCase();
 			updateInputStates();
 			const nextInput = inputRefs[index + 1]?.current;
@@ -90,23 +90,35 @@ export function InputCode({
 					nextInput.select();
 				}
 			}
-		}
-	};
+
+			// Enter the value of the current input
+			else {
+				if (index <= 5 && value != "") {
+					// inputRefs[index + 1]?.current?.focus();
+					inputRefs[index + 1]?.current?.select();
+					return;
+				}
+
+			}
+
+
+		};
+	}
 
 	//#region Functions
 	/**
 	 * This function handle paste logic lol
 	 * @returns None
 	 */
-	const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>, index: number) => {
+	const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
 		e.preventDefault();
 		const pastedData = e.clipboardData.getData('text').toUpperCase();
 		// console.log("Pasted data:", pastedData); // Debug log
-		
+
 		// clean  data
 		const cleanedChars = pastedData.replace(/[^A-Z0-9]/g, '').slice(0, 6);
 		// console.log("Cleaned chars:", cleanedChars); // Debug log
-		
+
 		// Start filling from the first box
 		for (let i = 0; i < cleanedChars.length && i < 6; i++) {
 			const targetInput = inputRefs[i].current;
@@ -114,10 +126,10 @@ export function InputCode({
 				targetInput.value = cleanedChars[i];
 			}
 		}
-	
+
 		// Update all states at once after filling
 		updateInputStates();
-	
+
 		// Focus on next empty input or last filled input
 		const lastIndex = Math.min(cleanedChars.length, 5);
 		inputRefs[lastIndex]?.current?.focus();
@@ -127,30 +139,28 @@ export function InputCode({
 	 * This function checks if there is an error in the input field.
 	 * @returns None
 	 */
-    const checkError = (index: number) => {
-        setShowError(true);
-        inputRefs[index]?.current?.focus();
-        inputRefs[index]?.current?.select();
-        updateInputStates();
-    };
+	const checkError = (index: number) => {
+		setShowError(true);
+		inputRefs[index]?.current?.focus();
+		inputRefs[index]?.current?.select();
+		updateInputStates();
+	};
 
-    const updateInputStates = () => {
-        const newInputs: Record<number, string> = {};
-        let hasEmpty = false;
+	const updateInputStates = () => {
+		const newInputs: Record<number, string> = {};
+		let hasEmpty = false;
 
-        inputRefs.forEach((ref, idx) => {
-            const value = ref.current?.value.toUpperCase() || "";
-            newInputs[idx] = value;
-            if (!value) hasEmpty = true;
-        });
+		inputRefs.forEach((ref, idx) => {
+			const value = ref.current?.value.toUpperCase() || "";
+			newInputs[idx] = value;
+			if (!value) hasEmpty = true;
+		});
 
-        setInput(newInputs);
-        setError(hasEmpty);
-    };
+		setInput(newInputs);
+		setError(hasEmpty);
+	};
 	/**
 	 * This function handles the change event of the input field.
-	 * @param {React.ChangeEvent<HTMLInputElement>} e - The change event.
-	 * @returns None
 	 */
 	const handleInputChange = (index: number) => {
 		checkError(index);
@@ -163,6 +173,7 @@ export function InputCode({
 			5: inputRefs[5]?.current?.value || "",
 		});
 	};
+
 	//#endregion
 
 	return (
@@ -186,11 +197,10 @@ export function InputCode({
 						ref={inputRefs[index]}
 						type="text"
 						maxLength={1}
-						className={`uppercase h-14 w-1/6 md:h-16 text-center text-2xl md:text-3xl rounded-md bg-neutrals-light-300 border-2 border-status-red-main font-display ${
-							error && showError
+						className={`uppercase h-14 w-1/6 md:h-16 text-center text-2xl md:text-3xl rounded-md bg-neutrals-light-300 border-2 border-status-red-main font-display ${error && showError
 								? "border-status-red-main"
 								: "border-none"
-						}`}
+							}`}
 						onClick={() => checkError(index)}
 						onKeyDown={(e) => handleKeyDown(e, index)}
 						onPaste={(e) => handlePaste(e, index)}

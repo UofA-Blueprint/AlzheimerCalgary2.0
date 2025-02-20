@@ -1,17 +1,26 @@
 //#region Imports
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   WarningCircle,
   Copy,
   ArrowsCounterClockwise,
 } from "@phosphor-icons/react";
 import { memberData } from "./MemberTable";
+import { doc, getFirestore, updateDoc } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { useParams } from "react-router-dom";
 //#endregion
+
+const firebaseConfig = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
+const app = initializeApp(firebaseConfig);
+const database = getFirestore(app);
 
 //#region Interfaces
 interface MemberInformationProps {
   member: memberData;
   className?: string;
+  isStateUpdate: boolean;
+  setIsStateUpdate: Dispatch<SetStateAction<boolean>>;
 }
 //#endregion
 
@@ -20,28 +29,28 @@ interface MemberInformationProps {
  * @param errorText - The error text to be displayed.
  * @returns
  */
-const MemberInformation = ({ member, className }: MemberInformationProps) => {
-  const [lastName, setLastName] = useState<string>(member.name);
-  const [link, setLink] = useState<string>(window.location.href);
-  const [errorText, setErrorText] = useState<string>("");
+const MemberInformation = ({ member, className, isStateUpdate, setIsStateUpdate }: MemberInformationProps) => {
+  const { id } = useParams();
 
-  const [password, setPassword] = useState<string>();
   const [copied, setCopied] = useState<boolean>(false);
   const fields = [
-    { label: "Member Link", value: link },
-    { label: "Member Last Name", value: lastName },
-    { label: "Member Password", value: password || "" },
+    { label: "Member Link", value: window.location.href },
+    { label: "Member Last Name", value: member.lastName },
+    { label: "Member Password", value: member.passcode },
   ];
 
-  //#region functions
-  useEffect(() => {
-    handleGeneratePassword();
-  }, []);
+  const updatePassword = async (newPass: string) => {
+    await updateDoc(doc(database, "users", id!), {
+      passcode: newPass,
+    })
+  }
+
+
 
   /**
    * Handles the generate password event.
    */
-  const handleGeneratePassword = () => {
+  const handleGeneratePassword = async () => {
     const characters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     let result = "";
@@ -51,7 +60,8 @@ const MemberInformation = ({ member, className }: MemberInformationProps) => {
         Math.floor(Math.random() * characters.length)
       );
     }
-    setPassword(result);
+    await updatePassword(result);
+    setIsStateUpdate(!isStateUpdate);
   };
 
   /**
@@ -95,26 +105,24 @@ const MemberInformation = ({ member, className }: MemberInformationProps) => {
                 <ArrowsCounterClockwise
                   size={28}
                   className="cursor-pointer"
-                  onClick={handleGeneratePassword}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleGeneratePassword();
+                  }}
                 />
               ) : null}
               <Copy
                 size={28}
                 className="cursor-pointer"
-                onClick={() => handleCopy(field.value)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCopy(field.value)
+                }}
               />
             </div>
           </div>
         </div>
       ))}
-      {/* Error */}
-      {errorText && (
-        <div className="flex items-center gap-x-2 text-status-red-main">
-          <WarningCircle size={20} />
-          <p>{errorText}</p>
-        </div>
-      )}
-
       {/* Copied Alert*/}
       <p
         className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-white py-2 px-3 rounded-lg transition ease-in-out ${copied ? "opacity-100" : "opacity-0"

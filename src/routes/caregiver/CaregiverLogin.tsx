@@ -57,7 +57,7 @@ export default function CaregiverLogin() {
 			localStorage.setItem("lastName", userLastName);
 			localStorage.setItem("passcode", userPasscode);
 			navigate("/");
-			
+
 		}
 
 		// User not found

@@ -17,6 +17,7 @@ import Button from "@/components/Button";
 import { memberData } from "@/components/MemberTable";
 import { Gallery } from "@/components/Gallery";
 import { twMerge } from "tailwind-merge";
+import { MemberInformation } from "@/components/MemberInformation";
 //#endregion
 
 //#region Firebase
@@ -43,6 +44,7 @@ export default function AdminMemberPage() {
 	const [patient, setPatient] = useState<memberData>();
 	const [isSelectable, setIsSelectable] = useState<boolean>(false);
 	const [isAddingMedia, setIsAddingMedia] = useState<boolean>(false);
+	const [isViewingInformation, setIsViewingInformation] = useState<boolean>(false);
 	const [masonryWidth, setMasonryWidth] = useState<number>(0);
 	const [data, setData] = useState<Media[]>([]);
 	const masonryContainerRef = useRef<HTMLDivElement>(null);
@@ -64,7 +66,9 @@ export default function AdminMemberPage() {
 			size: "medium",
 			icon: <Info />,
 			severity: "secondary",
-			onClick: () => { },
+			onClick: () => {
+				setIsViewingInformation(true);
+			},
 			title: "View patient information",
 		},
 		{
@@ -220,6 +224,15 @@ export default function AdminMemberPage() {
 					/>
 				</div>
 			</div>
+			{
+				isViewingInformation &&
+				<div
+					className="w-screen h-screen absolute top-0 left-0 z-50 flex justify-center items-center bg-neutrals-dark-300 bg-opacity-50"
+					onClick={() => setIsViewingInformation(false)}
+				>
+					<MemberInformation member={patient!} className="z-[99] opacity-100" isStateUpdate={isStateUpdate} setIsStateUpdate={setIsStateUpdate} />
+				</div>
+			}
 		</main>
 	);
 }

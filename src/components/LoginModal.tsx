@@ -38,14 +38,6 @@ interface LoginModalProps {
 
 /**
  * Represents the login modal component.
- * @param {string} title - The title of the login modal.
- * @param {string} className - Additional TailwindCSS.
- * @param {string} type - The type of the login modal.
- * @param {Function} setEmail - Set the email of the user.
- * @param {Function} setLastName - Set the last name of the user.
- * @param {Function} setPassword - Set the password of the user.
- * @param {Function} setPasscode - Set the passcode of the user.
- * @returns
  */
 const LoginModal = ({
 	className,
