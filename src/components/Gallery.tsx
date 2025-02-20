@@ -7,14 +7,13 @@ import { useParams } from "react-router-dom";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import { Trash } from "@phosphor-icons/react";
 import { initializeApp } from "firebase/app";
-import { collection, getCountFromServer, getDocs, getFirestore, deleteDoc, query, where  } from "firebase/firestore";
+import { collection, getCountFromServer, getDocs, getFirestore, deleteDoc, query, where, getDoc } from "firebase/firestore";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
-import { memberData } from "@/components/MemberTable";
-// firebase import
+
+// Firebase import
 import {
 	getStorage,
-	ref,	 
-	listAll,
+	ref,
 	getDownloadURL,
 	UploadTask
 } from "firebase/storage";
@@ -25,6 +24,7 @@ import {
 import { v4 as uuid } from 'uuid';
 import { toast, ToastContainer } from "react-toastify";
 import Toast from "./Toast";
+import clsx from "clsx";
 //#endregion
 
 
@@ -43,10 +43,9 @@ interface GalleryProps {
 }
 
 function Gallery({ handleClose, returning, isStateUpdate, setIsStateUpdate }: GalleryProps) {
-	//TODO: Configure the local gallery to display images here
 
 	// load the gallery
-	const [images, setImages] = useState<string[]>([]);
+	const [images, setImages] = useState<Media[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const { id } = useParams();
 
@@ -72,9 +71,7 @@ function Gallery({ handleClose, returning, isStateUpdate, setIsStateUpdate }: Ga
 		progress: number;
 		uploadTask?: UploadTask;
 	}>>([]);
-	// Firebase
 
-	const [patient, setPatient] = useState<memberData>();
 	//#region Functions
 
 	/**
@@ -84,30 +81,28 @@ function Gallery({ handleClose, returning, isStateUpdate, setIsStateUpdate }: Ga
 	/**
 	 * Handle an image in the gallery being clicked
 	 */
-	const handleImageClicked = async (imageUrl:string) => {
+	const handleImageClicked = async (imageUrl: string) => {
 		try {
-			console.log("Image clicked:")
-			const userRef = doc(database, "users", id! )
+			const userRef = doc(database, "users", id!)
 			const collectionRef = collection(userRef, "images")
-			const q = query(collectionRef, where("src","==", imageUrl));	
+			const q = query(collectionRef, where("src", "==", imageUrl));
 			// docRef = 
-			const querySnapshot = await getDocs(q);	
-			querySnapshot.forEach( async (document) => {
+			const querySnapshot = await getDocs(q);
+			querySnapshot.forEach(async (document) => {
 				const currentData = document.data();
-                await updateDoc(doc(collectionRef, document.id),
-			{
-                isDisplayed: !currentData.isDisplayed,
+				await updateDoc(doc(collectionRef, document.id),
+					{
+						isDisplayed: !currentData.isDisplayed,
 
+					});
+				setIsStateUpdate(!isStateUpdate);
 			});
-			console.log("Current isDisplayed value after the click:", currentData.isDisplayed);
-			setIsStateUpdate(!isStateUpdate);
-            });
 		}
 		catch (error) {
-            console.error("Error getting:", error);
-        }
+			console.error("Error getting:", error);
+		}
 	}
-		
+
 	// handle image being deleted
 	const handleDeleteImage = async (imageUrl: string) => {
 		try {
@@ -116,19 +111,19 @@ function Gallery({ handleClose, returning, isStateUpdate, setIsStateUpdate }: Ga
 			await deleteObject(imageRef);
 
 			// Remove the image from the state
-			setImages(prev => prev.filter(url => url !== imageUrl));
-			
+			setImages(prev => prev.filter(image => image.src !== imageUrl));
+
 			// remove image from document
 			const userRef = doc(database, "users", id!);
 			const collectionRef = collection(userRef, "images");
-			
-			const q = query(collectionRef, where("src","==", imageUrl));
-            const querySnapshot = await getDocs(q)
-			
-			querySnapshot.forEach( async (document) => {
-				console.log(document.id)
-                await deleteDoc(doc(collectionRef, document.id));
-            });
+
+			const q = query(collectionRef, where("src", "==", imageUrl));
+			const querySnapshot = await getDocs(q)
+
+			querySnapshot.forEach(async (document) => {
+				await deleteDoc(doc(collectionRef, document.id));
+			});
+			setIsStateUpdate(!isStateUpdate);
 		} catch (error) {
 			console.error("Error deleting image:", error);
 		}
@@ -182,19 +177,31 @@ function Gallery({ handleClose, returning, isStateUpdate, setIsStateUpdate }: Ga
 				},
 				() => {
 					getDownloadURL(uploadTask.snapshot.ref).then(url => {
-						setImages(prev => [...prev, url]);
 						const userRef = doc(database, "users", id!);
 						const collectionRef = collection(userRef, "images");
 						let count = 0;
 						getCountFromServer(collectionRef).then(snapshot => {
 							count = snapshot.data().count;
 							const docRef = doc(collectionRef, count.toString());
-							setDoc(docRef, {
+							const newDoc = {
 								src: url,
 								caption: "",
 								date: new Date(),
 								isDisplayed: false,
-							}).then(() => { });
+							};
+							setDoc(docRef, newDoc).then(async () => {
+								const doc = await getDoc(docRef);
+								const docData = doc.data();
+								const newImage: Media = {
+									id: doc.id,
+									src: docData!.src,
+									caption: docData!.caption,
+									date: docData!.date,
+									isDisplayed: docData!.isDisplayed,
+								}
+
+								setImages(prev => [...prev, newImage]);
+							});
 						})
 
 
@@ -216,19 +223,25 @@ function Gallery({ handleClose, returning, isStateUpdate, setIsStateUpdate }: Ga
 	useEffect(() => {
 		const fetchImages = async () => {
 			const querySnapshot = await getDocs(collection(database, "users", id!, "images"));
-			const images: string[] = [];
+			const images: Media[] = [];
 			querySnapshot.forEach((doc) => {
-				images.push(doc.data().src);		
+				const data = doc.data();
+				images.push({
+					id: doc.id,
+					src: data.src,
+					caption: data.caption,
+					date: data.date,
+					isDisplayed: data.isDisplayed,
+				} as Media);
 			});
 			setImages(images);
-			console.log(images)
 		};
 
 		if (id) {
 			fetchImages();
 			setIsLoading(false);
 		}
-	}, [id]);
+	}, [id, isStateUpdate]);
 
 	//#endregion
 
@@ -275,19 +288,19 @@ function Gallery({ handleClose, returning, isStateUpdate, setIsStateUpdate }: Ga
 				<p className="w-full flex items-center justify-center">Loading...</p>
 			) : images.length > 0 ? (
 				<div className="grid h-96 w-full px-2 grid-cols-2 md:grid-cols-4 gap-6 items-center overflow-y-auto scroller">
-					{images.map((imageUrl, index) => (
+					{images.map((image, index) => (
 						<div key={index} className="relative group">
 							<img
-								src={imageUrl}
+								src={image.src}
 								alt={`gallery-image-${index}`}
-								className="w-56 aspect-square rounded-xl cursor-pointer hover:scale-95 transition ease-in-out duration-200"
-								onClick={() => handleImageClicked(imageUrl)}
+								className={clsx("w-56 aspect-square rounded-xl cursor-pointer hover:scale-95 transition ease-in-out duration-200", image.isDisplayed && "border-4 border-primary-dark")}
+								onClick={() => handleImageClicked(image.src)}
 							/>
 							<button
 								onClick={(e) => {
 									e.stopPropagation();
 									// handleDeleteImage(imageUrl);
-									setImageToDelete(imageUrl);
+									setImageToDelete(image.src);
 									openModal();
 								}}
 								className="absolute -top-1 -right-1 p-1.5 rounded-full bg-neutrals-light-200 text-neutrals-dark-500 opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-red-400 hover:text-white"
