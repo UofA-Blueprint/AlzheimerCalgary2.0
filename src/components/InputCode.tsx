@@ -53,7 +53,7 @@ export function InputCode({
 
 	const [value, setValue] = useState<string>("");
 	const [showError, setShowError] = useState<boolean>(false);
-
+	
 	//#region Functions
 	/**
 	 * This function handles inputs based on the selected key.
@@ -64,41 +64,80 @@ export function InputCode({
 		e: React.KeyboardEvent<HTMLInputElement>,
 		index: number,
 	) => {
-		setValue(e.key.toString());
-
-		// Erase the value of the current input field when the backspace key is pressed
+		const currentInput = inputRefs[index]?.current;
+		if (!currentInput) return;
+	
 		if (e.key === "Backspace") {
-			if (inputRefs[index]?.current?.value === "" && index > 0)
-				inputRefs[index - 1]?.current?.focus();
-			setValue("");
-		}
-
-		// Enter the value of the current input
-		else {
-			if (index <= 5 && value != "") {
-				// inputRefs[index + 1]?.current?.focus();
-				inputRefs[index + 1]?.current?.select();
+			if (currentInput.value === "" && index > 0) {
+				const prevInput = inputRefs[index - 1]?.current;
+				if (prevInput) {
+					prevInput.focus();
+					prevInput.select();
+				}
+			}
+		} else if (index < 5 && /^[A-Za-z0-9]$/.test(e.key)) {
+			const nextInput = inputRefs[index + 1]?.current;
+			if (nextInput) {
+				nextInput.focus();
+				nextInput.select();
 			}
 		}
 	};
 
+	//#region Functions
+	/**
+	 * This function handle paste logic lol
+	 * @returns None
+	 */
+	const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>, index: number) => {
+		e.preventDefault();
+		const pastedData = e.clipboardData.getData('text').toUpperCase();
+		// console.log("Pasted data:", pastedData); // Debug log
+		
+		// clean  data
+		const cleanedChars = pastedData.replace(/[^A-Z0-9]/g, '').slice(0, 6);
+		// console.log("Cleaned chars:", cleanedChars); // Debug log
+		
+		// Start filling from the first box
+		for (let i = 0; i < cleanedChars.length && i < 6; i++) {
+			const targetInput = inputRefs[i].current;
+			if (targetInput) {
+				targetInput.value = cleanedChars[i];
+			}
+		}
+	
+		// Update all states at once after filling
+		updateInputStates();
+	
+		// Focus on next empty input or last filled input
+		const lastIndex = Math.min(cleanedChars.length, 5);
+		inputRefs[lastIndex]?.current?.focus();
+		inputRefs[lastIndex]?.current?.select();
+	};
 	/**
 	 * This function checks if there is an error in the input field.
 	 * @returns None
 	 */
-	const checkError = (index: number) => {
-		setShowError(true);
-		inputRefs[index]?.current?.focus();
+    const checkError = (index: number) => {
+        setShowError(true);
+        inputRefs[index]?.current?.focus();
+        inputRefs[index]?.current?.select();
+        updateInputStates();
+    };
 
-		inputRefs.forEach((input) => {
-			if (input.current?.value == "") {
-				setError(true);
-			} else {
-				setError(false);
-			}
-		});
-	};
+    const updateInputStates = () => {
+        const newInputs: Record<number, string> = {};
+        let hasEmpty = false;
 
+        inputRefs.forEach((ref, idx) => {
+            const value = ref.current?.value.toUpperCase() || "";
+            newInputs[idx] = value;
+            if (!value) hasEmpty = true;
+        });
+
+        setInput(newInputs);
+        setError(hasEmpty);
+    };
 	/**
 	 * This function handles the change event of the input field.
 	 * @param {React.ChangeEvent<HTMLInputElement>} e - The change event.
@@ -138,14 +177,20 @@ export function InputCode({
 						ref={inputRefs[index]}
 						type="text"
 						maxLength={1}
-						className={`h-14 w-1/6 md:h-16 text-center text-2xl md:text-3xl rounded-md bg-neutrals-light-300 border-2 border-status-red-main font-display ${
+						className={`uppercase h-14 w-1/6 md:h-16 text-center text-2xl md:text-3xl rounded-md bg-neutrals-light-300 border-2 border-status-red-main font-display ${
 							error && showError
 								? "border-status-red-main"
 								: "border-none"
 						}`}
 						onClick={() => checkError(index)}
-						onChange={(e) => handleInputChange(index)}
 						onKeyDown={(e) => handleKeyDown(e, index)}
+						onPaste={(e) => handlePaste(e, index)}
+						onChange={(e) => {
+							if (e.target.value) {
+								e.target.value = e.target.value.toUpperCase();
+							}
+							handleInputChange(index);
+						}}
 					/>
 				))}
 			</div>
