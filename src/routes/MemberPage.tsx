@@ -17,7 +17,6 @@ import {
 } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 
-// Temporary data for media grid
 //#region firebase
 const firebaseConfig = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
 const app = initializeApp(firebaseConfig);
@@ -29,7 +28,7 @@ export default function MemberPage() {
 	const navigate = useNavigate();
 	const [sortOrder, setSortOrder] = useState<
 		"latest" | "oldest" | string | null
-	>("latest");
+	>(localStorage.getItem("sortOrder"));
 	const [userData, setUserData] = useState<DocumentData | null>(null);
 	const [data, setData] = useState<Media[]>([]);
 	const [masonryWidth, setMasonryWidth] = useState<number>(0);
@@ -86,6 +85,7 @@ export default function MemberPage() {
 	// Function to update sortOrder and close the dropdown menu
 	const handleSortSelect = (order: "latest" | "oldest" | string | null) => {
 		setSortOrder(order); // Update sort order (latest or oldest)
+		localStorage.setItem("sortOrder", order);
 	};
 
 	useEffect(() => {
