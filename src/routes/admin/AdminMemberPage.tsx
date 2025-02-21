@@ -18,6 +18,7 @@ import { memberData } from "@/components/MemberTable";
 import { Gallery } from "@/components/Gallery";
 import { twMerge } from "tailwind-merge";
 import { MemberInformation } from "@/components/MemberInformation";
+import EditMember from "@/components/EditMember";
 //#endregion
 
 //#region Firebase
@@ -36,7 +37,14 @@ interface buttonProps {
 	onClick: () => void;
 	title?: string;
 }
-
+interface EditMemberProps {
+    member: memberData;
+    className?: string;
+    isStateUpdate: boolean;
+    setIsStateUpdate: (value: boolean) => void;
+    isOpen: boolean;
+    onClose: () => void;
+}
 export default function AdminMemberPage() {
 	const navigate = useNavigate();
 	const { id } = useParams();
@@ -45,6 +53,7 @@ export default function AdminMemberPage() {
 	const [isSelectable, setIsSelectable] = useState<boolean>(false);
 	const [isAddingMedia, setIsAddingMedia] = useState<boolean>(false);
 	const [isViewingInformation, setIsViewingInformation] = useState<boolean>(false);
+	const [isEditingMemberInformation, setIsEditingMemberInformation] = useState<boolean>(false);
 	const [masonryWidth, setMasonryWidth] = useState<number>(0);
 	const [data, setData] = useState<Media[]>([]);
 	const masonryContainerRef = useRef<HTMLDivElement>(null);
@@ -76,7 +85,7 @@ export default function AdminMemberPage() {
 			size: "medium",
 			icon: isSelectable ? <CheckCircle /> : <PencilSimple />,
 			severity: "secondary",
-			onClick: () => setIsSelectable(!isSelectable),
+			onClick: () => setIsEditingMemberInformation(true), 
 			title: "Edit patient information",
 		},
 	];
@@ -233,6 +242,26 @@ export default function AdminMemberPage() {
 					<MemberInformation member={patient!} className="z-[99] opacity-100" isStateUpdate={isStateUpdate} setIsStateUpdate={setIsStateUpdate} />
 				</div>
 			}
+				{isEditingMemberInformation && (
+					<div 
+						className="w-screen h-screen absolute top-0 left-0 z-50 flex justify-center items-center bg-neutrals-dark-300 bg-opacity-50"
+						onClick={(e) => {
+							// Only close if clicking the backdrop
+							if (e.target === e.currentTarget) {
+								setIsEditingMemberInformation(false);
+							}
+						}}
+					>
+						<EditMember 
+							member={patient!}
+							className="z-[99] opacity-100"
+							isStateUpdate={isStateUpdate}
+							setIsStateUpdate={setIsStateUpdate}
+							isOpen={isEditingMemberInformation}
+							onClose={() => setIsEditingMemberInformation(false)}
+						/>
+					</div>
+				)}
 		</main>
 	);
 }
