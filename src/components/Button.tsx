@@ -39,8 +39,8 @@ function Button({
 	const buttonRef = useRef<HTMLButtonElement>(null);
 
 	// Button styles
-	const base =
-		"flex flex-row items-center justify-center w-full h-full cursor-pointer rounded-lg gap-2 p-2 lg:p-4 xl:p-6 text-sm lg:text-base xl:text-xl xl:leading-6";
+	const base ="flex flex-row items-center justify-center w-full h-full cursor-pointer rounded-lg p-2 lg:p-4 xl:p-6 text-sm lg:text-base xl:text-xl xl:leading-6";
+		
 
 	// const small = "h-8 py-1 px-6 gap-1 text-sm";
 
@@ -93,6 +93,7 @@ function Button({
 					[danger]: severity === "danger",
 					[dangerPrimary]: severity === "dangerPrimary",
 					[disabledButton]: disabled,
+					'gap-2': icon,
 				}),
 			)}
 			onClick={onClick}
