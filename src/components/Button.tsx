@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
 
+// Testing
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	/* Height of the button */
 	size: "small" | "medium" | "large";
