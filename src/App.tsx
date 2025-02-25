@@ -33,6 +33,10 @@ const router = createBrowserRouter([
 		element: <MemberPage />
 	},
 	{
+		path: "/members/:id",
+		element: <MemberPage />
+	},
+	{
 		path: "/login",
 		element: <CaregiverLogin />,
 	},

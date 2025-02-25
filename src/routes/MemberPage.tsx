@@ -3,7 +3,7 @@ import { ToastContainer } from "react-toastify";
 import { NavigationBar } from "@/components/NavigationBar";
 import MediaGrid from "@/components/MediaGrid";
 import MemberHeader from "@/components/MemberHeader";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SortDropdownList from "@/components/SortDropdownList";
 import {
 	getFirestore,
@@ -26,6 +26,7 @@ const usersRef = collection(database, "users");
 
 export default function MemberPage() {
 	const navigate = useNavigate();
+	const { id } = useParams();
 	const [sortOrder, setSortOrder] = useState<
 		"latest" | "oldest" | string | null
 	>(localStorage.getItem("sortOrder"));
@@ -71,6 +72,10 @@ export default function MemberPage() {
 			const querySnapshot = await getDocs(q);
 			if (!querySnapshot.empty) {
 				const userDoc = querySnapshot.docs[0]; // Set retrieved user data to userData state
+				if (userDoc.id != id) {
+					localStorage.clear();
+					navigate("/login");
+				}
 				setUserData(userDoc.data());
 				fetchImages(userDoc.id)
 			} else {
