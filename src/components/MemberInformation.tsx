@@ -33,8 +33,10 @@ const MemberInformation = ({ member, className, isStateUpdate, setIsStateUpdate 
   const { id } = useParams();
 
   const [copied, setCopied] = useState<boolean>(false);
+  const location = window.location.href;
+  const newLocation = location.replace("admin/", "");
   const fields = [
-    { label: "Member Link", value: window.location.href },
+    { label: "Member Link", value: newLocation },
     { label: "Member Last Name", value: member.lastName },
     { label: "Member Password", value: member.passcode },
   ];
